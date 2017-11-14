@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>-->
 
-<table class="layui-table" lay-data="{width: 927, height:332, url:'listNews', page:true, id:'idTest'}" lay-filter="demo">
+<table class="layui-table" lay-data="{width: 927, height:332, url:'/news/listNews', page:true, id:'idTest'}" lay-filter="demo">
   <thead>
     <tr>
       <!-- <th lay-data="{checkbox:true, fixed: true,align:'center'}"></th> -->
@@ -69,7 +69,7 @@ layui.use('table', function(){
     	layer.close(index);
         $.ajax({
         	type: "post",
-        	url: "delNews",
+        	url: "news/delNews",
         	dataType: "html",
         	data: {
         		newsid: data.id
@@ -85,7 +85,7 @@ layui.use('table', function(){
         });//ajax end  
       });  
     } else if(obj.event === 'edit'){
-      window.location.href = location.origin+"/NewsCMS/NewsPage/goUpdate?newsid="+data.id;
+      window.location.href = location.origin+"/NewsCMS/NewsPage/news/goUpdate?newsid="+data.id;
     }
   });
 

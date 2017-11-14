@@ -82,7 +82,7 @@ layui.use(["form","layedit"], function(){
 		 
 		 $.ajax({
 				type:"post",
-				url:"updateNews",
+				url:"news/updateNews",
 				dataType:"html",
 				data:{
 					newsid: "${update.id}",

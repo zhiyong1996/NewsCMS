@@ -57,7 +57,7 @@ layui.use(["form","layedit"], function(){
 		 
 		 $.ajax({
 				type:"post",
-				url:"addCategory",
+				url:"category/addCategory",
 				dataType:"html",
 				data:{
 					categoryName: categoryName,

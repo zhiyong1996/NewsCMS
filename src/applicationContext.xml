@@ -38,9 +38,16 @@
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+	
 	<bean id="newsDao" class="com.zzy.dao.impl.NewsDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="newsService" class="com.zzy.service.impl.NewsServiceImpl"/>
+	<bean id="categoryDao" class="com.zzy.dao.impl.categoryDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="categoryService" class="com.zzy.service.impl.categoryServiceImpl"/>
+	
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>
+	<bean id="categoryAction" class="com.zzy.action.CategoryAction" scope="prototype"/>
 </beans>

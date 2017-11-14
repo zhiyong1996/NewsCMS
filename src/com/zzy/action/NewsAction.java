@@ -22,9 +22,6 @@ public class NewsAction extends ActionSupport{
 	private String content;	//新闻内容
 	private String newsfrom; //新闻来源
 	private Integer newsid; //新闻id
-	
-	private String categoryName; //类型名字
-	private String description; //类型描述
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -35,10 +32,6 @@ public class NewsAction extends ActionSupport{
 	private News news;
 	private String message;
 	private JSONObject pageJson;//返回的json数据
-	
-	//添加新闻类型
-	
-	//删除新闻
 	
 	//添加新闻
 	public String addNews() throws Exception{
@@ -186,20 +179,6 @@ public class NewsAction extends ActionSupport{
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
 	}
-	public String getCategoryName() {
-		return categoryName;
-	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	
 	
 	
 }
