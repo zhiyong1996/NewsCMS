@@ -33,6 +33,13 @@ public class NewsAction extends ActionSupport{
 	private String message;
 	private JSONObject pageJson;//返回的json数据
 	
+	public String go_addN(){
+		return "success";
+	}
+	public String go_listN(){
+		return "success";
+	}
+	
 	//添加新闻
 	public String addNews() throws Exception{
 		news = new News();

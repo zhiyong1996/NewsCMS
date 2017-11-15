@@ -16,53 +16,65 @@
     <!-- <constant name="struts.ui.theme" value="simple" /> -->
     <!-- <constant name="struts.objectFactory" value="spring" />  -->
     
-  <package name="news" extends="json-default" namespace="/news">  
+  <package name="news" extends="json-default" namespace="/news">
+  	<interceptors>
+  		<interceptor name="adminLogin" class="com.zzy.interceptor.AdminInterceptor"></interceptor>
+  		<interceptor-stack name="loginStack">
+  			<interceptor-ref name="adminLogin"/>
+  			<interceptor-ref name="defaultStack"/>
+  		</interceptor-stack>
+  	</interceptors>
     <action name="*" class="com.zzy.action.NewsAction" method="{1}">
-    <!-- 添加 -->
-    	<result name="addnews" type="json">
+    	<result name="go_addN">/WEB-INF/NewsPage/addNews.jsp</result>
+  		<result name="go_listN">/WEB-INF/NewsPage/listNews.jsp</result>
+    	<result name="addnews" type="json">    <!-- 添加 -->
                 <param name="root">message</param>
        	</result>
-    <!-- 获取分页 -->
-    	<result name="pageJson" type="json">
+    	<result name="pageJson" type="json">    <!-- 获取分页 -->
     		<param name="root">pageJson</param>
     	</result>
-   	<!-- 更新跳转 -->
-    	<result name="go_update">/NewsPage/updateNews.jsp</result>
-   	<!-- 更新新闻 -->
-    	<result type="json" name="update_success">
+    	<result name="go_update">/WEB-INF/NewsPage/updateNews.jsp</result>   	<!-- 更新跳转 -->
+    	<result type="json" name="update_success">   	<!-- 更新新闻 -->
 			<param name="root">message</param>
 		</result>
-	<!-- 删除新闻 -->
-    	<result type="json" name="delNews">
+    	<result type="json" name="delNews">	<!-- 删除新闻 -->
     		<param name="root">status</param>
     	</result>
     <!-- 对应方法 -->
-    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews</allowed-methods>
+    <interceptor-ref name="adminLogin"/>
+    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN</allowed-methods>
     </action>
   </package>  
   
   <package name="category" extends="json-default"  namespace="/category">
-  
   	<action name="*" class="com.zzy.action.NewsAction" method="{1}">
-  	<!-- 添加类型 -->
-  		<result name="addCategory" type="json">
+  		<result name="go_addC">/WEB-INF/CategoryPage/addCategory.jsp</result>
+  		<result name="go_listC">/WEB-INF/CategoryPage/listCategory.jsp</result>
+  		<result name="addCategory" type="json"><!-- 添加类型 -->
   			<param name="root">message</param>
   		</result>
-  	<!-- 获取所有 -->
-  		<result name="listCategory" type="json">
+  		<result name="listCategory" type="json"><!-- 获取所有 -->
   			<param name="root">pageJson</param>
   		</result>
-	<!-- 更新跳转 -->
-    	<result name="go_update">/CategoryPage/updateCategory.jsp</result>
-	<!-- 更新操作 -->
-    	<result type="json" name="update_success">
+    	<result name="go_update">/WEB-INF/CategoryPage/updateCategory.jsp</result><!-- 更新跳转 -->
+    	<result type="json" name="update_success"><!-- 更新操作 -->
 			<param name="root">message</param>
 		</result>
-	<!-- 删除分类 -->
-    	<result type="json" name="delCategory">
+    	<result type="json" name="delCategory"><!-- 删除分类 -->
     		<param name="root">status</param>
     	</result>
-    	<allowed-methods>addCategory,listCategory,goUpdateC,updateCategory,delCategory</allowed-methods>
+    	<interceptor-ref name="adminLogin"/>
+    	<allowed-methods>addCategory,listCategory,goUpdateC,updateCategory,delCategory,go_addC,go_listC</allowed-methods>
     </action>
+  </package>
+  
+  <package name="login" extends="json-default" namespace="/login">
+  	<action name="loginAction" class="com.zzy.action.loginAction" method="login">
+  		<result name="success">/WEB-INF/cmsIndex.jsp</result>
+  		<result name="login">/login.jsp</result>
+  		<interceptor-ref name="adminLogin">
+  			<param name="includeMethods">login</param>
+  		</interceptor-ref>
+  	</action>
   </package>
 </struts>

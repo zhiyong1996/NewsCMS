@@ -84,7 +84,7 @@ layui.use('table', function(){
         });//ajax end  
       });  
     } else if(obj.event === 'edit'){
-      window.location.href = location.origin+"/NewsCMS/CategoryPage/goUpdate?newsid="+data.id;
+      window.location.href = location.origin+"/NewsCMS/CategoryPage/goUpdate?cid="+data.id;
     }
   });
 

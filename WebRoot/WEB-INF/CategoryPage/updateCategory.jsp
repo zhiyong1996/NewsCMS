@@ -22,14 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">类型名</label>
           <div class="layui-input-block">
-            <input id="categoryName" type="text" name="categoryName" required  lay-verify="required" maxlength="30" placeholder="请输入类型名" autocomplete="off" class="layui-input">
+            <input id="categoryName" value="${updateC.title}" type="text" name="categoryName" required  lay-verify="required" maxlength="30" placeholder="请输入类型名" autocomplete="off" class="layui-input">
           </div>
-        </div>
-        <div class="layui-form-item">
-        	<label class="layui-form-label">类型描述</label>
-        	<div class="layui-input-block">
-        		<textarea id="description" name="description"></textarea>
-        	</div>
         </div>
         <div class="layui-form-item">
           <div class="layui-input-block">
@@ -49,19 +43,18 @@ layui.use(["form","layedit"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		 var categoryName = document.getElementById("categoryName").value,
-		 	newsfrom = document.getElementById("description").value;
+		 var categoryName = document.getElementById("categoryName").value;
 
 		  	if(categoryName==""||newsfrom==""||content=="")
 		  		return;
 		 
 		 $.ajax({
 				type:"post",
-				url:"category/addCategory",
+				url:"category/updateCategory",
 				dataType:"html",
 				data:{
 					categoryName: categoryName,
-					description: description
+					createTime: ${updateC.createTime}
 				},
 				success:function(data){
 					layer.msg("添加成功");

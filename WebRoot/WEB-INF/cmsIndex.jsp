@@ -1,11 +1,17 @@
-<!DOCTYPE html>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>layout 后台大布局 - Layui</title>
-  <link rel="stylesheet" href="../layui/css/layui.css">
-</head>
+  <head>
+    <base href="<%=basePath%>">    
+    <title>My JSP 'cmsIndex.jsp' starting page</title>    
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/layui/css/layui.css">
+	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
+  </head>
 <style>
   .layui-layout-admin .layui-body{
     bottom: 0;
@@ -33,7 +39,7 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
+          <%=session.getAttribute("admin") %>
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">基本资料</a></dd>
@@ -51,16 +57,16 @@
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">新闻类型管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;" target="target">添加类型</a></dd>
-            <dd><a href="javascript:;" target="target">类型管理</a></dd>
+            <dd><a href="go_addC" target="target">添加类型</a></dd>
+            <dd><a href="go_listC" target="target">类型管理</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item layui-nav-itemed">
           <a href="javascript:;">新闻管理</a>
           <dl class="layui-nav-child">
             <dd><a href="javascript:;" target="target">发布新闻</a></dd>
-            <dd><a href="addNews.jsp" target="target">添加新闻</a></dd>
-            <dd><a href="listNews.jsp" target="target">新闻管理</a></dd>
+            <dd><a href="go_addNews" target="target">添加新闻</a></dd>
+            <dd><a href="go_listNews" target="target">新闻管理</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item"><a href="" target="target">用户管理</a></li>
@@ -74,7 +80,7 @@
   </div>
 
 </div>
-<script src="../layui/layui.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
@@ -82,5 +88,5 @@ layui.use('element', function(){
 
 });
 </script>
-</body>
+  </body>
 </html>
