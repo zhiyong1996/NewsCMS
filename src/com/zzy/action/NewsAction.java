@@ -44,10 +44,10 @@ public class NewsAction extends ActionSupport{
 		for(Category c:allC){
 			category.put(c.getId(), c.getName());
 		}
-		return "success";
+		return "addNView";
 	}
 	public String go_listN(){
-		return "success";
+		return "listNView";
 	}
 	
 	//添加新闻

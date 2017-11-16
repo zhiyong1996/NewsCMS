@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">新闻类型</label>
           <div class="layui-input-block">
-            <s:select name="catagery" lay-verify="required" list="category" listKey="key" listValue="value" value="${update.category}" headerKey="-1" headerValue="请选择分类"></s:select>
+            <s:select name="catagery" lay-verify="required" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true"></s:select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -66,11 +66,12 @@ layui.use(["form","layedit"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		 var title = document.getElementById("title").value,
-		 	newsfrom = document.getElementById("newsfrom").value,
+		  var title = $("#title").val(),
+		 	newsfrom = $("#newsfrom").val(),
+		 	cid = $("#category").val(),
 		  	content = escape(layedit.getContent(edit));//获取正文内容转码
 
-		  	if(title==""||newsfrom==""||content=="")
+		  	if(title==""||newsfrom==""||content==""||cid<1)
 		  		return;
 		 
 		 $.ajax({
@@ -80,13 +81,14 @@ layui.use(["form","layedit"], function(){
 				data:{
 					newsid: "${update.id}",
 					title: title,
+					cid: cid,
 					content: content,
 					newsfrom: newsfrom,
 					createTime: "${update.createTime}"
 				},
 				success:function(data){
 					layer.msg("ID："+ data.id + "更新成功");
-					location.href = location.origin+"/NewsCMS/NewsPage/news/go_listN";
+					location.href = location.origin+"/NewsCMS/news/go_listN";
 				},
 				error:function(){
 					layer.msg("网络出错");

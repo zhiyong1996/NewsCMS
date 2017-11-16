@@ -10,7 +10,7 @@
 		<property name="createTime" type="long" not-null="true"/>
 		<property name="name" type="java.lang.String" length="15" not-null="true"/>
 		<set name="newss" fetch="join" inverse="true" cascade="all">
-			<key column="news_id"/>
+			<key column="category_id"/>
 			<one-to-many class="News"/>
 		</set>
 	</class>

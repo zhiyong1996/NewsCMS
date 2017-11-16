@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <categoryName>添加新闻</categoryName>
+    <title>添加新闻类型</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
@@ -43,10 +43,9 @@ layui.use(["form","layedit"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		 var categoryName = document.getElementById("categoryName").value,
-		 	newsfrom = document.getElementById("description").value;
+		 var categoryName = document.getElementById("categoryName").value;
 
-		  	if(categoryName==""||newsfrom==""||content=="")
+		  	if(categoryName=="")
 		  		return;
 		 
 		 $.ajax({
@@ -58,7 +57,7 @@ layui.use(["form","layedit"], function(){
 				},
 				success:function(data){
 					layer.msg("添加成功");
-					this.location.href = location.origin+"/NewsCMS/CategoryPage/category/go_listC"
+					location.href = location.origin+"/NewsCMS/category/go_listC"
 				},
 				error:function(){
 					layer.msg("网络出错");

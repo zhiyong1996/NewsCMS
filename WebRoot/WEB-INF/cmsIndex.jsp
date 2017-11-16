@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">layui 后台布局</div>
+    <div class="layui-logo">新闻后台管理系统</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
@@ -57,16 +57,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">新闻类型管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="go_addC" target="target">添加类型</a></dd>
-            <dd><a href="go_listC" target="target">类型管理</a></dd>
+            <dd><a href="category/go_addC" target="target">添加类型</a></dd>
+            <dd><a href="category/go_listC" target="target">类型管理</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item layui-nav-itemed">
           <a href="javascript:;">新闻管理</a>
           <dl class="layui-nav-child">
             <dd><a href="javascript:;" target="target">发布新闻</a></dd>
-            <dd><a href="go_addNews" target="target">添加新闻</a></dd>
-            <dd><a href="go_listNews" target="target">新闻管理</a></dd>
+            <dd><a href="news/go_addN" target="target">添加新闻</a></dd>
+            <dd><a href="news/go_listN" target="target">新闻管理</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item"><a href="" target="target">用户管理</a></li>
@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
 
   <div class="layui-body">
-    <iframe src="welcome.html" frameborder="0" width="100%" height="100%" name="target"></iframe>
+    <iframe src="" frameborder="0" width="100%" height="100%" name="target"></iframe>
   </div>
 
 </div>

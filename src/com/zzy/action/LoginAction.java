@@ -16,8 +16,10 @@ public class LoginAction extends ActionSupport{
 		if(username.equals("admin")&&password.equals("123456")){
 			session = ActionContext.getContext().getSession();
 			session.put("admin", username);
+			System.out.println("登录成功");
 			return SUCCESS;
 		}else{
+			System.out.println("登录失败");
 			return LOGIN;
 		}
 	}

@@ -21,15 +21,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="layui-container">
     	<div class="layui-row">
     		<div class="layui-col-md4 layui-col-md-offset4 login">
-    			<form class="layui-form" method="post" action="loginAction">
+    			<form class="layui-form" method="post" action="login/loginAction">
     				<div class="layui-form-item">
     					<div class="layui-input-block">
-    						<input id="username" type="text" required  lay-verify="required" maxlength="30" placeholder="用户名" autocomplete="off" class="layui-input">
+    						<input id="username" name="username" type="text" required  lay-verify="required" maxlength="30" placeholder="用户名" autocomplete="off" class="layui-input">
     					</div>
     				</div>
     				<div class="layui-form-item">
     					<div class="layui-input-block">
-    						<input id="password" type="password" required  lay-verify="required" maxlength="30" placeholder="密码" autocomplete="off" class="layui-input">
+    						<input id="password" name="password" type="password" required  lay-verify="required" maxlength="30" placeholder="密码" autocomplete="off" class="layui-input">
     					</div>
     				</div>
     				<div class="layui-form-item">

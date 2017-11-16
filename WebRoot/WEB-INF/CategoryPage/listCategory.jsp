@@ -27,13 +27,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>-->
 
-<table class="layui-table" lay-data="{width: 927, height:332, url:'listCategory', page:true, id:'idTest'}" lay-filter="demo">
+<table class="layui-table" lay-data="{width: 927, height:332, url:'category/pageCategory', page:true, id:'idTest'}" lay-filter="demo">
   <thead>
     <tr>
       <!-- <th lay-data="{checkbox:true, fixed: true,align:'center'}"></th> -->
-      <th lay-data="{field:'id', fixed: true, width:60, sort: true}">ID</th>
-      <th lay-data="{field:'categoryName', width:100,align:'center'}">类型名</th>
-      <th lay-data="{field:'description', width:280,align:'center'}">类型描述</th>
+      <th lay-data="{field:'cid', fixed: true, width:60, sort: true}">ID</th>
+      <th lay-data="{field:'cName', width:100,align:'center'}">类型名</th>
       <th lay-data="{field:'createTime', width:160,align:'center'}">创建时间</th>
       <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
     </tr>
@@ -65,10 +64,10 @@ layui.use('table', function(){
     	layer.close(index);
         $.ajax({
         	type: "post",
-        	url: "delCategory",
+        	url: "category/delCategory",
         	dataType: "html",
         	data: {
-        		newsid: data.id
+        		cid: data.cid
         	},
         	success: function(data){     		
         		console.log(data);
@@ -81,7 +80,7 @@ layui.use('table', function(){
         });//ajax end  
       });  
     } else if(obj.event === 'edit'){
-      window.location.href = location.origin+"/NewsCMS/CategoryPage/goUpdate?cid="+data.id;
+      window.location.href = location.origin+"/NewsCMS/category/goUpdate?cid="+data.cid;
     }
   });
 

@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <categoryName>添加新闻</categoryName>
+    <title>修改新闻类型</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">类型名</label>
           <div class="layui-input-block">
-            <input id="categoryName" value="${updateC.title}" type="text" name="categoryName" required  lay-verify="required" maxlength="30" placeholder="请输入类型名" autocomplete="off" class="layui-input">
+            <input id="categoryName" value="${updateC.name}" type="text" name="categoryName" required  lay-verify="required" maxlength="30" placeholder="请输入类型名" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item">
@@ -45,7 +45,7 @@ layui.use(["form","layedit"], function(){
 		  
 		 var categoryName = document.getElementById("categoryName").value;
 
-		  	if(categoryName==""||newsfrom==""||content=="")
+		  	if(categoryName=="")
 		  		return;
 		 
 		 $.ajax({
@@ -53,12 +53,13 @@ layui.use(["form","layedit"], function(){
 				url:"category/updateCategory",
 				dataType:"html",
 				data:{
+					cid: "${updateC.id}",
 					categoryName: categoryName,
 					createTime: ${updateC.createTime}
 				},
 				success:function(data){
 					layer.msg("添加成功");
-					this.location.href = location.origin+"/NewsCMS/CategoryPage/category/go_listC"
+					location.href = location.origin+"/NewsCMS/category/go_listC"
 				},
 				error:function(){
 					layer.msg("网络出错");

@@ -31,10 +31,10 @@ public class CategoryAction extends ActionSupport{
 	private String message;
 	
 	public String go_addC(){
-		return "success";
+		return "addCView";
 	}
 	public String go_listC(){
-		return "success";
+		return "listCView";
 	}
 
 	
@@ -63,6 +63,7 @@ public class CategoryAction extends ActionSupport{
 	
 	public String updateCategory(){
 		c = new Category();
+		c.setId(cid);
 		c.setName(categoryName);
 		c.setCreateTime(createTime);
 		cService.saveOrUpdate(c);
@@ -72,7 +73,7 @@ public class CategoryAction extends ActionSupport{
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public String pageCategory(){
-		String hql = "from News";
+		String hql = "from Category";
 		int count = newsService.getCount(hql);
 		int offset = (page-1)*limit;
 		cSet = (List<Category>)cService.pageCategory(hql,offset,limit);
@@ -83,10 +84,11 @@ public class CategoryAction extends ActionSupport{
 		for(Category c:cSet){
 			if(c.getId() != null){
 				data = new JSONObject();
-				data.put("id",c.getId());
-				data.put("title", c.getName());
+				data.put("cid",c.getId());
+				data.put("cName", c.getName());
 				data.put("createTime",dateformat.format(c.getCreateTime()));
 				arrData.add(data);
+				System.out.println(c.getId());
 			}else{
 				System.out.println("查询数据失败");
 			}
@@ -96,8 +98,8 @@ public class CategoryAction extends ActionSupport{
 		pageC.put("msg", message);
 		pageC.put("count", count);
 		pageC.put("data", arrData);
-		//System.out.println("pageJson"+pageJson.toString());
-		return "pageJson";
+		System.out.println("pageC"+pageC.toString());
+		return "pageC";
 	}
 	
 	public Integer getCid() {

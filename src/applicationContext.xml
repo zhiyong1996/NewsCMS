@@ -15,7 +15,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://localhost:3306/newscms?useUnicode=true&amp;characterEncoding=UTF-8"/>
 		<property name="username" value="root"/>
-		<property name="password" value=""/>
+		<property name="password" value="root"/>
 		<!-- 最大连接数 -->
 		<property name="maxActive" value="100"/>
 		<!-- 最大等待连接数 -->
@@ -43,10 +43,10 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="newsService" class="com.zzy.service.impl.NewsServiceImpl"/>
-	<bean id="categoryDao" class="com.zzy.dao.impl.categoryDaoImpl">
+	<bean id="categoryDao" class="com.zzy.dao.impl.CategoryDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
-	<bean id="categoryService" class="com.zzy.service.impl.categoryServiceImpl"/>
+	<bean id="categoryService" class="com.zzy.service.impl.CategoryServiceImpl"/>
 	
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>
 	<bean id="categoryAction" class="com.zzy.action.CategoryAction" scope="prototype"/>
