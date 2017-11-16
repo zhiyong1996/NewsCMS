@@ -9,4 +9,5 @@ public interface CategoryDao {
 	public void delCategory(Category c);
 	public Category findById(Integer cid);
 	public List<Category> pageCategory(String hql,int offset,int length);
+	public List<Category> allCategory();
 }

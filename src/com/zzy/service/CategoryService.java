@@ -10,4 +10,5 @@ public interface CategoryService {
 	public Category getById(Integer cid);
 	public void delCategory(Category c);
 	public List<Category> pageCategory(String hql,int offset,int length);
+	public List<Category> allCategory();
 }

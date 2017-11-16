@@ -58,7 +58,7 @@ layui.use(["form","layedit"], function(){
 				},
 				success:function(data){
 					layer.msg("添加成功");
-					this.location.href = location.origin+"/NewsCMS/CategoryPage/listCategory.jsp"
+					this.location.href = location.origin+"/NewsCMS/CategoryPage/category/go_listC"
 				},
 				error:function(){
 					layer.msg("网络出错");

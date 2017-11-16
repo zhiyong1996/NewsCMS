@@ -41,14 +41,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </table>
 
 <script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+  
   <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 </script>
 
 
 <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
 <script>
 layui.use('table', function(){
   var $ = layui.jquery;
@@ -60,10 +60,7 @@ layui.use('table', function(){
   //监听工具条
   table.on('tool(demo)', function(obj){
     var data = obj.data;
-    if(obj.event === 'detail'){
-      layer.msg('ID：'+ data.id + ' 的查看操作');
-      console.log(navigator)
-    } else if(obj.event === 'del'){
+    if(obj.event === 'del'){
       layer.confirm("警告,删除该分类会连同该分类所有新闻一起删除", function(index){
     	layer.close(index);
         $.ajax({

@@ -3,7 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,14 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">新闻类型</label>
           <div class="layui-input-block">
-            <select name="catagery" lay-verify="required">
-              <option value=""></option>
-              <option value="0">政治</option>
-              <option value="1">军事</option>
-              <option value="2">金融</option>
-              <option value="3">社会</option>
-              <option value="4">科技</option>
-            </select>
+          	<s:select name="category" id="category" lay-verify="required" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类"></s:select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -70,8 +63,9 @@ layui.use(["form","layedit"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		 var title = document.getElementById("title").value,
-		 	newsfrom = document.getElementById("newsfrom").value,
+		 var title = $("#title").val(),
+		 	newsfrom = $("#newsfrom").val(),
+		 	cid = $("#category").val(),
 		  	content = escape(layedit.getContent(edit));//获取正文内容转码
 
 		  	if(title==""||newsfrom==""||content=="")
@@ -83,12 +77,13 @@ layui.use(["form","layedit"], function(){
 				dataType:"html",
 				data:{
 					title: title,
+					cid: cid,
 					newsfrom: newsfrom,
 					content: content
 				},
 				success:function(data){
 					layer.msg("添加成功");
-					this.location.href = location.origin+"/NewsCMS/NewsPage/listNews.jsp"
+					this.location.href = location.origin+"/NewsCMS/NewsPage/news/go_listN"
 				},
 				error:function(){
 					layer.msg("网络出错");

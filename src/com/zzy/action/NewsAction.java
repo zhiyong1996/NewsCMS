@@ -11,17 +11,21 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.Category;
 import com.zzy.po.News;
+import com.zzy.service.CategoryService;
 import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class NewsAction extends ActionSupport{
+	@Resource CategoryService cService;
 	@Resource NewsService newsService;
 	//从客户端接受的数据
 	private String title;	//新闻标题
 	private String content;	//新闻内容
 	private String newsfrom; //新闻来源
 	private Integer newsid; //新闻id
+	private Integer cid; //分类id
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -32,8 +36,14 @@ public class NewsAction extends ActionSupport{
 	private News news;
 	private String message;
 	private JSONObject pageJson;//返回的json数据
+	private Map<Integer,Object> category;
 	
 	public String go_addN(){
+		category = new HashMap<Integer, Object>();
+		List<Category> allC = cService.allCategory();
+		for(Category c:allC){
+			category.put(c.getId(), c.getName());
+		}
 		return "success";
 	}
 	public String go_listN(){
@@ -46,6 +56,7 @@ public class NewsAction extends ActionSupport{
 		news.setTitle(title);
 		news.setContent(content);
 		news.setNewsfrom(newsfrom);
+		news.setCategory(cService.getById(cid));
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
@@ -55,6 +66,11 @@ public class NewsAction extends ActionSupport{
 	}
 	//定向到更新新闻页面
 	public String goUpdate(){
+		category = new HashMap<Integer, Object>();
+		List<Category> allC = cService.allCategory();
+		for(Category c:allC){
+			category.put(c.getId(), c.getName());
+		}
 		news = newsService.getById(newsid);
 		ActionContext act = ActionContext.getContext();
 		act.put("update", news);
@@ -185,6 +201,18 @@ public class NewsAction extends ActionSupport{
 	}
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+	public Map<Integer, Object> getCategory() {
+		return category;
+	}
+	public void setCategory(Map<Integer, Object> category) {
+		this.category = category;
+	}
+	public Integer getCid() {
+		return cid;
+	}
+	public void setCid(Integer cid) {
+		this.cid = cid;
 	}
 	
 	

@@ -7,6 +7,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
@@ -51,6 +52,12 @@ public class CategoryDaoImpl extends HibernateDaoSupport implements CategoryDao 
 			}
 		});
 		return rs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> allCategory() {
+		return (List<Category>) getHibernateTemplate().find("from Category");
 	}
 
 }

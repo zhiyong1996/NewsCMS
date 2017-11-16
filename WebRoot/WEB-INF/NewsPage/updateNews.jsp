@@ -28,14 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">新闻类型</label>
           <div class="layui-input-block">
-            <select name="catagery" lay-verify="required">
-              <option value=""></option>
-              <option value="0">政治</option>
-              <option value="1">军事</option>
-              <option value="2">金融</option>
-              <option value="3">社会</option>
-              <option value="4">科技</option>
-            </select>
+            <s:select name="catagery" lay-verify="required" list="category" listKey="key" listValue="value" value="${update.category}" headerKey="-1" headerValue="请选择分类"></s:select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -93,7 +86,7 @@ layui.use(["form","layedit"], function(){
 				},
 				success:function(data){
 					layer.msg("ID："+ data.id + "更新成功");
-					location.href = location.origin+"/NewsCMS/NewsPage/listNews.jsp";
+					location.href = location.origin+"/NewsCMS/NewsPage/news/go_listN";
 				},
 				error:function(){
 					layer.msg("网络出错");

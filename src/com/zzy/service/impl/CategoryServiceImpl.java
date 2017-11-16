@@ -38,4 +38,10 @@ public class CategoryServiceImpl implements CategoryService{
 		return categoryDao.pageCategory(hql, offset, length);
 	}
 
+	@Override
+	public List<Category> allCategory() {
+		// TODO Auto-generated method stub
+		return categoryDao.allCategory();
+	}
+
 }
