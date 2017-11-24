@@ -12,6 +12,6 @@
 		<property name="newsfrom" type="string" length="15" not-null="true"/>
 		<property name="createTime" type="long"  not-null="true"/>
 		<property name="updateTime" type="long"  not-null="false"/>
-		<many-to-one name="category" class="Category" column="category_id"/>
+		<many-to-one name="category" class="Category" column="category_id" lazy="false" fetch="join"/>
 	</class>
 </hibernate-mapping>

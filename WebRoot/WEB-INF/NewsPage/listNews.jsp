@@ -27,13 +27,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>-->
 
-<table class="layui-table" lay-data="{width: 927, height:332, url:'news/listNews', page:true, id:'idTest'}" lay-filter="demo">
+<table class="layui-table" lay-data="{width: 1000, height:332, url:'news/listNews', page:true, id:'idTest'}" lay-filter="demo">
   <thead>
     <tr>
       <!-- <th lay-data="{checkbox:true, fixed: true,align:'center'}"></th> -->
       <th lay-data="{field:'id', fixed: true, width:60, sort: true}">ID</th>
       <th lay-data="{field:'title', width:280,align:'center'}">新闻标题</th>
-      <th lay-data="{field:'newsfrom', width:100,align:'center'}">新闻来源</th>
+      <th lay-data="{field:'newsfrom', width:90,align:'center'}">新闻来源</th>
+      <th lay-data="{field:'category', width:90,align:'center'}">新闻类型</th>
       <th lay-data="{field:'createTime', width:160,align:'center'}">创建时间</th>
       <th lay-data="{field:'updateTime', width:160,align:'center'}">更新时间</th>
       <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>

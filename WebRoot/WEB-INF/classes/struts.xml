@@ -42,6 +42,7 @@
     	<result type="json" name="delNews">	<!-- 删除新闻 -->
     		<param name="root">status</param>
     	</result>
+    	<result type="redirect" name="login">/login.jsp</result>
     <!-- 对应方法 -->
     <interceptor-ref name="loginStack"/>
     <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN</allowed-methods>
@@ -65,6 +66,7 @@
     	<result type="json" name="delCategory"><!-- 删除分类 -->
     		<param name="root">status</param>
     	</result>
+    	<result type="redirect" name="login">/login.jsp</result>
     <interceptor-ref name="loginStack"/>
     	<allowed-methods>addCategory,pageCategory,goUpdate,updateCategory,delCategory,go_addC,go_listC</allowed-methods>
     </action>
@@ -72,8 +74,28 @@
   
   <package name="login" extends="json-default,interce" namespace="/login">
   	<action name="loginAction" class="com.zzy.action.LoginAction" method="login">
-  		<result name="success">/WEB-INF/cmsIndex.jsp</result>
+  		<result name="success" type="redirectAction">index</result>
   		<result name="login">/login.jsp</result>
+  	</action>
+  	<action name="index" class="com.zzy.action.CategoryAction">
+  		<result name="index" type="dispatcher">/WEB-INF/cmsIndex.jsp</result>
+  	</action>
+  </package>
+  
+  <package name="imgUpload" extends="json-default,interce" namespace="/upload">
+  	<action name="uploadNewsImg" class="com.zzy.action.ImageAction" method="uploadNewsImg">
+  		<result name="uploadNewsImg" type="json">
+  			<param name="root">imgJson</param>
+  		</result>
+  		<result name="login">/login.jsp</result>
+  		<interceptor-ref name="loginStack"/>
+  		<interceptor-ref name="fileUpload">
+    		<param name="allowedTypes">
+    			image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg ,image/bmp, image/gif, image/x-png
+    			</param>
+    		<param name="maximumSize">1027*1027*3</param>
+    	</interceptor-ref>
+    	<interceptor-ref name="defaultStack"/>
   	</action>
   </package>
 </struts>

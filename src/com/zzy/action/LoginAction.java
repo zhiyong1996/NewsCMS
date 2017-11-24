@@ -24,6 +24,10 @@ public class LoginAction extends ActionSupport{
 		}
 	}
 	
+	public String quit(){
+		return "quit";
+	}
+	
 	public String getUsername() {
 		return username;
 	}

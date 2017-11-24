@@ -38,6 +38,10 @@ public class NewsAction extends ActionSupport{
 	private JSONObject pageJson;//返回的json数据
 	private Map<Integer,Object> category;
 	
+	public String go_index(){
+		return "index";
+	}
+	
 	public String go_addN(){
 		category = new HashMap<Integer, Object>();
 		List<Category> allC = cService.allCategory();
@@ -107,11 +111,13 @@ public class NewsAction extends ActionSupport{
 		ArrayList arrData = new ArrayList();
 		JSONObject data;
 		for(News ns:newsSet){
+			//System.out.println(ns.getCategory().getName());
 			if(ns.getId() != null){
 				data = new JSONObject();
 				data.put("id",ns.getId());
 				data.put("title", ns.getTitle());
 				data.put("newsfrom",ns.getNewsfrom());
+				data.put("category", ns.getCategory().getName());
 				data.put("createTime",dateformat.format(ns.getCreateTime()));
 				data.put("updateTime",dateformat.format(ns.getUpdateTime()));
 				arrData.add(data);
