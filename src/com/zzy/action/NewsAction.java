@@ -26,6 +26,7 @@ public class NewsAction extends ActionSupport{
 	private String newsfrom; //新闻来源
 	private Integer newsid; //新闻id
 	private Integer cid; //分类id
+	private String newsHide; //隐藏信息
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -219,6 +220,14 @@ public class NewsAction extends ActionSupport{
 	}
 	public void setCid(Integer cid) {
 		this.cid = cid;
+	}
+
+	public String getNewsHide() {
+		return newsHide;
+	}
+
+	public void setNewsHide(String newsHide) {
+		this.newsHide = newsHide;
 	}
 	
 	

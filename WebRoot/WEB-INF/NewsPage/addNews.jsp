@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="layui-container">
   <div class="layui-row">
       <form class="layui-form" action="" method="post">
+      	<input type="hidden" value="2017/12/2/10:37" id="newsHide" name="newsHide"/>
         <div class="layui-form-item">
           <label class="layui-form-label">新闻标题</label>
           <div class="layui-input-block">
@@ -77,7 +78,7 @@ layui.use(["form","layedit","upload"], function(){
 		});
 	  var edit = layedit.build('demo'); //建立编辑器
 	  
-	  var cid ;
+	  var cid = -1;
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		});
@@ -107,7 +108,7 @@ layui.use(["form","layedit","upload"], function(){
 		 	newsfrom = $("#newsfrom").val(),
 		  	content = escape(layedit.getContent(edit));//获取正文内容转码
 			console.log(cid);
-		  	if(parseInt(cid)<1){
+		  	if(parseInt(cid)<1||title==""||newsform==""){
 		  		layer.msg("请选择新闻分类");
 		  		return;
 		  	}

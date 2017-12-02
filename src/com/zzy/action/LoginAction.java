@@ -25,6 +25,8 @@ public class LoginAction extends ActionSupport{
 	}
 	
 	public String quit(){
+		session = ActionContext.getContext().getSession();
+		session.get("admin");
 		return "quit";
 	}
 	

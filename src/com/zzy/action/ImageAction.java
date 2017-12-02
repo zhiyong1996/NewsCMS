@@ -25,6 +25,8 @@ public class ImageAction extends ActionSupport{
 	private File file;  //上传的文件本体
 	private String Path;  //路径
 	
+	private String newsHide; //隐藏信息
+	
 	private JSONObject imgJson;
 	
 	@SuppressWarnings("deprecation")
@@ -102,6 +104,15 @@ public class ImageAction extends ActionSupport{
 
 	public void setImgJson(JSONObject imgJson) {
 		this.imgJson = imgJson;
+	}
+
+	public String getNewsHide() {
+		return newsHide;
+	}
+
+	public void setNewsHide(String newsHide) {
+		this.newsHide = newsHide;
+		System.out.println(newsHide);
 	}
 	
 	
