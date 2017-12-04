@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">新闻类型</label>
           <div class="layui-input-block">
-            <s:select name="catagery" lay-verify="required" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true"></s:select>
+            <s:select name="catagery" lay-filter="test" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true"></s:select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -78,23 +78,6 @@ layui.use(["form","layedit","upload"], function(){
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		}); 
-	  
-	//图片上传,选完文件后不自动上传
-	 /* upload.render({
-	    elem: '#newsImg'
-	    ,url: '/upload/'
-    	,before: function(obj){
-    	      //预读本地文件示例，不支持ie8
-    	      obj.preview(function(index, file, result){
-    	        $('#preview').attr('src', result); //图片链接（base64）
-    	      });
-    	    }
-	    ,auto: false
-	    ,bindAction: '#submit'
-	    ,done: function(res){
-	      console.log(res)
-	    }
-	  });*/
 		
 	  var sub = document.getElementById("submit");
 	  sub.addEventListener("click",function(e){

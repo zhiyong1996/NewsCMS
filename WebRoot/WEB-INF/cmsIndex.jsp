@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="layui-layout layui-layout-admin kit-layout-admin">
         <div class="layui-header">
             <div class="layui-logo">NewsManager</div>
-            <div class="layui-logo kit-logo-mobile">K</div>
+            <div class="layui-logo kit-logo-mobile"><i class="fa fa-desktop" aria-hidden="true"></div>
             <ul class="layui-nav layui-layout-left kit-nav" kit-one-level>
                 <li class="layui-nav-item"><a href="javascript:;">控制台</a></li>
                 <li class="layui-nav-item"><a href="javascript:;">商品管理</a></li>
@@ -45,16 +45,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span>新闻管理</span></a>
+                        <a href="javascript:;"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" kit-target data-options="{url:'test.html',icon:'&#xe6c6;',title:'新闻类型',id:'1'}"><i class="layui-icon">&#xe6c6;</i><span>新闻类型</span></a>
+                                <a href="javascript:;" data-url="news/go_listN" data-title="类型管理" kit-target data-id='1'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="news/go_addN" data-icon="&#xe654;" data-title="添加新闻" kit-target data-id='2'><i class="layui-icon" aria-hidden="true">&#xe654;</i><span> 添加新闻</span></a>
+                                <a href="javascript:;" data-url="news/go_listN" data-title="文章管理" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章管理</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="2.html" data-icon="&#xe628;" data-title="导航栏" kit-target data-id='3'><i class="layui-icon">&#xe628;</i><span> 导航栏</span></a>
+                                <a href="javascript:;" data-url="2.html" data-title="导航栏" kit-target data-id='3'><i class="layui-icon">&#xe628;</i><span> 导航栏</span></a>
                             </dd>
                             <dd>
                                 <a href="javascript:;" data-url="3.html" data-icon="&#xe614;" data-title="列表四" kit-target data-id='4'><i class="layui-icon">&#xe614;</i><span> 列表四</span></a>
@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;"><i class="fa fa-plug" aria-hidden="true"></i><span>广告管理</span></a>
+                        <a href="javascript:;"><i class="fa fa-life-buoy" aria-hidden="true"></i><span> 广告管理</span></a>
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;" kit-target data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
                             <dd><a href="javascript:;" kit-target data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a></dd>

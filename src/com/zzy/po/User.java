@@ -4,6 +4,8 @@ public class User {
 	private Integer id;
 	private String username;
 	private String password;
+	private String avatar;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -22,6 +24,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 	
 }

@@ -17,28 +17,28 @@ import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class CategoryAction extends ActionSupport{
-	@Resource NewsService newsService;
-	@Resource CategoryService cService;
-	private Integer cid;
-	private String categoryName;
-	private long createTime;
-	private int limit;
-	private int page;
+	@Resource NewsService newsService; //新闻功能
+	@Resource CategoryService cService; //分类功能
+	private Integer cid; //客户端类型id
+	private String categoryName; //类型名字
+	private long createTime; //创建时间戳
+	private int page;//分页查询当前页
+	private int limit;//每页最大项目数
 	
-	private JSONObject pageC;
-	private List<Category> cSet;
-	private Category c;
-	private String message;
+	private JSONObject pageC; //返回的json数据
+	private List<Category> cSet; //从数据库获取的类型列表
+	private Category c; //单个类型对象
+	private String message; //返回的message
 	
-	public String go_addC(){
+	public String go_addC(){ //路由到添加类型页
 		return "addCView";
 	}
-	public String go_listC(){
+	public String go_listC(){ //路由到类型列表页
 		return "listCView";
 	}
 
 	
-	public String addCategory(){
+	public String addCategory(){ //添加类型
 		c = new Category();
 		c.setName(categoryName);
 		c.setCreateTime(System.currentTimeMillis());
@@ -47,21 +47,21 @@ public class CategoryAction extends ActionSupport{
 		return "addCategory";
 	}
 	
-	public String delCategory(){
+	public String delCategory(){  //删除类型
 		c = cService.getById(cid);
 		cService.delCategory(c);
 		message = "删除成功";
 		return "delCategory";
 	}
 	
-	public String goUpdate(){
+	public String goUpdate(){  // 路由到更新类型
 		c = cService.getById(cid);
 		ActionContext act = ActionContext.getContext();
 		act.put("updateC",c);
 		return "go_Update";
 	}
 	
-	public String updateCategory(){
+	public String updateCategory(){  //进行更新类型
 		c = new Category();
 		c.setId(cid);
 		c.setName(categoryName);

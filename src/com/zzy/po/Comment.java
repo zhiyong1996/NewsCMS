@@ -5,7 +5,7 @@ public class Comment {
 	private String content;
 //	private User form;
 //	private User to;
-//	private News news;
+	private News news;
 	public Integer getId() {
 		return id;
 	}
@@ -30,6 +30,12 @@ public class Comment {
 //	public void setTo(User to) {
 //		this.to = to;
 //	}
+	public News getNews() {
+		return news;
+	}
+	public void setNews(News news) {
+		this.news = news;
+	}
 	
 	
 }

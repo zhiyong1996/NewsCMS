@@ -88,6 +88,7 @@ public class NewsAction extends ActionSupport{
 		news.setTitle(title);
 		news.setContent(content);
 		news.setNewsfrom(newsfrom);
+		news.setCategory(cService.getById(cid));
 		long updateTime = System.currentTimeMillis();
 		news.setCreateTime(this.createTime);
 		news.setUpdateTime(updateTime);
