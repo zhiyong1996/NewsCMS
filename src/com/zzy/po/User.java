@@ -1,10 +1,14 @@
 package com.zzy.po;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
 	private Integer id;
 	private String username;
 	private String password;
-	private String avatar;
+	private Avatar avatar;
+	private Set<Comment> comments = new HashSet<Comment>(); 
 	
 	public Integer getId() {
 		return id;
@@ -24,11 +28,17 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getAvatar() {
+	public Avatar getAvatar() {
 		return avatar;
 	}
-	public void setAvatar(String avatar) {
+	public void setAvatar(Avatar avatar) {
 		this.avatar = avatar;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 	
 }

@@ -1,13 +1,19 @@
 package com.zzy.po;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class News {
-	private Integer id;
-	private String title;
-	private String content;
-	private String newsfrom;
-	private long createTime;
-	private long updateTime;
-	private Category category;
+	private Integer id;       //新闻id
+	private String title;     //新闻标题
+	private String content;   //新闻内容
+	private String newsfrom;  //新闻来源
+	private long createTime;  //创建时间
+	private long updateTime;  //更新时间
+	private Category category;  //分类
+	private boolean isShow;   //是否展示
+	private Set<Comment> comments = new HashSet<Comment>(); //新闻评论
+	private Set<NewsImg> newsimgs = new HashSet<NewsImg>(); //新闻图片
 	
 	public Integer getId() {
 		return id;
@@ -50,6 +56,24 @@ public class News {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	public Set<NewsImg> getNewsimgs() {
+		return newsimgs;
+	}
+	public void setNewsimgs(Set<NewsImg> newsimgs) {
+		this.newsimgs = newsimgs;
+	}
+	public boolean isShow() {
+		return isShow;
+	}
+	public void setShow(boolean isShow) {
+		this.isShow = isShow;
 	}
 	
 	
