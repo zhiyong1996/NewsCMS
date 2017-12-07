@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="layui-row">
       <form class="layui-form" action="" method="post">
         <div class="layui-form-item">
+          <input type="hidden" value="${update.createId}" id="createId" name="createId"/>
           <label class="layui-form-label">新闻标题</label>
           <div class="layui-input-block">
             <input id="title" type="text" name="title" value="${update.title}" required  lay-verify="required" maxlength="15" placeholder="请输入标题" autocomplete="off" class="layui-input">
@@ -98,6 +99,7 @@ layui.use(["form","layedit","upload"], function(){
 				dataType:"html",
 				data:{
 					newsid: "${update.id}",
+					createId: "${update.createId}",
 					title: title,
 					cid: cid,
 					content: content,

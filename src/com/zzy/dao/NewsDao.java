@@ -12,4 +12,5 @@ public interface NewsDao {
 	public void delNews(News news);
 	public List<News> listPage(String hql,int offset,int length);
 	public int getCount(String hql);
+	public News getByCreateId(String createId);
 }

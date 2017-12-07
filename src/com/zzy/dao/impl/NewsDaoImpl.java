@@ -66,5 +66,11 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	public int getCount(String hql) {
 		return getHibernateTemplate().find(hql).size();
 	}
+	
+	//根据createid查询
+	@Override
+	public News getByCreateId(String createId) {
+		return (News)getHibernateTemplate().find("form News where createId like"+createId);
+	}
 
 }

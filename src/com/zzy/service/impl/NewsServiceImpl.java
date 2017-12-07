@@ -51,4 +51,8 @@ public class NewsServiceImpl implements NewsService {
 		return newsDao.getCount(hql);
 	}
 
+	@Override
+	public News getByCreateId(String createId) {
+		return newsDao.getByCreateId(createId);
+	}
 }

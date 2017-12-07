@@ -1,6 +1,7 @@
 package com.zzy.action;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,13 +21,16 @@ import com.zzy.service.NewsService;
 public class NewsAction extends ActionSupport{
 	@Resource CategoryService cService;
 	@Resource NewsService newsService;
+	
+	//日期格式化
+	private static SimpleDateFormat DateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	//从客户端接受的数据
-	private String title;	//新闻标题
-	private String content;	//新闻内容
+	private String title;	 //新闻标题
+	private String content;	 //新闻内容
 	private String newsfrom; //新闻来源
-	private Integer newsid; //新闻id
-	private Integer cid; //分类id
-	private String newsHide; //隐藏信息
+	private Integer newsid;  //新闻id
+	private Integer cid;     //分类id
+	private String createId; // 创建空白新闻区分字段
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -49,26 +53,43 @@ public class NewsAction extends ActionSupport{
 		for(Category c:allC){
 			category.put(c.getId(), c.getName());
 		}
-		return "addNView";
+		//创建空白新闻
+		news = new News();
+		String createId = DateFormat.format(new Date()).toString();
+		news.setCreateId(createId);
+		news.setTitle("新建新闻");
+		news.setContent("");
+		news.setNewsfrom("");
+		news.setCategory(null);
+		long createTime = System.currentTimeMillis();
+		news.setCreateTime(createTime);
+		news.setUpdateTime(createTime);
+		newsService.save(news);
+		
+		ActionContext act = ActionContext.getContext();
+		act.put("update", newsService.getByCreateId(createId));
+		
+		return "go_update";
+		
 	}
 	public String go_listN(){
 		return "listNView";
 	}
 	
-	//添加新闻
-	public String addNews() throws Exception{
-		news = new News();
-		news.setTitle(title);
-		news.setContent(content);
-		news.setNewsfrom(newsfrom);
-		news.setCategory(cService.getById(cid));
-		long createTime = System.currentTimeMillis();
-		news.setCreateTime(createTime);
-		news.setUpdateTime(createTime);
-		newsService.save(news);
-		message = "新闻添加成功";
-		return "addnews";
-	}
+//	//添加新闻
+//	public String addNews() throws Exception{
+//		news = new News();
+//		news.setTitle(title);
+//		news.setContent(content);
+//		news.setNewsfrom(newsfrom);
+//		news.setCategory(cService.getById(cid));
+//		long createTime = System.currentTimeMillis();
+//		news.setCreateTime(createTime);
+//		news.setUpdateTime(createTime);
+//		newsService.save(news);
+//		message = "新闻添加成功";
+//		return "addnews";
+//	}
 	//定向到更新新闻页面
 	public String goUpdate(){
 		category = new HashMap<Integer, Object>();
@@ -223,12 +244,12 @@ public class NewsAction extends ActionSupport{
 		this.cid = cid;
 	}
 
-	public String getNewsHide() {
-		return newsHide;
+	public String getCreateId() {
+		return createId;
 	}
 
-	public void setNewsHide(String newsHide) {
-		this.newsHide = newsHide;
+	public void setCreateId(String createId) {
+		this.createId = createId;
 	}
 	
 	

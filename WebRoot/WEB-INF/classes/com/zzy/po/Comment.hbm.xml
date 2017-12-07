@@ -8,5 +8,8 @@
 			<generator class="native"/>
 		</id>
 		<property name="content" type="text" not-null="true"/>
+		<property name="createTime" type="long"  not-null="true"/>
+		<many-to-one name="news" class="News" column="news_id" lazy="false" fetch="join"/>
+		<many-to-one name="user" class="User" column="user_id" lazy="false" fetch="join"/>	
 	</class>
 </hibernate-mapping>

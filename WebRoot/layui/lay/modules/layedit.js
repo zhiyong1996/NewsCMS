@@ -391,7 +391,7 @@ layui.define(['layer', 'form'], function(exports){
             url: uploadImage.url
             ,method: uploadImage.type
             ,elem: $(that).find('input')[0]
-          	,data: {newsHide:$("#newsHide").val()||"layedit"}
+          	,data: {createId:$("#createId").val()||"layedit"}
             ,done: function(res){
               if(res.code == 0){
                 res.data = res.data || {};

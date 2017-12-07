@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.zzy.po">
+	<class name="Avatar" table="avatar">
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="path" type="text" not-null="true"/>
+		<property name="name" type="text" not-null="true"/>
+		<one-to-one name="user" class="User" cascade="all"/>
+	</class>
+</hibernate-mapping>

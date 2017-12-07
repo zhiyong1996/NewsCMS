@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class News {
-	private Integer id;       //新闻id
+	private Integer id;       //新闻主键id
+	private String createId; //自建id,新闻创建设定
 	private String title;     //新闻标题
 	private String content;   //新闻内容
 	private String newsfrom;  //新闻来源
@@ -20,6 +21,12 @@ public class News {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getCreateId() {
+		return createId;
+	}
+	public void setCreateId(String createId) {
+		this.createId = createId;
 	}
 	public String getTitle() {
 		return title;

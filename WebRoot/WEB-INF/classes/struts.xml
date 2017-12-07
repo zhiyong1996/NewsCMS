@@ -30,6 +30,7 @@
   </package>
   <package name="news" extends="json-default,interce" namespace="/news">
   	
+  	<!-- 新闻Action -->
     <action name="*" class="com.zzy.action.NewsAction" method="{1}">
     	<result name="addNView">/WEB-INF/NewsPage/addNews.jsp</result>
   		<result name="listNView">/WEB-INF/NewsPage/listNews.jsp</result>
@@ -53,6 +54,7 @@
     </action>
   </package>  
   
+  <!-- 分类Action -->
   <package name="category" extends="json-default,interce"  namespace="/category">
   	<action name="*" class="com.zzy.action.CategoryAction" method="{1}">
   		<result name="addCView">/WEB-INF/CategoryPage/addCategory.jsp</result>
@@ -76,6 +78,7 @@
     </action>
   </package>
   
+  <!-- 登录Action -->
   <package name="login" extends="json-default,interce" namespace="/login">
   	<action name="loginAction" class="com.zzy.action.LoginAction" method="login">
   		<result name="success" type="redirectAction">index</result>
@@ -86,6 +89,7 @@
   	</action>
   </package>
   
+  <!-- 图片Action -->
   <package name="imgUpload" extends="json-default,interce" namespace="/upload">
   	<action name="uploadNewsImg" class="com.zzy.action.ImageAction" method="uploadNewsImg">
   		<result name="uploadNewsImg" type="json">

@@ -3,13 +3,12 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.zzy.po">
-	<class name="Comment" table="comment">
+	<class name="NewsImg" table="newsimg">
 		<id name="id">
 			<generator class="native"/>
 		</id>
-		<property name="content" type="text" not-null="true"/>
-		<property name="createTime" type="long"  not-null="true"/>
+		<property name="name" type="text" not-null="true"/>
+		<property name="path" type="text" not-null="true"/>
 		<many-to-one name="news" class="News" column="news_id" lazy="false" fetch="join"/>
-		<many-to-one name="user" class="User" column="user_id" lazy="false" fetch="join"/>	
 	</class>
 </hibernate-mapping>
