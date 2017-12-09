@@ -2,21 +2,28 @@ package com.zzy.action;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.NewsImg;
+import com.zzy.service.ImageService;
+import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class ImageAction extends ActionSupport{
+	@Resource ImageService imgService;
+	@Resource NewsService nService;
+	
 	private final String newsPath = "\\data\\NewsImg";
 	private final String userPath = "\\data\\UserImg";
 	private final String adPath = "\\data\\AdImg";
@@ -25,7 +32,7 @@ public class ImageAction extends ActionSupport{
 	private File file;  //上传的文件本体
 	private String Path;  //路径
 	
-	private String newsHide; //隐藏信息
+	private String createId; //隐藏信息,新闻的createId
 	
 	private JSONObject imgJson;
 	
@@ -44,6 +51,11 @@ public class ImageAction extends ActionSupport{
 		String fileName = (new SimpleDateFormat("yyyyMMddHHmmssSSS")).format(new Date())+type;
 		String filePath = getSavePath()+newsPath+"\\"+fileName;
 		//String pathData = newsPath+"\\"+fileName;
+		NewsImg newsImg = new NewsImg();
+		newsImg.setName(fileName);
+		newsImg.setPath(filePath);
+		newsImg.setNews(nService.getByCreateId(createId));
+		imgService.save(newsImg);
 		
 		InputStream is = new FileInputStream(getFile());
 		OutputStream os = new FileOutputStream(filePath);
@@ -54,6 +66,8 @@ public class ImageAction extends ActionSupport{
 		is.close();
 		os.close();
 		
+		System.out.println(ServletActionContext.getRequest().getContextPath()+"/data/NewsImg/"+fileName);
+		System.out.println(filePath);
 		JSONObject data = new JSONObject();
 		data.put("src",ServletActionContext.getRequest().getContextPath()+"/data/NewsImg/"+fileName);
 		data.put("title", fileFileName);
@@ -106,13 +120,13 @@ public class ImageAction extends ActionSupport{
 		this.imgJson = imgJson;
 	}
 
-	public String getNewsHide() {
-		return newsHide;
+	public String getCreateId() {
+		return createId;
 	}
 
-	public void setNewsHide(String newsHide) {
-		this.newsHide = newsHide;
-		System.out.println(newsHide);
+	public void setCreateId(String createId) {
+		this.createId = createId;
+		System.out.println(createId);
 	}
 	
 	

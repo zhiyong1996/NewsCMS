@@ -29,25 +29,39 @@
 		<!-- 通过hibernate.cfg.xml配置其他相关属性 -->
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"/>
 	</bean>
-	
+<!-- 事务管理bean -->
 	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager"/>
-	
+<!-- hibernateTemplate -->
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
+<!-- news业务bean -->
 	<bean id="newsDao" class="com.zzy.dao.impl.NewsDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="newsService" class="com.zzy.service.impl.NewsServiceImpl"/>
+<!-- category业务bean -->
 	<bean id="categoryDao" class="com.zzy.dao.impl.CategoryDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="categoryService" class="com.zzy.service.impl.CategoryServiceImpl"/>
+<!-- image业务bean -->
+	<bean id="imageDao" class="com.zzy.dao.impl.ImageDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="imageService" class="com.zzy.service.impl.ImageServiceImpl"/>
+<!-- user业务bean -->	
+	<bean id="UserDao" class="com.zzy.dao.impl.UserDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="userService" class="com.zzy.service.impl.UserServiceImpl"/>
 	
+<!-- ActionBean -->
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>
 	<bean id="categoryAction" class="com.zzy.action.CategoryAction" scope="prototype"/>
+	<bean id="imageAction" class="com.zzy.action.ImageAction" scope="prototype"/>
 </beans>

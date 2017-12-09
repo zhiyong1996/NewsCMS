@@ -35,13 +35,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
 	</script>
 
-
+	<script type="text/html" id="switchTpl">
+  		<!-- 这里的 checked 的状态只是演示 -->
+  		<input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
+	</script>
+	
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 
 	<script>
 	layui.use('table', function(){
 	  var $ = layui.jquery;
-	  var table = layui.table;
+	  var table = layui.table,
+	  	  form = layui.form;
 	  //监听表格复选框选择
 	  table.on('checkbox(demo)', function(obj){
 	    console.log(obj)
@@ -59,7 +64,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
 		      ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		      ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
+		      ,{field:'sex', title:'性别', width:85, templet: '#switchTpl', unresize: true}
 		      ,{fixed: "right", width:160, align:"center", toolbar: "#barDemo"}
+
 		        ]]
 	  	  ,id: "Reload"
 		  ,page:true
@@ -96,6 +103,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    } else if(obj.event === 'edit'){
 	      window.location.href = location.origin+"/NewsCMS/news/goUpdate?newsid="+data.id;
 	    }
+	  });
+	  
+	  //监听性别操作
+	  form.on('switch(sexDemo)', function(obj){
+	    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+	  });
+
+	  //监听锁定操作
+	  form.on('checkbox(lockDemo)', function(obj){
+	    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
 	  });
 	
 	  //顶部按钮组的功能函数

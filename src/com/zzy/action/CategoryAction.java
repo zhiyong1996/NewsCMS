@@ -11,7 +11,6 @@ import net.sf.json.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.po.Category;
-import com.zzy.po.News;
 import com.zzy.service.CategoryService;
 import com.zzy.service.NewsService;
 

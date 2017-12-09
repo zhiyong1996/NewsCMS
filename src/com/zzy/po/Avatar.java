@@ -5,7 +5,6 @@ public class Avatar {
 	private User user;
 	private String imgName;
 	private String path;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -30,5 +29,7 @@ public class Avatar {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+
 	
 }

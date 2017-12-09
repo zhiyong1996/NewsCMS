@@ -11,8 +11,9 @@ public class News {
 	private String newsfrom;  //新闻来源
 	private long createTime;  //创建时间
 	private long updateTime;  //更新时间
+	private Boolean issue;   //是否展示
+	
 	private Category category;  //分类
-	private boolean isShow;   //是否展示
 	private Set<Comment> comments = new HashSet<Comment>(); //新闻评论
 	private Set<NewsImg> newsimgs = new HashSet<NewsImg>(); //新闻图片
 	
@@ -76,11 +77,11 @@ public class News {
 	public void setNewsimgs(Set<NewsImg> newsimgs) {
 		this.newsimgs = newsimgs;
 	}
-	public boolean isShow() {
-		return isShow;
+	public Boolean getIssue() {
+		return issue;
 	}
-	public void setShow(boolean isShow) {
-		this.isShow = isShow;
+	public void setIssue(Boolean issue) {
+		this.issue = issue;
 	}
 	
 	

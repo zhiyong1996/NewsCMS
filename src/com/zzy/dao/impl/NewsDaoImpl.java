@@ -70,7 +70,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	//根据createid查询
 	@Override
 	public News getByCreateId(String createId) {
-		return (News)getHibernateTemplate().find("form News where createId like"+createId);
+		return (News)getHibernateTemplate().find("from News where createId like "+createId);
 	}
 
 }

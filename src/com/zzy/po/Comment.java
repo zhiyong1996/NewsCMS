@@ -5,7 +5,7 @@ public class Comment {
 	private String content;//评论内容
 	private News news; //评论的新闻
 	private User user; //评论人
-	private String date; //评论日期
+	private long createTime; //评论日期
 	
 	public Integer getId() {
 		return id;
@@ -31,11 +31,11 @@ public class Comment {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public String getDate() {
-		return date;
+	public long getCreateTime() {
+		return createTime;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
 	}
 
 }

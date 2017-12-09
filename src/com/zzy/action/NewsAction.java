@@ -31,6 +31,7 @@ public class NewsAction extends ActionSupport{
 	private Integer newsid;  //新闻id
 	private Integer cid;     //分类id
 	private String createId; // 创建空白新闻区分字段
+	private Integer show;    //是否展示
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -61,6 +62,7 @@ public class NewsAction extends ActionSupport{
 		news.setContent("");
 		news.setNewsfrom("");
 		news.setCategory(null);
+		news.setIssue(false);
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
@@ -250,6 +252,14 @@ public class NewsAction extends ActionSupport{
 
 	public void setCreateId(String createId) {
 		this.createId = createId;
+	}
+
+	public Integer getShow() {
+		return show;
+	}
+
+	public void setShow(Integer show) {
+		this.show = show;
 	}
 	
 	

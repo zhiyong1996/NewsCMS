@@ -13,7 +13,7 @@
 		<property name="newsfrom" type="string" length="15" not-null="false"/>
 		<property name="createTime" type="long"  not-null="true"/>
 		<property name="updateTime" type="long"  not-null="false"/>
-		<property name="isShow" type="boolean" not-null="true"/>
+		<property name="issue" type="true_false"/>
 		<many-to-one name="category" class="Category" column="category_id" lazy="false" fetch="join"/>
 		<set name="comments" fetch="join" inverse="true" cascade="all">
 			<key column="comment_id"/>
