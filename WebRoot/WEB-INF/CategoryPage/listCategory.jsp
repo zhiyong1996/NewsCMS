@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML">
 <html>
   <head>
     <title>新闻列表</title>
@@ -14,98 +14,104 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="padding:30px;">
-    <div style="margin-bottom: 5px;">
+	<form class="layui-form" action="" style="width:100%;">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">新增类型:</label>
+				<div class="layui-input-inline">
+					<input type="text" name="categoryName" id="categoryName" lay-verify="required" autocomplete="off" class="layui-input"/>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<button class="layui-btn" lay-submit="" lay-filter="submitC">立即提交</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+	<table class="layui-table" lay-filter="table" id="table"></table>
 
-<!-- 示例-970 
-<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-</div>
-
-<div class="layui-btn-group demoTable">
-  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-</div>-->
-
-<table class="layui-table" lay-data="{width: 927, height:332, url:'category/pageCategory', page:true, id:'idTest'}" lay-filter="demo">
-  <thead>
-    <tr>
-      <!-- <th lay-data="{checkbox:true, fixed: true,align:'center'}"></th> -->
-      <th lay-data="{field:'cid', fixed: true, width:60, sort: true}">ID</th>
-      <th lay-data="{field:'cName', width:100,align:'center'}">类型名</th>
-      <th lay-data="{field:'createTime', width:160,align:'center'}">创建时间</th>
-      <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
-    </tr>
-  </thead>
-</table>
-
-<script type="text/html" id="barDemo">
-  
-  <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
-</script>
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+	</script>
 
 
-<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
-
-<script>
-layui.use('table', function(){
-  var $ = layui.jquery;
-  var table = layui.table;
-  //监听表格复选框选择
-  table.on('checkbox(demo)', function(obj){
-    console.log(obj)
-  });
-  //监听工具条
-  table.on('tool(demo)', function(obj){
-    var data = obj.data;
-    if(obj.event === 'del'){
-      layer.confirm("警告,删除该分类会连同该分类所有新闻一起删除", function(index){
-    	layer.close(index);
-        $.ajax({
-        	type: "post",
-        	url: "category/delCategory",
-        	dataType: "html",
-        	data: {
-        		cid: data.cid
-        	},
-        	success: function(data){     		
-        		console.log(data);
-        		layer.msg("删除成功");
-        		obj.del();
-        	},
-        	error: function(){
-        		layer.msg("删除失败");
-        	}
-        });//ajax end  
-      });  
-    } else if(obj.event === 'edit'){
-      window.location.href = location.origin+"/NewsCMS/category/goUpdate?cid="+data.cid;
-    }
-  });
-
-  var $ = layui.$, active = {
-    getCheckData: function(){ //获取选中数据
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.alert(JSON.stringify(data));
-    }
-    ,getCheckLength: function(){ //获取选中数目
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.msg('选中了：'+ data.length + ' 个');
-    }
-    ,isAll: function(){ //验证是否全选
-      var checkStatus = table.checkStatus('idTest');
-      layer.msg(checkStatus.isAll ? '全选': '未全选')
-    }
-  };
-
-  $('.demoTable .layui-btn').on('click', function(){
-    var type = $(this).data('type');
-    active[type] ? active[type].call(this) : '';
-  });
-});
-</script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
+	<script>
+		layui.use(["table","form"], function(){
+		  var $ = layui.jquery;
+		  var table = layui.table;
+		  var form = layui.form;
+		  
+		  //方法级渲染表格
+		  table.render({
+			  elem: "#table"
+			  ,url: "category/pageCategory"
+			  ,cellMinWidth: 60
+			  ,cols: [[
+				   {field: "cid", title: "ID", width: 60, sort: true,fixed: true}
+			      ,{field: "cName", title: "名字", width: 280, align: "center",edit: "text"}		  		  ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
+			      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}
+			        ]]
+		  	  ,id: "Reload"
+			  ,page:true
+			  , height:332
+		  });
+		  
+		  //监听单元格编辑
+		  table.on("edit(table)", function(obj){
+		    var value = obj.value //得到修改后的值
+		    ,data = obj.data //得到所在行所有键值
+		    ,field = obj.field; //得到字段
+		    layer.msg('[ID: '+ data.cid +'] ' + field + ' 字段更改为：'+ value);
+		  });
+		  
+		  //监听工具条
+		  table.on("tool(table)", function(obj){
+		    var data = obj.data;
+		    if(obj.event === 'del'){
+		      layer.confirm("警告,删除该分类会连同该分类所有新闻一起删除", function(index){
+		    	layer.close(index);
+		        $.ajax({
+		        	type: "post",
+		        	url: "category/delCategory",
+		        	dataType: "html",
+		        	data: {
+		        		cid: data.cid
+		        	},
+		        	success: function(data){     		
+		        		console.log(data);
+		        		layer.msg("删除成功");
+		        		obj.del();
+		        	},
+		        	error: function(){
+		        		layer.msg("删除失败");
+		        	}
+		        });//ajax end  
+		      });  
+		    } 
+		  });
+		
+		  //监听提交新类型
+		  form.on("submit(submitC)", function(data){
+		    console.log(data);
+		    
+		    $.ajax({
+				type:"post",
+				url:"category/addCategory",
+				dataType:"html",
+				data:data.field,
+				success:function(data){
+					layer.msg("添加成功");
+				},
+				error:function(){
+					layer.msg("网络出错");
+				}
+			});
+		    return false;
+		  });
+		});
+	</script>
   </body>
 </html>

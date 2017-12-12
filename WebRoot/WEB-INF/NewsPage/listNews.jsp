@@ -64,8 +64,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
 		      ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		      ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
-		      ,{field:'sex', title:'性别', width:85, templet: '#switchTpl', unresize: true}
-		      ,{fixed: "right", width:160, align:"center", toolbar: "#barDemo"}
+		      ,{field:"sex", title:"性别", width:85, templet: "#switchTpl", unresize: true}
+		      ,{fixed: "right",title:"操作", width:160, align:"center", toolbar: "#barDemo"}
 
 		        ]]
 	  	  ,id: "Reload"

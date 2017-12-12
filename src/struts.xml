@@ -57,7 +57,6 @@
   <!-- 分类Action -->
   <package name="category" extends="json-default,interce"  namespace="/category">
   	<action name="*" class="com.zzy.action.CategoryAction" method="{1}">
-  		<result name="addCView">/WEB-INF/CategoryPage/addCategory.jsp</result>
   		<result name="listCView">/WEB-INF/CategoryPage/listCategory.jsp</result>
   		<result name="addCategory" type="json"><!-- 添加类型 -->
   			<param name="root">message</param>
@@ -74,7 +73,7 @@
     	</result>
     	<result type="redirect" name="login">/login.jsp</result>
     <interceptor-ref name="loginStack"/>
-    	<allowed-methods>addCategory,pageCategory,goUpdate,updateCategory,delCategory,go_addC,go_listC</allowed-methods>
+    	<allowed-methods>addCategory,pageCategory,goUpdate,updateCategory,delCategory,go_listC</allowed-methods>
     </action>
   </package>
   

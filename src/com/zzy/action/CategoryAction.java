@@ -29,9 +29,6 @@ public class CategoryAction extends ActionSupport{
 	private Category c; //单个类型对象
 	private String message; //返回的message
 	
-	public String go_addC(){ //路由到添加类型页
-		return "addCView";
-	}
 	public String go_listC(){ //路由到类型列表页
 		return "listCView";
 	}
