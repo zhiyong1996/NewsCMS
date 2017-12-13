@@ -7,6 +7,7 @@ public class Category {
 	private Integer id;
 	private String name;
 	private long createTime;
+	private long updateTime;
 	private Set<News> newss = new HashSet<News>();
 	private boolean used; //是否启用
 	public Integer getId() {
@@ -32,6 +33,12 @@ public class Category {
 	}
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+	public long getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(long updateTime) {
+		this.updateTime = updateTime;
 	}
 	public boolean isUsed() {
 		return used;

@@ -14,13 +14,16 @@
 		<property name="createTime" type="long"  not-null="true"/>
 		<property name="updateTime" type="long"  not-null="false"/>
 		<property name="issue" type="true_false"/>
+		
 		<many-to-one name="category" class="Category" column="category_id" lazy="false" fetch="join"/>
+		
 		<set name="comments" fetch="join" inverse="true" cascade="all">
-			<key column="comment_id"/>
+			<key column="news_id"/>
 			<one-to-many class="Comment"/>
 		</set>
+		
 		<set name="newsimgs" fetch="join" inverse="true" cascade="all">
-			<key column="newsimg_id"/>
+			<key column="news_id"/>
 			<one-to-many class="NewsImg"/>
 		</set>
 	</class>

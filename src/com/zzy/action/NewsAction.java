@@ -31,7 +31,7 @@ public class NewsAction extends ActionSupport{
 	private Integer newsid;  //新闻id
 	private Integer cid;     //分类id
 	private String createId; // 创建空白新闻区分字段
-	private Integer show;    //是否展示
+	private Boolean issue;    //是否展示
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
@@ -52,16 +52,20 @@ public class NewsAction extends ActionSupport{
 		category = new HashMap<Integer, Object>();
 		List<Category> allC = cService.allCategory();
 		for(Category c:allC){
-			category.put(c.getId(), c.getName());
+			if(c.getId() ==1 ){
+				continue;
+			}else{
+				category.put(c.getId(), c.getName());
+			}
 		}
 		//创建空白新闻
 		news = new News();
 		String createId = DateFormat.format(new Date()).toString();
 		news.setCreateId(createId);
-		news.setTitle("新建新闻");
+		news.setTitle("NewTitle");
 		news.setContent("");
-		news.setNewsfrom("");
-		news.setCategory(null);
+		news.setNewsfrom("New");
+		news.setCategory(cService.getById(1));
 		news.setIssue(false);
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
@@ -69,7 +73,8 @@ public class NewsAction extends ActionSupport{
 		newsService.save(news);
 		
 		ActionContext act = ActionContext.getContext();
-		act.put("update", newsService.getByCreateId(createId));
+		
+		act.put("update", news);
 		
 		return "go_update";
 		
@@ -77,21 +82,7 @@ public class NewsAction extends ActionSupport{
 	public String go_listN(){
 		return "listNView";
 	}
-	
-//	//添加新闻
-//	public String addNews() throws Exception{
-//		news = new News();
-//		news.setTitle(title);
-//		news.setContent(content);
-//		news.setNewsfrom(newsfrom);
-//		news.setCategory(cService.getById(cid));
-//		long createTime = System.currentTimeMillis();
-//		news.setCreateTime(createTime);
-//		news.setUpdateTime(createTime);
-//		newsService.save(news);
-//		message = "新闻添加成功";
-//		return "addnews";
-//	}
+
 	//定向到更新新闻页面
 	public String goUpdate(){
 		category = new HashMap<Integer, Object>();
@@ -106,14 +97,12 @@ public class NewsAction extends ActionSupport{
 	}
 	//更新新闻操作
 	public String updateNews(){
-		news = new News();
-		news.setId(newsid);
+		news = newsService.getById(newsid);
 		news.setTitle(title);
 		news.setContent(content);
 		news.setNewsfrom(newsfrom);
 		news.setCategory(cService.getById(cid));
 		long updateTime = System.currentTimeMillis();
-		news.setCreateTime(this.createTime);
 		news.setUpdateTime(updateTime);
 		newsService.saveOrUpdate(news);
 		message = "新闻更新成功";
@@ -140,9 +129,11 @@ public class NewsAction extends ActionSupport{
 			if(ns.getId() != null){
 				data = new JSONObject();
 				data.put("id",ns.getId());
+				data.put("createid",ns.getCreateId());
 				data.put("title", ns.getTitle());
 				data.put("newsfrom",ns.getNewsfrom());
 				data.put("category", ns.getCategory().getName());
+				data.put("issue", ns.getIssue());
 				data.put("createTime",dateformat.format(ns.getCreateTime()));
 				data.put("updateTime",dateformat.format(ns.getUpdateTime()));
 				arrData.add(data);
@@ -164,6 +155,13 @@ public class NewsAction extends ActionSupport{
 		newsService.delNews(news);
 		message = "新闻删除成功";
 		return "delNews";
+	}
+	//更新发布(issue)状态
+	public String issueN(){
+		news = (News)newsService.getById(newsid);
+		news.setIssue(issue);
+		newsService.saveOrUpdate(news);
+		return "issue_success";
 	}
 
 	public String getTitle() {
@@ -254,12 +252,12 @@ public class NewsAction extends ActionSupport{
 		this.createId = createId;
 	}
 
-	public Integer getShow() {
-		return show;
+	public Boolean getIssue() {
+		return issue;
 	}
 
-	public void setShow(Integer show) {
-		this.show = show;
+	public void setIssue(Boolean issue) {
+		this.issue = issue;
 	}
 	
 	

@@ -33,11 +33,12 @@ public class CategoryAction extends ActionSupport{
 		return "listCView";
 	}
 
-	
 	public String addCategory(){ //添加类型
 		c = new Category();
 		c.setName(categoryName);
-		c.setCreateTime(System.currentTimeMillis());
+		long createTime = System.currentTimeMillis();
+		c.setCreateTime(createTime);
+		c.setUpdateTime(createTime);
 		cService.save(c);
 		message = "添加成功";
 		return "addCategory";
@@ -50,18 +51,10 @@ public class CategoryAction extends ActionSupport{
 		return "delCategory";
 	}
 	
-	public String goUpdate(){  // 路由到更新类型
-		c = cService.getById(cid);
-		ActionContext act = ActionContext.getContext();
-		act.put("updateC",c);
-		return "go_Update";
-	}
-	
 	public String updateCategory(){  //进行更新类型
-		c = new Category();
-		c.setId(cid);
+		c = cService.getById(cid);
 		c.setName(categoryName);
-		c.setCreateTime(createTime);
+		c.setUpdateTime(System.currentTimeMillis());
 		cService.saveOrUpdate(c);
 		message = "更新成功";
 		return "update_success";
@@ -78,15 +71,16 @@ public class CategoryAction extends ActionSupport{
 		ArrayList arrData = new ArrayList();
 		JSONObject data;
 		for(Category c:cSet){
-			if(c.getId() != null){
+			if(c.getId() == 1){
+				continue;
+			}else{
 				data = new JSONObject();
 				data.put("cid",c.getId());
 				data.put("cName", c.getName());
 				data.put("createTime",dateformat.format(c.getCreateTime()));
+				data.put("updateTime",dateformat.format(c.getUpdateTime()));
 				arrData.add(data);
 				System.out.println(c.getId());
-			}else{
-				System.out.println("查询数据失败");
 			}
 		}
 		message = "";

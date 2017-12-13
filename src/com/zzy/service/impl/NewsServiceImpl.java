@@ -52,7 +52,7 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public News getByCreateId(String createId) {
+	public List<News> getByCreateId(String createId) {
 		return newsDao.getByCreateId(createId);
 	}
 }

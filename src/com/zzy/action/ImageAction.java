@@ -15,6 +15,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.News;
 import com.zzy.po.NewsImg;
 import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
@@ -24,9 +25,9 @@ public class ImageAction extends ActionSupport{
 	@Resource ImageService imgService;
 	@Resource NewsService nService;
 	
-	private final String newsPath = "\\data\\NewsImg";
-	private final String userPath = "\\data\\UserImg";
-	private final String adPath = "\\data\\AdImg";
+	private final String newsPath = "\\data\\NewsImg"; //新闻图片路径
+	private final String userPath = "\\data\\UserImg"; //用户图片路径
+	private final String adPath = "\\data\\AdImg";     //广告图片路径
 	private String fileFileName;  //图片文件名字
 	private String fileContentType;  //文件类型
 	private File file;  //上传的文件本体
@@ -54,9 +55,10 @@ public class ImageAction extends ActionSupport{
 		NewsImg newsImg = new NewsImg();
 		newsImg.setName(fileName);
 		newsImg.setPath(filePath);
-		newsImg.setNews(nService.getByCreateId(createId));
+		newsImg.setNews((News)nService.getByCreateId(createId).get(0));
 		imgService.save(newsImg);
 		
+		//开启文档流,保存图片到服务器
 		InputStream is = new FileInputStream(getFile());
 		OutputStream os = new FileOutputStream(filePath);
 		byte buffer[] = new byte[1024];
@@ -65,9 +67,11 @@ public class ImageAction extends ActionSupport{
 			os.write(buffer, 0, len);
 		is.close();
 		os.close();
+		//关闭文档流
 		
 		System.out.println(ServletActionContext.getRequest().getContextPath()+"/data/NewsImg/"+fileName);
 		System.out.println(filePath);
+		//设置保存信息
 		JSONObject data = new JSONObject();
 		data.put("src",ServletActionContext.getRequest().getContextPath()+"/data/NewsImg/"+fileName);
 		data.put("title", fileFileName);

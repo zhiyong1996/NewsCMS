@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
   </head>
   
-  <body>
+  <body style="padding:30px;">
   <div class="layui-container">
   
   <div class="layui-row">
@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <label class="layui-form-label">新闻类型</label>
           <div class="layui-input-block">
-            <s:select name="catagery" lay-filter="test" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true"></s:select>
+            <s:select name="catagery" lay-filter="test" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true" value="%{#update.category.id}"></s:select>
           </div>
         </div>
         <div class="layui-form-item">
@@ -67,6 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 <script type="text/javascript">
+console.log("category:"+"${update.category.id}"+"${update.category.name}");
 (function(){
 	var content = $("#demo").val(unescape("${update.content}"));
 })();
@@ -74,6 +75,14 @@ layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
 	  layedit = layui.layedit;
 	  //upload = layui.upload;
+	  //设置图片上传接口
+	  layedit.set({
+		  uploadImage: {
+		    url: 'upload/uploadNewsImg' //接口url
+		    ,type: 'post' //默认post
+		  }
+		});
+	  
 	  var edit = layedit.build('demo'); //建立编辑器
 	  var cid = -1;
 	  form.on("select(test)", function(data){
@@ -84,9 +93,10 @@ layui.use(["form","layedit","upload"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		  var title = $("#title").val(),
-		 	newsfrom = $("#newsfrom").val(),
-		  	content = escape(layedit.getContent(edit));//获取正文内容转码
+		  var newsid = "${update.id}"
+		  	,title = $("#title").val()
+		 	,newsfrom = $("#newsfrom").val()
+		  	,content = escape(layedit.getContent(edit));//获取正文内容转码
 			console.log(parseInt(cid))
 		  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
 		  		layer.msg("请选择新闻分类");
@@ -98,16 +108,14 @@ layui.use(["form","layedit","upload"], function(){
 				url:"news/updateNews",
 				dataType:"html",
 				data:{
-					newsid: "${update.id}",
-					createId: "${update.createId}",
+					newsid: newsid,
 					title: title,
 					cid: cid,
 					content: content,
 					newsfrom: newsfrom,
-					createTime: "${update.createTime}"
 				},
 				success:function(data){
-					layer.msg("ID："+ data.id + "更新成功,3秒后自动跳转");
+					layer.msg("ID："+ newsid + "更新成功,3秒后自动跳转");
 					setTimeout(function(){
 						location.href = location.origin+"/NewsCMS/news/go_listN"
 						},3000);

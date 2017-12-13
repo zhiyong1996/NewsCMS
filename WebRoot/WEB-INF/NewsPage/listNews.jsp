@@ -30,14 +30,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<table class="layui-table" id="table" lay-filter="demo"></table>
 
 	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
-  		<a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-  		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+  		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 
 	<script type="text/html" id="switchTpl">
-  		<!-- 这里的 checked 的状态只是演示 -->
-  		<input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
+  		<!-- 这里的 d为ajax获取到的数据对象 -->
+  		<input type="checkbox" name="issue" value="{{d.id}}" lay-skin="switch" lay-text="on|off" lay-filter="sexDemo" {{ d.issue == true ? 'checked' : '' }}>
 	</script>
 	
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
@@ -64,13 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
 		      ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		      ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
-		      ,{field:"sex", title:"性别", width:85, templet: "#switchTpl", unresize: true}
-		      ,{fixed: "right",title:"操作", width:160, align:"center", toolbar: "#barDemo"}
+		      ,{field: "issue", title: "是否发布", width:100, align: "center", templet: "#switchTpl"}
+		      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}
 
 		        ]]
 	  	  ,id: "Reload"
+	  	  ,cellMinWidth: 85
 		  ,page:true
-		  ,width: 1200
 		  , height:332
 	  });
 	  
@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      layer.msg('ID：'+ data.id + ' 的查看操作');
 	      console.log(navigator)
 	    } else if(obj.event === 'del'){
-	      layer.confirm('真的删除行么', function(index){
+	      layer.confirm('确定删除该行么', function(index){
 	    	layer.close(index);
 	        $.ajax({
 	        	type: "post",
@@ -105,14 +105,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    }
 	  });
 	  
-	  //监听性别操作
+	  //监听issue操作
 	  form.on('switch(sexDemo)', function(obj){
-	    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-	  });
-
-	  //监听锁定操作
-	  form.on('checkbox(lockDemo)', function(obj){
-	    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+		//console.log(obj);
+	    //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+	    $.ajax({
+	        	type: "post",
+	        	url: "news/issueN",
+	        	dataType: "html",
+	        	data: {
+	        		newsid: this.value,
+	        		issue: obj.elem.checked
+	        	},
+	        	success: function(data){     		
+	        		console.log(data);
+	        		layer.msg("更新成功");
+	        	},
+	        	error: function(){
+	        		layer.msg("更新失败");
+	        	}
+	        });//ajax end  
 	  });
 	
 	  //顶部按钮组的功能函数

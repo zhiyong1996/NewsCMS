@@ -44,13 +44,16 @@
     	<result type="json" name="update_success">   	<!-- 更新新闻 -->
 			<param name="root">message</param>
 		</result>
+		<result type="json" name="issue_success">   	<!-- 更新新闻issue -->
+			<param name="root">message</param>
+		</result>
     	<result type="json" name="delNews">	<!-- 删除新闻 -->
     		<param name="root">status</param>
     	</result>
     	<result type="redirect" name="login">/login.jsp</result>
     <!-- 对应方法 -->
     <interceptor-ref name="loginStack"/>
-    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN</allowed-methods>
+    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN,issueN</allowed-methods>
     </action>
   </package>  
   
@@ -64,7 +67,6 @@
   		<result name="pageC" type="json"><!-- 获取类型分页 -->
   			<param name="root">pageC</param>
   		</result>
-    	<result name="go_Update">/WEB-INF/CategoryPage/updateCategory.jsp</result><!-- 更新跳转 -->
     	<result type="json" name="update_success"><!-- 更新操作 -->
 			<param name="root">message</param>
 		</result>
@@ -73,7 +75,7 @@
     	</result>
     	<result type="redirect" name="login">/login.jsp</result>
     <interceptor-ref name="loginStack"/>
-    	<allowed-methods>addCategory,pageCategory,goUpdate,updateCategory,delCategory,go_listC</allowed-methods>
+    	<allowed-methods>addCategory,pageCategory,updateCategory,delCategory,go_listC</allowed-methods>
     </action>
   </package>
   

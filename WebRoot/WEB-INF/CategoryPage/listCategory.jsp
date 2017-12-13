@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<table class="layui-table" lay-filter="table" id="table"></table>
 
 	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 
 
@@ -51,7 +51,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  ,cellMinWidth: 60
 			  ,cols: [[
 				   {field: "cid", title: "ID", width: 60, sort: true,fixed: true}
-			      ,{field: "cName", title: "名字", width: 280, align: "center",edit: "text"}		  		  ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
+			      ,{field: "cName", title: "新闻类型(点击可编辑)", width: 280, align: "center",edit: "text"}		  		  ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
+		  		  ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
 			      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}
 			        ]]
 		  	  ,id: "Reload"
@@ -64,7 +65,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    var value = obj.value //得到修改后的值
 		    ,data = obj.data //得到所在行所有键值
 		    ,field = obj.field; //得到字段
-		    layer.msg('[ID: '+ data.cid +'] ' + field + ' 字段更改为：'+ value);
+		    console.log('[ID: '+ data.cid +'] ' + field + ' 字段更改为：'+ value);
+		    console.log(obj);
+		    
+		    if(value=="" || value==undefined){
+		    	layer.msg("不能为空");
+		    	return false;
+		    }
+		    
+		    $.ajax({
+				type:"post",
+				url:"category/updateCategory",
+				dataType:"html",
+				data:{
+					cid: obj.data.cid,
+					categoryName: value
+				},
+				success:function(data){
+					layer.msg("更新成功,3秒后自动刷新");
+					setTimeout(function(){
+						history.go(0);
+					},3000);
+				},
+				error:function(){
+					layer.msg("网络出错");
+				}
+			});//ajax end 
+
 		  });
 		  
 		  //监听工具条
@@ -103,7 +130,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				dataType:"html",
 				data:data.field,
 				success:function(data){
-					layer.msg("添加成功");
+					layer.msg("添加成功,3秒后自动更新");
+					setTimeout(function(){
+						history.go(0);
+					},3000);
 				},
 				error:function(){
 					layer.msg("网络出错");
