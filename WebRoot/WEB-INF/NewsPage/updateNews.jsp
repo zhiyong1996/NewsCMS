@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 <script type="text/javascript">
-console.log("category:"+"${update.category.id}"+"${update.category.name}");
+
 (function(){
 	var content = $("#demo").val(unescape("${update.content}"));
 })();
@@ -84,7 +84,7 @@ layui.use(["form","layedit","upload"], function(){
 		});
 	  
 	  var edit = layedit.build('demo'); //建立编辑器
-	  var cid = -1;
+	  var cid = "%{#update.category.id} ||" -1;
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		}); 

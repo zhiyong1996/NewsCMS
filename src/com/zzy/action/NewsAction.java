@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -23,7 +25,8 @@ public class NewsAction extends ActionSupport{
 	@Resource NewsService newsService;
 	
 	//日期格式化
-	private static SimpleDateFormat DateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//从客户端接受的数据
 	private String title;	 //新闻标题
 	private String content;	 //新闻内容
@@ -32,17 +35,20 @@ public class NewsAction extends ActionSupport{
 	private Integer cid;     //分类id
 	private String createId; // 创建空白新闻区分字段
 	private Boolean issue;    //是否展示
+	
 	//公共参数
 	private int page;//分页查询当前页
 	private int limit;//每页最大项目数
 	private long createTime; //更新操作参数
+	
 	//服务器端数据
 	private String status = "success";
 	private List<News> newsSet;//新闻列表
-	private News news;
-	private String message;
+	private News news;         //新闻对象
+	private String message;    //待用信息
 	private JSONObject pageJson;//返回的json数据
-	private Map<Integer,Object> category;
+	private Map<Integer,Object> category;  //更新/添加新闻时查询的分类Map格式数据
+	private Map<String, String> backnews  = new HashMap<String,String>();       //返回的新闻对象
 	
 	public String go_index(){
 		return "index";
@@ -60,7 +66,7 @@ public class NewsAction extends ActionSupport{
 		}
 		//创建空白新闻
 		news = new News();
-		String createId = DateFormat.format(new Date()).toString();
+		String createId = DateFormat1.format(new Date()).toString();
 		news.setCreateId(createId);
 		news.setTitle("NewTitle");
 		news.setContent("");
@@ -122,7 +128,7 @@ public class NewsAction extends ActionSupport{
 		newsSet = (List<News>)newsService.pageNews(hql,offset,limit);
 		SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		pageJson = new JSONObject();
-		ArrayList arrData = new ArrayList();
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
 		JSONObject data;
 		for(News ns:newsSet){
 			//System.out.println(ns.getCategory().getName());
@@ -162,6 +168,20 @@ public class NewsAction extends ActionSupport{
 		news.setIssue(issue);
 		newsService.saveOrUpdate(news);
 		return "issue_success";
+	}
+	
+	//预览新闻
+	public String newsPreview(){
+		news = (News)newsService.getById(newsid);
+
+		backnews.put("title", news.getTitle());
+		backnews.put("createTime",DateFormat2.format(news.getCreateTime()));
+		backnews.put("newsfrom", news.getNewsfrom());
+		backnews.put("content", news.getContent());
+		
+		ActionContext act = ActionContext.getContext();
+		act.put("preview", backnews);
+		return "preview";
 	}
 
 	public String getTitle() {
@@ -258,6 +278,14 @@ public class NewsAction extends ActionSupport{
 
 	public void setIssue(Boolean issue) {
 		this.issue = issue;
+	}
+
+	public Map<String, String> getBacknews() {
+		return backnews;
+	}
+
+	public void setBacknews(Map<String, String> backnews) {
+		this.backnews = backnews;
 	}
 	
 	

@@ -33,6 +33,8 @@
   	<!-- 新闻Action -->
     <action name="*" class="com.zzy.action.NewsAction" method="{1}">
     	<result name="addNView">/WEB-INF/NewsPage/addNews.jsp</result>
+    	<!-- addNView暂时无用 -->
+    	
   		<result name="listNView">/WEB-INF/NewsPage/listNews.jsp</result>
     	<result name="addnews" type="json">    <!-- 添加 -->
                 <param name="root">message</param>
@@ -40,20 +42,21 @@
     	<result name="pageJson" type="json">    <!-- 获取分页 -->
     		<param name="root">pageJson</param>
     	</result>
-    	<result name="go_update">/WEB-INF/NewsPage/updateNews.jsp</result>   	<!-- 更新跳转 -->
+    	<result name="go_update">/WEB-INF/NewsPage/updateNews.jsp</result>   	<!-- 更新路由-->
     	<result type="json" name="update_success">   	<!-- 更新新闻 -->
 			<param name="root">message</param>
 		</result>
 		<result type="json" name="issue_success">   	<!-- 更新新闻issue -->
 			<param name="root">message</param>
 		</result>
+		<result type="dispatcher" name="preview">/WEB-INF/NewsPage/newsPreview.jsp</result>   	<!-- 预览新闻 -->
     	<result type="json" name="delNews">	<!-- 删除新闻 -->
     		<param name="root">status</param>
     	</result>
     	<result type="redirect" name="login">/login.jsp</result>
     <!-- 对应方法 -->
     <interceptor-ref name="loginStack"/>
-    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN,issueN</allowed-methods>
+    <allowed-methods>addNews,listNews,goUpdate,updateNews,delNews,go_addN,go_listN,issueN,newsPreview</allowed-methods>
     </action>
   </package>  
   

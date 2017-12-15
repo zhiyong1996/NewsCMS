@@ -13,6 +13,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
+    <script>
+    	if(window!=top){
+    		top.location.href = location.href;
+    	}
+    </script>
   </head>
   <style>
   	

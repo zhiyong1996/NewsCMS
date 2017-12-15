@@ -78,8 +78,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  table.on('tool(demo)', function(obj){
 	    var data = obj.data;
 	    if(obj.event === 'detail'){
-	      layer.msg('ID：'+ data.id + ' 的查看操作');
-	      console.log(navigator)
+	    	window.location.href = location.origin+"/NewsCMS/news/newsPreview?newsid="+data.id;
+	    	console.log(data.id);
 	    } else if(obj.event === 'del'){
 	      layer.confirm('确定删除该行么', function(index){
 	    	layer.close(index);

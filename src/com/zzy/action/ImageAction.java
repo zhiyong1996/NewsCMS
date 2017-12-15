@@ -33,7 +33,7 @@ public class ImageAction extends ActionSupport{
 	private File file;  //上传的文件本体
 	private String Path;  //路径
 	
-	private String createId; //隐藏信息,新闻的createId
+	private String createId; //新闻的createId，标识是哪一篇新闻的
 	
 	private JSONObject imgJson;
 	
@@ -42,6 +42,8 @@ public class ImageAction extends ActionSupport{
 		return ServletActionContext.getRequest().getRealPath("");
 	}
 	
+	//@param fileName 文件名
+	//@param filePath文件保存路径
 	public String uploadNewsImg() throws Exception{
 		File file = new File(getSavePath()+newsPath);
 		if(!file.isDirectory()){
@@ -81,6 +83,10 @@ public class ImageAction extends ActionSupport{
 		imgJson.put("msg", "");
 		imgJson.put("data", data);
 		return "uploadNewsImg";
+	}
+	
+	public String deleteImg(){
+		return "deleteImg";
 	}
 	
 	public String uploadUserImage(){
