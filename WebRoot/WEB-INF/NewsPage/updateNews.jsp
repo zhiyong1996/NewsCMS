@@ -91,39 +91,42 @@ layui.use(["form","layedit","upload"], function(){
 		
 	  var sub = document.getElementById("submit");
 	  sub.addEventListener("click",function(e){
-		  e.preventDefault();
-		  
-		  var newsid = "${update.id}"
-		  	,title = $("#title").val()
-		 	,newsfrom = $("#newsfrom").val()
-		  	,content = escape(layedit.getContent(edit));//获取正文内容转码
-			console.log(parseInt(cid))
-		  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
-		  		layer.msg("请选择新闻分类");
-		  		return;
-	  	}
-		 
-		 $.ajax({
-				type:"post",
-				url:"news/updateNews",
-				dataType:"html",
-				data:{
-					newsid: newsid,
-					title: title,
-					cid: cid,
-					content: content,
-					newsfrom: newsfrom,
-				},
-				success:function(data){
-					layer.msg("ID："+ newsid + "更新成功,3秒后自动跳转");
-					setTimeout(function(){
-						location.href = location.origin+"/NewsCMS/news/go_listN"
-						},3000);
-				},
-				error:function(){
-					layer.msg("网络出错");
-				}
-			});
+	    layer.confirm("确定提交么", function(index){
+		      layer.close(index);
+			  e.preventDefault();
+			  
+			  var newsid = "${update.id}"
+			  	,title = $("#title").val()
+			 	,newsfrom = $("#newsfrom").val()
+			  	,content = escape(layedit.getContent(edit));//获取正文内容转码
+				console.log(parseInt(cid))
+			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
+			  		layer.msg("请选择新闻分类");
+			  		return;
+		  	}
+			 
+			 $.ajax({
+					type:"post",
+					url:"news/updateNews",
+					dataType:"html",
+					data:{
+						newsid: newsid,
+						title: title,
+						cid: cid,
+						content: content,
+						newsfrom: newsfrom,
+					},
+					success:function(data){
+						layer.msg("ID："+ newsid + "更新成功,3秒后自动跳转");
+						setTimeout(function(){
+							location.href = location.origin+"/NewsCMS/news/go_listN"
+							},3000);
+					},
+					error:function(){
+						layer.msg("网络出错");
+					}
+				});//ajax end
+	      });
 	  });
 	});
 </script>

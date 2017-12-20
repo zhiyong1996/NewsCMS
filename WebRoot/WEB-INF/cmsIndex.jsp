@@ -67,10 +67,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="/components/table/table.html" data-name="table" kit-loader><i class="fa fa-plug" aria-hidden="true"></i><span> 表格(page)</span></a>
+                        <a href="javascript:;" data-url="/components/table/table.html" data-name="table" kit-loader><i class="fa fa-user-o" aria-hidden="true"></i><span> 用户管理</span></a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="/views/form.html" data-name="form" kit-loader><i class="fa fa-plug" aria-hidden="true"></i><span> 表单(page)</span></a>
+                        <a href="javascript:;" data-url="/views/form.html" data-name="form" kit-loader><i class="fa fa-file-image-o" aria-hidden="true"></i><span> 图片管理</span></a>
                     </li>
                 </ul>
             </div>

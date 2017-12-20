@@ -8,8 +8,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
