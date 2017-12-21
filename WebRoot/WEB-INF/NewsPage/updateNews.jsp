@@ -84,26 +84,26 @@ layui.use(["form","layedit","upload"], function(){
 		});
 	  
 	  var edit = layedit.build('demo'); //建立编辑器
-	  var cid = "%{#update.category.id} ||" -1;
+	  var cid = "${update.category.id}"|| -1;
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		}); 
 		
 	  var sub = document.getElementById("submit");
 	  sub.addEventListener("click",function(e){
-	    layer.confirm("确定提交么", function(index){
-		      layer.close(index);
+	   // layer.confirm("确定提交么", function(index){
+		      //layer.close(index);
 			  e.preventDefault();
 			  
 			  var newsid = "${update.id}"
 			  	,title = $("#title").val()
 			 	,newsfrom = $("#newsfrom").val()
-			  	,content = escape(layedit.getContent(edit));//获取正文内容转码
-				console.log(parseInt(cid))
+			  	,content = layedit.getContent(edit);//获取正文内容转码
+				console.log(content);
 			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
 			  		layer.msg("请选择新闻分类");
 			  		return;
-		  	}
+		  		}
 			 
 			 $.ajax({
 					type:"post",
@@ -111,9 +111,10 @@ layui.use(["form","layedit","upload"], function(){
 					dataType:"html",
 					data:{
 						newsid: newsid,
+						createId: "${update.createId}",
 						title: title,
 						cid: cid,
-						content: content,
+						content: escape(content),
 						newsfrom: newsfrom,
 					},
 					success:function(data){
@@ -126,7 +127,7 @@ layui.use(["form","layedit","upload"], function(){
 						layer.msg("网络出错");
 					}
 				});//ajax end
-	      });
+	   //});
 	  });
 	});
 </script>

@@ -118,7 +118,7 @@ public class NewsAction extends ActionSupport{
 	 * @param offset 每页首条记录的索引
 	 * @newsSet 新闻集合
 	**/
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ })
 	public String listNews(){
 		String hql = "from News";
 		int count = newsService.getCount(hql);

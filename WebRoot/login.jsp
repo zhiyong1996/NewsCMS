@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		height: 100%;
   		
   	}
+  	
   	.container{
   		position: relative;
   		height: 100%;
@@ -32,8 +33,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		
   	}
   	.header{
-  		padding: 20px 30px;
+  		padding: 12px 30px;
   		background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  		box-shadow: 0 6px 15px rgba(36,37,38,0.08);
   	}
   	.login-box{
   		position: absolute;
