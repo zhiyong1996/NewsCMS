@@ -15,8 +15,6 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.zzy.po.News;
-import com.zzy.po.NewsImg;
 import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
 
@@ -51,7 +49,7 @@ public class ImageAction extends ActionSupport{
 	 * */
 	public String uploadNewsImg() throws Exception{
 		
-		//创建图片存储目录
+		//创建临时图片存储目录
 		today = new Date();
 		String secondPath = (new SimpleDateFormat("yyyyMM")).format(today).toString();
 		String thirdPath = (new SimpleDateFormat("dd")).format(today).toString();
@@ -61,10 +59,10 @@ public class ImageAction extends ActionSupport{
 			file.mkdirs();
 		}
 		
-		//设置图片名字和类型，获取图片保存路径
+		//设置图片名字和类型，图片临时保存路径
 		String type = fileFileName.substring(fileFileName.lastIndexOf("."));
 		String fileName = "NIMG"+(new SimpleDateFormat("yyyyMMddHHmmssSSS")).format(today)+type;
-		String filePath = getSavePath()+savePath+"\\"+fileName;
+		String filePath = getSavePath()+savePath+"\\"+fileName;//文件保存的绝对路径包含文件名
 		
 		//开启文档流,保存图片到服务器
 		InputStream is = new FileInputStream(getFile());

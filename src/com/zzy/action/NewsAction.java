@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.imgUtil.ImgUtil;
 import com.zzy.po.Category;
 import com.zzy.po.News;
 import com.zzy.service.CategoryService;
@@ -33,6 +34,7 @@ public class NewsAction extends ActionSupport{
 	private Integer cid;     //分类id
 	private String createId; // 创建空白新闻区分字段
 	private Boolean issue;    //是否展示
+	private String pathList ; //新闻内容图片路径，以字符串拼接的形式传递
 	
 	//公共参数
 	private int page;//分页查询当前页
@@ -101,6 +103,27 @@ public class NewsAction extends ActionSupport{
 	}
 	//更新新闻操作
 	public String updateNews(){
+		if(!pathList.equals("")){
+			String[] imgList = pathList.split(",");           //暂存图片路径数组
+			System.out.println("*******"+imgList[0]);
+			String[] targetArr = new String[imgList.length];  //新图片路径数组
+			String fileName;
+			String new_src ;
+			
+			for(int i=0;i<imgList.length;i++){
+
+				fileName = imgList[i].substring(imgList[i].lastIndexOf("/")+1);
+				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName);
+				targetArr[i] = new_src;
+			}
+			
+			for(int i=0;i<targetArr.length;i++){
+				if(!targetArr[i].equals("")){
+					 System.out.println(targetArr[i]);
+					content.replace(imgList[i], targetArr[i]);}
+			}
+		}
+		
 		news = newsService.getById(newsid);
 		news.setTitle(title);
 		news.setContent(content);
@@ -284,6 +307,14 @@ public class NewsAction extends ActionSupport{
 
 	public void setBacknews(Map<String, String> backnews) {
 		this.backnews = backnews;
+	}
+
+	public String getPathList() {
+		return pathList;
+	}
+
+	public void setPathList(String pathList) {
+		this.pathList = pathList;
 	}
 	
 	

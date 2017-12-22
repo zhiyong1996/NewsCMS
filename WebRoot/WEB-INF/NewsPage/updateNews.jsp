@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 
 (function(){
-	var content = $("#demo").val(unescape("${update.content}"));
+	var content = $("#demo").val("${update.content}");
 })();
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
@@ -98,8 +98,24 @@ layui.use(["form","layedit","upload"], function(){
 			  var newsid = "${update.id}"
 			  	,title = $("#title").val()
 			 	,newsfrom = $("#newsfrom").val()
-			  	,content = layedit.getContent(edit);//获取正文内容转码
-				console.log(content);
+			  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
+			  	
+			  var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
+			      pathList = [],//图片路径集合
+			      src = "";     //单个图片路径
+			      
+				if(imgs.length>0){
+				  for(var i=0;i<imgs.length;i++){
+					src = $(imgs[i]).attr("src");
+					if(src.search(/^(http|https)/) < 0){
+						pathList.push(src);
+					}
+				  }
+					pathList = pathList.join(",");
+				}else{
+					pathList = "";
+				}
+			      console.log(pathList+"11111");
 			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
 			  		layer.msg("请选择新闻分类");
 			  		return;
@@ -114,8 +130,9 @@ layui.use(["form","layedit","upload"], function(){
 						createId: "${update.createId}",
 						title: title,
 						cid: cid,
-						content: escape(content),
+						content: content,
 						newsfrom: newsfrom,
+						pathList: pathList
 					},
 					success:function(data){
 						layer.msg("ID："+ newsid + "更新成功,3秒后自动跳转");
