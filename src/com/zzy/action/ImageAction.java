@@ -64,7 +64,7 @@ public class ImageAction extends ActionSupport{
 		String fileName = "NIMG"+(new SimpleDateFormat("yyyyMMddHHmmssSSS")).format(today)+type;
 		String filePath = getSavePath()+savePath+"\\"+fileName;//文件保存的绝对路径包含文件名
 		
-		//开启文档流,保存图片到服务器
+		//开启文档流,暂存图片到服务器临时目录
 		InputStream is = new FileInputStream(getFile());
 		OutputStream os = new FileOutputStream(filePath);
 		byte buffer[] = new byte[1024];
@@ -77,8 +77,6 @@ public class ImageAction extends ActionSupport{
 		
 		//前端返回的图片引用路径src
 		String imgSrc = ServletActionContext.getRequest().getContextPath()+"/"+temporaryPath+"/"+secondPath+"/"+thirdPath+"/"+fileName;
-		System.out.println(imgSrc);
-		System.out.println(filePath);
 		
 		//设置保存信息
 		JSONObject data = new JSONObject();

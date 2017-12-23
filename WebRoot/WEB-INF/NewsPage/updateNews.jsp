@@ -48,7 +48,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo" id="submit">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
       </form>
@@ -101,19 +100,24 @@ layui.use(["form","layedit","upload"], function(){
 			  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 			  	
 			  var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
-			      pathList = [],//图片路径集合
+			  	  allPath = [], //全部图片路径
+			      pathList = [],//本地上传图片路径集合
 			      src = "";     //单个图片路径
 			      
 				if(imgs.length>0){
 				  for(var i=0;i<imgs.length;i++){
 					src = $(imgs[i]).attr("src");
-					if(src.search(/^(http|https)/) < 0){
+					allPath.push(src);
+					//src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
+					if($(imgs[i]).attr("src") == "Nupload"){
 						pathList.push(src);
 					}
 				  }
 					pathList = pathList.join(",");
+					allPath = allPath.join(",");
 				}else{
 					pathList = "";
+					allPath = "";
 				}
 			      console.log(pathList+"11111");
 			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
@@ -132,14 +136,22 @@ layui.use(["form","layedit","upload"], function(){
 						cid: cid,
 						content: content,
 						newsfrom: newsfrom,
-						pathList: pathList
+						pathList: pathList,
+						allPath: allPath
 					},
 					success:function(data){
-						layer.msg("ID："+ newsid + "更新成功,3秒后自动跳转");
-						setTimeout(function(){
-							location.href = location.origin+"/NewsCMS/news/go_listN"
-							},3000);
+						
+						for(var i=4;i>0;i--){
+							(function(i){
+								if(i==0){
+									location.href = location.origin+"/NewsCMS/news/go_listN";
+								}else{
+									layer.msg("ID："+ newsid + "更新成功,"+i+"秒后自动跳转");
+								}
+							})(i);
+						}
 					},
+					
 					error:function(){
 						layer.msg("网络出错");
 					}

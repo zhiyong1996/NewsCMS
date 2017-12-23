@@ -396,8 +396,9 @@ layui.define(['layer', 'form'], function(exports){
               if(res.code == 0){
                 res.data = res.data || {};
                 insertInline.call(iframeWin, 'img', {
-                  src: res.data.src
+                  src: locatiion.origin+res.data.src
                   ,alt: res.data.title
+                  ,dataType: "Nupload" //自己添加的属性，用于区图片是否本地上传
                 }, range);
               } else {
                 layer.msg(res.msg||'上传失败');

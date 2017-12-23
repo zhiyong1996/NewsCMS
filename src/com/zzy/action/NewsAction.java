@@ -1,4 +1,5 @@
 package com.zzy.action;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +16,16 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.imgUtil.ImgUtil;
 import com.zzy.po.Category;
 import com.zzy.po.News;
+import com.zzy.po.NewsImg;
 import com.zzy.service.CategoryService;
+import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class NewsAction extends ActionSupport{
 	@Resource CategoryService cService;
 	@Resource NewsService newsService;
+	@Resource ImageService imgService;
 	
 	//日期格式化
 	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -34,7 +38,8 @@ public class NewsAction extends ActionSupport{
 	private Integer cid;     //分类id
 	private String createId; // 创建空白新闻区分字段
 	private Boolean issue;    //是否展示
-	private String pathList ; //新闻内容图片路径，以字符串拼接的形式传递
+	private String pathList ; //本地上传的图片路径，以字符串拼接的形式传递
+	private String allpath ;  //所有图片路径，以字符串拼接的形式传递
 	
 	//公共参数
 	private int page;//分页查询当前页
@@ -102,27 +107,7 @@ public class NewsAction extends ActionSupport{
 		return "go_update";
 	}
 	//更新新闻操作
-	public String updateNews(){
-		if(!pathList.equals("")){
-			String[] imgList = pathList.split(",");           //暂存图片路径数组
-			System.out.println("*******"+imgList[0]);
-			String[] targetArr = new String[imgList.length];  //新图片路径数组
-			String fileName;
-			String new_src ;
-			
-			for(int i=0;i<imgList.length;i++){
-
-				fileName = imgList[i].substring(imgList[i].lastIndexOf("/")+1);
-				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName);
-				targetArr[i] = new_src;
-			}
-			
-			for(int i=0;i<targetArr.length;i++){
-				if(!targetArr[i].equals("")){
-					 System.out.println(targetArr[i]);
-					content.replace(imgList[i], targetArr[i]);}
-			}
-		}
+	public String updateNews() throws IOException{
 		
 		news = newsService.getById(newsid);
 		news.setTitle(title);
@@ -132,6 +117,36 @@ public class NewsAction extends ActionSupport{
 		long updateTime = System.currentTimeMillis();
 		news.setUpdateTime(updateTime);
 		newsService.saveOrUpdate(news);
+		
+
+		
+		if(!pathList.equals("")){
+			
+			String[] imgList = pathList.split(",");           //旧的图片路径由客户端传递字符串切割
+			String[] targetArr = new String[imgList.length];  
+			String fileName;
+			String new_src ;
+			
+			for(int i=0;i<imgList.length;i++){  //循环遍历旧的图片路径,对图片进行移动
+
+				fileName = imgList[i].substring(imgList[i].lastIndexOf("/")+1);//通过字符串截取文件名
+				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); //调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
+				targetArr[i] = new_src;
+				if(!targetArr[i].equals("")){    //如果新路径不为空,则为新的图片,新建图片对象保存数据库。
+					setContent(getContent().replace(imgList[i], targetArr[i]));//循环将图片引用替换成新路径
+					imgList[i] = targetArr[i];             //同时更新路径到旧数组
+					
+					NewsImg ni = new NewsImg();
+					ni.setName(fileName);
+					ni.setPath(imgList[i]);
+					ni.setNews(news);
+					
+					imgService.saveOrUpdate(ni);
+				}
+			}
+			
+		}
+
 		message = "新闻更新成功";
 		return "update_success";
 	}
@@ -315,6 +330,14 @@ public class NewsAction extends ActionSupport{
 
 	public void setPathList(String pathList) {
 		this.pathList = pathList;
+	}
+
+	public String getAllpath() {
+		return allpath;
+	}
+
+	public void setAllpath(String allpath) {
+		this.allpath = allpath;
 	}
 	
 	
