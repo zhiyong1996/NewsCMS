@@ -52,9 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <dd>
                                 <a href="javascript:;" data-url="news/go_listN" data-title="文章管理" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章管理</span></a>
                             </dd>
-                            <dd>
-                                <a href="javascript:;" kit-target data-options="{url:'https://www.baidu.com',icon:'&#xe658;',title:'百度一下',id:'5'}"><i class="layui-icon">&#xe658;</i><span> 百度一下</span></a>
-                            </dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">

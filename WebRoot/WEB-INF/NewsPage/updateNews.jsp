@@ -109,17 +109,18 @@ layui.use(["form","layedit","upload"], function(){
 					src = $(imgs[i]).attr("src");
 					allPath.push(src);
 					//src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
-					if($(imgs[i]).attr("src") == "Nupload"){
+					if($(imgs[i]).attr("datatype") == "Nupload"){
 						pathList.push(src);
 					}
 				  }
 					pathList = pathList.join(",");
 					allPath = allPath.join(",");
+					console.log("pathList:"+pathList)
+					console.log("allPath:"+allPath)
 				}else{
 					pathList = "";
 					allPath = "";
 				}
-			      console.log(pathList+"11111");
 			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
 			  		layer.msg("请选择新闻分类");
 			  		return;
@@ -141,12 +142,14 @@ layui.use(["form","layedit","upload"], function(){
 					},
 					success:function(data){
 						
-						for(var i=4;i>0;i--){
+						for(var i=4;i>=0;i--){
 							(function(i){
 								if(i==0){
 									location.href = location.origin+"/NewsCMS/news/go_listN";
 								}else{
-									layer.msg("ID："+ newsid + "更新成功,"+i+"秒后自动跳转");
+									setTimeout(function(){
+										layer.msg("ID："+ newsid + "更新成功,"+i+"秒后自动跳转");
+									},i*1000);
 								}
 							})(i);
 						}

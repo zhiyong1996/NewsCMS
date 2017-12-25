@@ -111,13 +111,10 @@ public class NewsAction extends ActionSupport{
 		
 		news = newsService.getById(newsid);
 		news.setTitle(title);
-		news.setContent(content);
 		news.setNewsfrom(newsfrom);
 		news.setCategory(cService.getById(cid));
 		long updateTime = System.currentTimeMillis();
 		news.setUpdateTime(updateTime);
-		newsService.saveOrUpdate(news);
-		
 
 		
 		if(!pathList.equals("")){
@@ -143,10 +140,11 @@ public class NewsAction extends ActionSupport{
 					
 					imgService.saveOrUpdate(ni);
 				}
-			}
-			
+			}		
 		}
-
+		news.setContent(content);
+		newsService.saveOrUpdate(news);
+		
 		message = "新闻更新成功";
 		return "update_success";
 	}
