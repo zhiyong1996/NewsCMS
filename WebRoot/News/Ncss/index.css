@@ -1,0 +1,123 @@
+	body{
+		padding-top: 60px;
+        font-family: 微软雅黑;
+	}
+    ul,li{padding: 0;margin: 0;list-style: none}
+    .navbar{
+        background: #fff;
+        box-shadow: 0 -1px 8px #8c8c8c;
+    }
+    .navbar-brand{
+        padding: 10px 10px 0 10px;
+    }
+    .logo{
+        width: 100px;
+    }
+    .advertise-top{
+        position: relative;
+        height: 90px;
+        background: #ddd;
+        margin-bottom: 30px;
+    }
+    .ad-logo{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 3px;
+        border: 1px solid #ccc;
+    }
+    .col-md-4.right{
+        padding-top: 8px;
+        padding-left: 15px;
+        padding-right: 15px;
+        height: 100%;
+        background: #f2f2f2;
+    }
+    .col-md-4.right ul li{
+        list-style: none;
+    }
+    .hot-news{
+        position: relative;
+        border-bottom: 2px solid #f00;
+        height: 25%;
+    }
+    .hot-news .hot-title{
+        font-size: 22px;
+    }
+    .hot-news .glyphicon-play{
+        position: absolute;
+        line-height: inherit;
+        left: 0;
+        top: 50%;
+        color: #aa0000;
+        transform: translate(0, -50%);
+    }
+    .hot-items{
+        margin-top: 10px;
+    }
+    .hot-items .hot-item{
+        height: 88px;
+        padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    .hot-items .hot-item:nth-last-child(1){
+        border-bottom: none;
+    }
+    .hot-item-title{
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .hot-item .keyword{
+        height: auto;
+        font-size: 12px;
+        color: #818181;
+    }
+    .container.category{
+        margin-top: 30px;
+    }
+    .catetory-item{
+        height: auto;
+        padding: 0;
+        border: 1px solid #ccc;
+        width: 48%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+    .cateName{
+        /*border-bottom: 2px solid #d9e3e4;*/
+        margin-bottom: 5px;
+
+    }
+    .cateN{
+        padding-left: 10px;
+        border-left: 4px solid #771010;
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+    .newsItem{
+        list-style: none;
+
+    }
+    footer{
+        background: #444;
+        color: #b5b5b5;
+        padding: 40px 0 20px 0 ;
+    }
+    .footer-logo{
+        padding-right: 20px;
+        border-right: 1px solid #ccc;
+    }
+    .foot {
+        background: #000;
+        color: #ddd;
+        text-align: center;
+        font-size: 14px;
+    }
+    .foot a{
+        color: #ddd;
+    }
+    .foot p{
+        margin: 10px 0;
+    }
