@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	Object admin = session.getAttribute("admin");
 	if(admin == null){
-		response.sendRedirect(path+"/login.jsp");
+		response.sendRedirect(path+"/admin_login.jsp");
 	}
 %>
 <!DOCTYPE html>
@@ -27,14 +27,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <ul class="layui-nav layui-layout-right kit-nav">
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> Van
+                        <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> admin
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">基本资料</a></dd>
                         <dd><a href="javascript:;">安全设置</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+                <li class="layui-nav-item"><a href="login/quit"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
             </ul>
         </div>
 
@@ -44,13 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
+                        <a href="javascript:;" data-title="新闻管理"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
                             <dd>
                                 <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='1'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
                             </dd>
                             <dd>
                                 <a href="javascript:;" data-url="news/go_listN" data-title="文章管理" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章管理</span></a>
+                            </dd>
+                            <dd>
+                                <a href="javascript:;" data-url="" data-title="新建文章" kit-target data-id='3'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
                             </dd>
                         </dl>
                     </li>

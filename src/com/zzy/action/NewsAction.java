@@ -30,6 +30,12 @@ public class NewsAction extends ActionSupport{
 	//日期格式化
 	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	//新闻位置
+	private final static Integer COMMENT_NEWS = 0;
+	private final static Integer CA_NEWS = 1;
+	private final static Integer HOT_NEWS = 2;
+	
 	//从客户端接受的数据
 	private String title;	 //新闻标题
 	private String content;	 //新闻内容
@@ -39,7 +45,8 @@ public class NewsAction extends ActionSupport{
 	private String createId; // 创建空白新闻区分字段
 	private Boolean issue;    //是否展示
 	private String pathList ; //本地上传的图片路径，以字符串拼接的形式传递
-	private String allpath ;  //所有图片路径，以字符串拼接的形式传递
+//	private String allpath ;  //所有图片路径，以字符串拼接的形式传递
+	private Integer position; //位置码,用于区分新闻所属位置
 	
 	//公共参数
 	private int page;//分页查询当前页
@@ -330,13 +337,21 @@ public class NewsAction extends ActionSupport{
 		this.pathList = pathList;
 	}
 
-	public String getAllpath() {
-		return allpath;
+	public Integer getPosition() {
+		return position;
 	}
 
-	public void setAllpath(String allpath) {
-		this.allpath = allpath;
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
-	
+
+//	public String getAllpath() {
+//		return allpath;
+//	}
+//
+//	public void setAllpath(String allpath) {
+//		this.allpath = allpath;
+//	}
+//	
 	
 }

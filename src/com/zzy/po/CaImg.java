@@ -1,21 +1,16 @@
 package com.zzy.po;
 
-public class Avatar {
+public class CaImg {
 	private Integer id;
-	private User user;
 	private String imgName;
 	private String path;
+	private News news;
+	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public String getImgName() {
 		return imgName;
@@ -29,4 +24,11 @@ public class Avatar {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	public News getNews() {
+		return news;
+	}
+	public void setNews(News news) {
+		this.news = news;
+	}
+	
 }

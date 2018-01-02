@@ -18,15 +18,19 @@ public class LoginAction extends ActionSupport{
 			session.put("admin", username);
 			System.out.println("登录成功");
 			return SUCCESS;
-		}else{
+		}else if(username.equals("")&&password.equals("")){
+			ActionContext.getContext().put("msg", "帐号密码有误");
 			System.out.println("登录失败");
+			return LOGIN;
+		}else{
+			ActionContext.getContext().put("msg", "帐号密码有误");
 			return LOGIN;
 		}
 	}
 	
-	public String quit(){
+	public String quitAdmin(){
 		session = ActionContext.getContext().getSession();
-		session.get("admin");
+		session.remove("admin");
 		return "quit";
 	}
 	

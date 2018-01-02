@@ -8,18 +8,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>新闻首页</title>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>NewsIndex</title>
-    <link rel="stylesheet" type="text/css" href="Ncss/Normalize.css"/>
-
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
+    <link rel="stylesheet" type="text/css" href="News/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="News/Ncss/index.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+	<script src="News/bootstrap/js/bootstrap.js"></script>
   </head>
   
   <body>
@@ -27,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="" class="navbar-brand"><img class="logo" src="img/logo.png" alt="logo"></a>
+                <a href="" class="navbar-brand"><img class="logo" src="News/Nimg/logo.png" alt="logo"></a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="javacript:;">新闻首页</a></li>
@@ -206,7 +202,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="row">
                 <div class="col-md-5">
                     <div class="footer-logo">
-                        <a href="javascript:;"><img src="img/logoko.png" alt="logo"></a>
+                        <a href="javascript:;"><img src="News/Nimg/logoko.png" alt="logo"></a>
                     </div>
                 </div>
                 <div class="col-md-5 footer-cate">

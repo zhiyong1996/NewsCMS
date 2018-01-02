@@ -13,6 +13,9 @@ public class News {
 	private long updateTime;  //更新时间
 	private Boolean issue;   //是否展示
 	
+	private CaImg caimg;  //轮播新闻图
+	private Integer newsPosition; //新闻位置，一般有3个位置,轮播位(需要预览图),热点和普通新闻,无需预览图，用数字0,1,2表示
+	
 	private Category category;  //分类
 	private Set<Comment> comments = new HashSet<Comment>(); //新闻评论
 	private Set<NewsImg> newsimgs = new HashSet<NewsImg>(); //新闻图片
@@ -82,6 +85,18 @@ public class News {
 	}
 	public void setIssue(Boolean issue) {
 		this.issue = issue;
+	}
+	public CaImg getCaimg() {
+		return caimg;
+	}
+	public void setCaimg(CaImg caimg) {
+		this.caimg = caimg;
+	}
+	public int getNewsPosition() {
+		return newsPosition;
+	}
+	public void setNewsPosition(Integer newsPosition) {
+		this.newsPosition = newsPosition;
 	}
 	
 	

@@ -52,17 +52,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
       </form>
     </div>
-    <!-- <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-	  		<legend>选择新闻图片</legend>
-		</fieldset>
-	
-		<div class="layui-upload">
-		  <button type="button" class="layui-btn" id="newsImg"><i class="layui-icon"></i>上传图片</button>
-		  <div class="layui-upload-list">
-		    <img class="layui-upload-img" id="preview">
-		    <p id="demoText"></p>
-		  </div>
-		</div> -->	
 	</div>
 <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 <script type="text/javascript">
@@ -83,23 +72,6 @@ layui.use(["form","layedit","upload"], function(){
 		  cid = data.value;
 		});
 	  
-		//图片上传,选完文件后不自动上传
-	  /*upload.render({
-	    elem: '#newsImg'
-	    ,url: '/upload/'
-    	,before: function(obj){
-    	      //预读本地文件示例，不支持ie8
-    	      obj.preview(function(index, file, result){
-    	        $('#preview').attr('src', result); //图片链接（base64）
-    	      });
-    	    }
-	    ,auto: false
-	    ,bindAction: '#submit'
-	    ,done: function(res){
-	      console.log(res)
-	    }
-	  });*/
-		
 	  var sub = document.getElementById("submit");
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();

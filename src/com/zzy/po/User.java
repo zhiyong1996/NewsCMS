@@ -8,7 +8,7 @@ public class User {
 	private String username;
 	private String password;
 	private Avatar avatar;
-	private Boolean lock;   //是否锁定
+	private Boolean isLock;   //是否锁定
 	private Set<Comment> comments = new HashSet<Comment>(); 
 	
 	public Integer getId() {
@@ -36,11 +36,11 @@ public class User {
 		this.avatar = avatar;
 	}
 	
-	public Boolean getLock() {
-		return lock;
+	public Boolean getIsLock() {
+		return isLock;
 	}
-	public void setLock(Boolean lock) {
-		this.lock = lock;
+	public void setIsLock(Boolean isLock) {
+		this.isLock = isLock;
 	}
 	public Set<Comment> getComments() {
 		return comments;

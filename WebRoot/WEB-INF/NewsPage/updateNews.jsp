@@ -6,9 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
+  <head> 
     <title>更新新闻</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
@@ -82,7 +80,10 @@ layui.use(["form","layedit","upload"], function(){
 		  }
 		});
 	  
-	  var edit = layedit.build('demo'); //建立编辑器
+	  var edit = layedit.build('demo', {
+		  tool: ['strong','italic','underline','del','|','left', 'center', 'right', '|', 'link','unlink','image'] //设置工具条
+	  	 ,height: 500 //设置高度
+	  }); //建立编辑器
 	  var cid = "${update.category.id}"|| -1;
 	  form.on("select(test)", function(data){
 		  cid = data.value;
@@ -90,8 +91,6 @@ layui.use(["form","layedit","upload"], function(){
 		
 	  var sub = document.getElementById("submit");
 	  sub.addEventListener("click",function(e){
-	   // layer.confirm("确定提交么", function(index){
-		      //layer.close(index);
 			  e.preventDefault();
 			  
 			  var newsid = "${update.id}"
@@ -99,29 +98,41 @@ layui.use(["form","layedit","upload"], function(){
 			 	,newsfrom = $("#newsfrom").val()
 			  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 			  	
+			  if(content.indexOf("<img") == 0){
+				  console.log("无p标签包裹");
+				  content = "<p>"+content+"</p>"
+			  }else{
+				  console.log("有p标签包裹");
+			  }
+			  	
 			  var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
-			  	  allPath = [], //全部图片路径
+			 
+			  	  //allPath = [], //全部图片路径
 			      pathList = [],//本地上传图片路径集合
 			      src = "";     //单个图片路径
+			      console.log(content);
+			      console.log($(content));
+			      console.log(imgs);
 			      
 				if(imgs.length>0){
 				  for(var i=0;i<imgs.length;i++){
 					src = $(imgs[i]).attr("src");
-					allPath.push(src);
-					//src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
+					//allPath.push(src);
+					src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 					if($(imgs[i]).attr("datatype") == "Nupload"){
 						pathList.push(src);
 					}
 				  }
 					pathList = pathList.join(",");
-					allPath = allPath.join(",");
+					//allPath = allPath.join(",");
 					console.log("pathList:"+pathList)
-					console.log("allPath:"+allPath)
+					//console.log("allPath:"+allPath)
 				}else{
 					pathList = "";
-					allPath = "";
+					//allPath = "";
 				}
-			  	if(title==""||newsfrom==""||content==""||parseInt(cid)<1){
+			      
+			  	if(title==""||newsfrom==""||parseInt(cid)<1){
 			  		layer.msg("请选择新闻分类");
 			  		return;
 		  		}
@@ -131,28 +142,21 @@ layui.use(["form","layedit","upload"], function(){
 					url:"news/updateNews",
 					dataType:"html",
 					data:{
-						newsid: newsid,
-						createId: "${update.createId}",
-						title: title,
-						cid: cid,
-						content: content,
-						newsfrom: newsfrom,
-						pathList: pathList,
-						allPath: allPath
+						newsid: newsid
+						,createId: "${update.createId}"
+						,title: title
+						,cid: cid
+						,content: content
+						,newsfrom: newsfrom
+						,pathList: pathList
+						//,allPath: allPath
 					},
 					success:function(data){
-						
-						for(var i=4;i>=0;i--){
-							(function(i){
-								if(i==0){
-									location.href = location.origin+"/NewsCMS/news/go_listN";
-								}else{
-									setTimeout(function(){
-										layer.msg("ID："+ newsid + "更新成功,"+i+"秒后自动跳转");
-									},i*1000);
-								}
-							})(i);
-						}
+						/*layer.msg("保存成功,3秒后自动跳转");
+						setTimeout(function(){
+							location.href = location.origin+"/NewsCMS/news/go_listN";
+						},3000);*/
+
 					},
 					
 					error:function(){

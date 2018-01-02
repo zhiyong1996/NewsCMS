@@ -16,7 +16,7 @@
         <!-- getCurrentSession!!!! 
         <property name="hibernate.current_session_context_class">thread</property>-->
     	<!-- 向控制台显示执行的SQL语句 -->
-    	<property name="show_sql">true</property>
+    	<property name="show_sql">false</property>
     	<property name="hbm2ddl.auto">update</property>
     	<!-- 配置映射文件 -->
     	<mapping resource="com/zzy/po/News.hbm.xml"/>

@@ -2,6 +2,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+Object admin = session.getAttribute("admin");
+if(admin != null){
+	response.sendRedirect(path+"/cmsIndex.jsp");
+}
 %>
 
 <!DOCTYPE HTML>
@@ -29,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		position: relative;
   		height: 100%;
   		background: url(img/login_bg.jpg);
-  		/*margin-top: 100px;*/
+  		background-size: cover; 
   		
   	}
   	.header{
@@ -53,6 +57,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	.layui-input-block{
   		margin-left: 0;
   	}
+  	.msg{
+  		color: red;
+  		padding: 0 5px 5px 5px;
+  		height: 20px;
+  	}
   </style>
   <body>
     <div class="container">
@@ -61,6 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</header>
    		<div class="login-box">
    			<h2 class="login-title">登录NewsCMS</h2>
+   			<p class="msg">${msg}</p>
    			<form class="layui-form" method="post" action="login/loginAction">
    				<div class="layui-form-item">
    					<div class="layui-input-block">

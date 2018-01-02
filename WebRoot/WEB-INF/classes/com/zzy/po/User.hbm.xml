@@ -9,7 +9,7 @@
 		</id>
 		<property name="username" type="java.lang.String" length="15" not-null="true"/>
 		<property name="password" type="java.lang.String" length="15" not-null="true"/>
-		<property name="lock" type="true_false"/>
+		<property name="isLock" type="true_false"/>
 		<many-to-one name="avatar" class="Avatar" column="avatar_id" unique="true" fetch="join"/>
 		<set name="comments" fetch="join" inverse="true" cascade="all">
 			<key column="comment_id"/>

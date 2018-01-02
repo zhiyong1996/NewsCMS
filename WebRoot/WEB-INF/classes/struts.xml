@@ -85,11 +85,14 @@
   <!-- 登录Action -->
   <package name="login" extends="json-default,interce" namespace="/login">
   	<action name="loginAction" class="com.zzy.action.LoginAction" method="login">
-  		<result name="success" type="redirectAction">index</result>
+  		<result name="success" type="redirectAction">indexAdmin</result>
   		<result name="login">/admin_login.jsp</result>
   	</action>
-  	<action name="index" class="com.zzy.action.NewsAction" method="go_index">
-  		<result name="index" type="dispatcher">/WEB-INF/cmsIndex.jsp</result>
+  	<action name="indexAdmin" class="com.zzy.action.NewsAction" method="go_index">
+  		<result name="index" type="redirect">/cmsIndex.jsp</result>
+  	</action>
+  	<action name="quit" class="com.zzy.action.LoginAction" method="quitAdmin">
+  		<result name="quit" type="redirect">/admin_login.jsp</result>
   	</action>
   </package>
   
@@ -110,4 +113,5 @@
     	<interceptor-ref name="defaultStack"/>
   	</action>
   </package>
+  
 </struts>
