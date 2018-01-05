@@ -68,6 +68,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	}
 	
 	//根据createid查询
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> getByCreateId(String createId) {
 		return (List<News>) getHibernateTemplate().find("from News where createId like "+createId);

@@ -32,10 +32,12 @@
   	
   	<!-- 新闻Action -->
     <action name="*" class="com.zzy.action.NewsAction" method="{1}">
-    	<result name="addNView">/WEB-INF/NewsPage/addNews.jsp</result>
-    	<!-- addNView暂时无用 -->
-    	
+    	<result name="go_add_com">/WEB-INF/NewsPage/addComNews.jsp</result>
+    	<result name="go_add_hot">/WEB-INF/NewsPage/addHotNews.jsp</result>
+    	<result name="go_add_ca">/WEB-INF/NewsPage/addCaNews.jsp</result>
   		<result name="listNView">/WEB-INF/NewsPage/listNews.jsp</result>
+  		
+  		
     	<result name="addnews" type="json">    <!-- 添加 -->
                 <param name="root">message</param>
        	</result>

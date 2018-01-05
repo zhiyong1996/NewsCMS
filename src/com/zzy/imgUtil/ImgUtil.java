@@ -67,7 +67,12 @@ public class ImgUtil {
 				return ServletActionContext.getRequest().getContextPath()+"/"+N_fileName+"/"+nid+"/"+filename;
 				
 			}
-		}
-		
+		}	
+	}
+	// moveFile 方法结束
+	
+	//
+	public static String moveCaNewsImg() throws IOException{
+		return "";
 	}
 }

@@ -13,17 +13,22 @@ public class LoginAction extends ActionSupport{
 	private Map<String,Object> session;
 	
 	public String login(){
-		if(username.equals("admin")&&password.equals("123456")){
+		
+		if(username == null|| password == null){
+			ActionContext.getContext().put("msg", "帐号密码不能为空");
+			System.out.println("登录失败,帐号密码为null");
+			return LOGIN;
+		}else if(username.equals("")&&password.equals("")){
+			ActionContext.getContext().put("msg", "帐号密码不能为空");
+			System.out.println("登录失败,帐号密码未空");
+			return LOGIN;
+		}else if(username.equals("admin")&&password.equals("123456")){
 			session = ActionContext.getContext().getSession();
 			session.put("admin", username);
 			System.out.println("登录成功");
 			return SUCCESS;
-		}else if(username.equals("")&&password.equals("")){
-			ActionContext.getContext().put("msg", "帐号密码有误");
-			System.out.println("登录失败");
-			return LOGIN;
 		}else{
-			ActionContext.getContext().put("msg", "帐号密码有误");
+			ActionContext.getContext().put("msg", "帐号或者密码错误");
 			return LOGIN;
 		}
 	}

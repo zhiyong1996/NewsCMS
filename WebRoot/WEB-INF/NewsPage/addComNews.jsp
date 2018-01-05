@@ -17,9 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="padding:30px;">
   <div class="layui-container">
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  	 <legend>新建普通新闻</legend>
+	</fieldset>
   <div class="layui-row">
       <form class="layui-form" action="" method="post">
-      	<input type="hidden" value="2017/12/2/10:37" id="newsHide" name="newsHide"/>
         <div class="layui-form-item">
           <label class="layui-form-label">新闻标题</label>
           <div class="layui-input-block">
@@ -65,14 +67,17 @@ layui.use(["form","layedit","upload"], function(){
 		    ,type: 'post' //默认post
 		  }
 		});
-	  var edit = layedit.build('demo'); //建立编辑器
+	  var edit = layedit.build('demo', {
+		  tool: ['strong','italic','underline','del','|','left', 'center', 'right', '|', 'link','unlink','image'] //设置工具条
+	  	 ,height: 500 //设置高度
+	  }); //建立编辑器
 	  
 	  var cid = -1;
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		});
 	  
-	  var sub = document.getElementById("submit");
+	  var sub = $("#submit");
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
@@ -91,10 +96,11 @@ layui.use(["form","layedit","upload"], function(){
 				url:"news/addNews",
 				dataType:"html",
 				data:{
-					title: title,
-					cid: cid,
-					newsfrom: newsfrom,
-					content: content
+					title: title
+					,cid: cid
+					,newsfrom: newsfrom
+					,content: content
+					,news_type: 0
 				},
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");

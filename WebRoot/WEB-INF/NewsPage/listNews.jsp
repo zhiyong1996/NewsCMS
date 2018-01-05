@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  	  ,id: "Reload"
 	  	  ,cellMinWidth: 85
 		  ,page:true
-		  , height:332
+		  , height:400
 	  });
 	  
 	  //监听工具条

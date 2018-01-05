@@ -46,7 +46,7 @@ public class NewsAction extends ActionSupport{
 	private Boolean issue;    //是否展示
 	private String pathList ; //本地上传的图片路径，以字符串拼接的形式传递
 //	private String allpath ;  //所有图片路径，以字符串拼接的形式传递
-	private Integer position; //位置码,用于区分新闻所属位置
+	private Integer news_type; //位置码,用于区分新闻所属位置
 	
 	//公共参数
 	private int page;//分页查询当前页
@@ -64,6 +64,16 @@ public class NewsAction extends ActionSupport{
 	
 	public String go_index(){
 		return "index";
+	}
+	
+	public String go_addHotNews(){
+		return "go_add_hot";
+	}
+	public String go_addCaNews(){
+		return "go_add_ca";
+	}
+	public String go_addCommonNews(){
+		return "go_add_com";
 	}
 	
 	public String go_addN(){
@@ -337,13 +347,15 @@ public class NewsAction extends ActionSupport{
 		this.pathList = pathList;
 	}
 
-	public Integer getPosition() {
-		return position;
+	public Integer getNews_type() {
+		return news_type;
 	}
 
-	public void setPosition(Integer position) {
-		this.position = position;
+	public void setNews_type(Integer news_type) {
+		this.news_type = news_type;
 	}
+
+
 
 //	public String getAllpath() {
 //		return allpath;

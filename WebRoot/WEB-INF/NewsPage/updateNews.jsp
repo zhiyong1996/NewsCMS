@@ -89,7 +89,7 @@ layui.use(["form","layedit","upload"], function(){
 		  cid = data.value;
 		}); 
 		
-	  var sub = document.getElementById("submit");
+	  var sub = $("#submit");
 	  sub.addEventListener("click",function(e){
 			  e.preventDefault();
 			  
