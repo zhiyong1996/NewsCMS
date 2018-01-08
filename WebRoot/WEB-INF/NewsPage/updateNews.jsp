@@ -84,10 +84,12 @@ layui.use(["form","layedit","upload"], function(){
 		  tool: ['strong','italic','underline','del','|','left', 'center', 'right', '|', 'link','unlink','image'] //设置工具条
 	  	 ,height: 500 //设置高度
 	  }); //建立编辑器
-	  var cid = "${update.category.id}"|| -1;
+	  
+	  var cid = "${update.category.id}"|| -1;//初始化新闻类型id
+	  
 	  form.on("select(test)", function(data){
 		  cid = data.value;
-		}); 
+		}); //监听新闻类型选择
 		
 	  var sub = $("#submit");
 	  sub.addEventListener("click",function(e){
@@ -107,29 +109,21 @@ layui.use(["form","layedit","upload"], function(){
 			  	
 			  var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
 			 
-			  	  //allPath = [], //全部图片路径
 			      pathList = [],//本地上传图片路径集合
 			      src = "";     //单个图片路径
-			      console.log(content);
-			      console.log($(content));
-			      console.log(imgs);
 			      
 				if(imgs.length>0){
 				  for(var i=0;i<imgs.length;i++){
 					src = $(imgs[i]).attr("src");
-					//allPath.push(src);
 					src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 					if($(imgs[i]).attr("datatype") == "Nupload"){
 						pathList.push(src);
 					}
 				  }
 					pathList = pathList.join(",");
-					//allPath = allPath.join(",");
 					console.log("pathList:"+pathList)
-					//console.log("allPath:"+allPath)
 				}else{
 					pathList = "";
-					//allPath = "";
 				}
 			      
 			  	if(title==""||newsfrom==""||parseInt(cid)<1){
@@ -139,7 +133,7 @@ layui.use(["form","layedit","upload"], function(){
 			 
 			 $.ajax({
 					type:"post",
-					url:"news/updateNews",
+					url:"news/update_news",
 					dataType:"html",
 					data:{
 						newsid: newsid

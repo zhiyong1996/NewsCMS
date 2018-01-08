@@ -12,8 +12,9 @@ import com.zzy.service.NewsService;
 
 @Transactional(readOnly = false)
 public class NewsServiceImpl implements NewsService {
-	@Resource NewsDao newsDao;
-	
+	@Resource
+	NewsDao newsDao;
+
 	@Override
 	public void saveOrUpdate(News news) {
 		newsDao.saveOrUpdate(news);
@@ -35,17 +36,18 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public void save(News news) {
-		newsDao.save(news);
+	public Integer save(News news) {
+		return newsDao.save(news);
 	}
-	
-	//分页查询
+
+	// 分页查询
 	@Override
-	public List<News> pageNews(final String hql,final int offset,final int length) {
+	public List<News> pageNews(final String hql, final int offset,
+			final int length) {
 		return newsDao.listPage(hql, offset, length);
 	}
-	
-	//获取某个记录总数
+
+	// 获取某个记录总数
 	@Override
 	public int getCount(String hql) {
 		return newsDao.getCount(hql);

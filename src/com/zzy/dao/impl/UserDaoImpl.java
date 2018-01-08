@@ -8,9 +8,9 @@ import com.zzy.po.User;
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	@Override
-	public void saveUser(User user) {
+	public Integer saveUser(User user) {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override

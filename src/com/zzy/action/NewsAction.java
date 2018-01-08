@@ -1,4 +1,5 @@
 package com.zzy.action;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,100 +23,136 @@ import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
-public class NewsAction extends ActionSupport{
-	@Resource CategoryService cService;
-	@Resource NewsService newsService;
-	@Resource ImageService imgService;
-	
-	//日期格式化
-	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
-	//新闻位置
-	private final static Integer COMMENT_NEWS = 0;
-	private final static Integer CA_NEWS = 1;
-	private final static Integer HOT_NEWS = 2;
-	
-	//从客户端接受的数据
-	private String title;	 //新闻标题
-	private String content;	 //新闻内容
-	private String newsfrom; //新闻来源
-	private Integer newsid;  //新闻id
-	private Integer cid;     //分类id
+public class NewsAction extends ActionSupport {
+	@Resource
+	CategoryService cService;
+	@Resource
+	NewsService newsService;
+	@Resource
+	ImageService imgService;
+
+	// 日期格式化
+	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat(
+			"yyyyMMddHHmmssSSS");
+	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
+
+	// 新闻位置
+	private final static Integer COMMENT_NEWS = 0; // 普通新闻
+	private final static Integer CA_NEWS = 1; // 轮播新闻
+	private final static Integer HOT_NEWS = 2; // 热点新闻
+
+	// 从客户端接受的数据
+	private String title; // 新闻标题
+	private String content; // 新闻内容
+	private String newsfrom; // 新闻来源
+	private Integer newsid; // 新闻id
+	private Integer cid; // 分类id
 	private String createId; // 创建空白新闻区分字段
-	private Boolean issue;    //是否展示
-	private String pathList ; //本地上传的图片路径，以字符串拼接的形式传递
-//	private String allpath ;  //所有图片路径，以字符串拼接的形式传递
-	private Integer news_type; //位置码,用于区分新闻所属位置
-	
-	//公共参数
-	private int page;//分页查询当前页
-	private int limit;//每页最大项目数
-	private long createTime; //更新操作参数
-	
-	//服务器端数据
+	private Boolean issue; // 是否展示
+	private String pathList; // 本地上传的图片路径，以字符串拼接的形式传递
+	// private String allpath ; //所有图片路径，以字符串拼接的形式传递
+	private Integer newstype; // 位置码,用于区分新闻所属位置
+
+	// 公共参数
+	private int page;// 分页查询当前页
+	private int limit;// 每页最大项目数
+	private long createTime; // 更新操作参数
+
+	// 服务器端数据
 	private String status = "success";
-	private List<News> newsSet;//新闻列表
-	private News news;         //新闻对象
-	private String message;    //待用信息
-	private JSONObject pageJson;//返回的json数据
-	private Map<Integer,Object> category;  //更新/添加新闻时查询的分类Map格式数据
-	private Map<String, String> backnews  = new HashMap<String,String>();       //返回的新闻对象
-	
-	public String go_index(){
+	private List<News> newsSet;// 新闻列表
+	private News news; // 新闻对象
+	private String message; // 待用信息
+	private JSONObject pageJson;// 返回的json数据
+	private Map<Integer, Object> category; // 更新/添加新闻时查询的分类Map格式数据
+	private Map<String, String> backnews = new HashMap<String, String>(); // 返回的新闻对象
+
+	public String go_index() {
 		return "index";
 	}
-	
-	public String go_addHotNews(){
-		return "go_add_hot";
+
+	public String select_news() {
+		return "select_news";
 	}
-	public String go_addCaNews(){
-		return "go_add_ca";
-	}
-	public String go_addCommonNews(){
-		return "go_add_com";
-	}
-	
-	public String go_addN(){
+
+	public String go_add_news() {
 		category = new HashMap<Integer, Object>();
 		List<Category> allC = cService.allCategory();
-		for(Category c:allC){
-			if(c.getId() ==1 ){
+		for (Category c : allC) {
+			if (c.getId() == 1) {
 				continue;
-			}else{
+			} else {
 				category.put(c.getId(), c.getName());
 			}
 		}
-		//创建空白新闻
+		if (newstype == CA_NEWS) {
+			return "go_add_ca";
+		} else if (newstype == HOT_NEWS) {
+			return "go_add_hot";
+		} else if (newstype == COMMENT_NEWS) {
+			return "go_add_com";
+		} else {
+			return "select_news";
+		}
+	}
+
+	public String add_news() throws Exception {
 		news = new News();
 		String createId = DateFormat1.format(new Date()).toString();
 		news.setCreateId(createId);
-		news.setTitle("NewTitle");
-		news.setContent("");
-		news.setNewsfrom("New");
-		news.setCategory(cService.getById(1));
+		news.setTitle(title);
+		news.setContent(content);
+		news.setNewsfrom(newsfrom);
+		news.setCategory(cService.getById(cid));
 		news.setIssue(false);
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
+		news.setNewstype(newstype);
+
+		if (!pathList.equals("")) {
+
+			String[] imgList = pathList.split(","); // 旧的图片路径由客户端传递字符串切割
+			String[] targetArr = new String[imgList.length];
+			String fileName;
+			String new_src;
+
+			for (int i = 0; i < imgList.length; i++) { // 循环遍历旧的图片路径,对图片进行移动
+
+				fileName = imgList[i]
+						.substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
+				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); // 调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
+				targetArr[i] = new_src;
+				if (!targetArr[i].equals("")) { // 如果新路径不为空,则为新的图片,新建图片对象保存数据库。
+					setContent(getContent().replace(imgList[i], targetArr[i]));// 循环将图片引用替换成新路径
+					imgList[i] = targetArr[i]; // 同时更新路径到旧数组
+
+					NewsImg ni = new NewsImg();
+					ni.setName(fileName);
+					ni.setPath(imgList[i]);
+					ni.setNews(news);
+
+					imgService.saveOrUpdate(ni);
+				}
+			}
+		}
+
 		newsService.save(news);
-		
-		ActionContext act = ActionContext.getContext();
-		
-		act.put("update", news);
-		
-		return "go_update";
-		
-	}
-	public String go_listN(){
-		return "listNView";
+
+		return "add_news_suc";
+
 	}
 
-	//定向到更新新闻页面
-	public String goUpdate(){
+	public String go_list_news() {
+		return "list_news";
+	}
+
+	// 定向到更新新闻页面
+	public String go_update() {
 		category = new HashMap<Integer, Object>();
 		List<Category> allC = cService.allCategory();
-		for(Category c:allC){
+		for (Category c : allC) {
 			category.put(c.getId(), c.getName());
 		}
 		news = newsService.getById(newsid);
@@ -123,9 +160,10 @@ public class NewsAction extends ActionSupport{
 		act.put("update", news);
 		return "go_update";
 	}
-	//更新新闻操作
-	public String updateNews() throws IOException{
-		
+
+	// 更新新闻操作
+	public String update_news() throws IOException {
+
 		news = newsService.getById(newsid);
 		news.setTitle(title);
 		news.setNewsfrom(newsfrom);
@@ -133,68 +171,73 @@ public class NewsAction extends ActionSupport{
 		long updateTime = System.currentTimeMillis();
 		news.setUpdateTime(updateTime);
 
-		
-		if(!pathList.equals("")){
-			
-			String[] imgList = pathList.split(",");           //旧的图片路径由客户端传递字符串切割
-			String[] targetArr = new String[imgList.length];  
-			String fileName;
-			String new_src ;
-			
-			for(int i=0;i<imgList.length;i++){  //循环遍历旧的图片路径,对图片进行移动
+		if (!pathList.equals("")) {
 
-				fileName = imgList[i].substring(imgList[i].lastIndexOf("/")+1);//通过字符串截取文件名
-				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); //调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
+			String[] imgList = pathList.split(","); // 旧的图片路径由客户端传递字符串切割
+			String[] targetArr = new String[imgList.length];
+			String fileName;
+			String new_src;
+
+			for (int i = 0; i < imgList.length; i++) { // 循环遍历旧的图片路径,对图片进行移动
+
+				fileName = imgList[i]
+						.substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
+				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); // 调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
 				targetArr[i] = new_src;
-				if(!targetArr[i].equals("")){    //如果新路径不为空,则为新的图片,新建图片对象保存数据库。
-					setContent(getContent().replace(imgList[i], targetArr[i]));//循环将图片引用替换成新路径
-					imgList[i] = targetArr[i];             //同时更新路径到旧数组
-					
+				if (!targetArr[i].equals("")) { // 如果新路径不为空,则为新的图片,新建图片对象保存数据库。
+					setContent(getContent().replace(imgList[i], targetArr[i]));// 循环将图片引用替换成新路径
+					imgList[i] = targetArr[i]; // 同时更新路径到旧数组
+
 					NewsImg ni = new NewsImg();
 					ni.setName(fileName);
 					ni.setPath(imgList[i]);
 					ni.setNews(news);
-					
+
 					imgService.saveOrUpdate(ni);
 				}
-			}		
+			}
 		}
 		news.setContent(content);
 		newsService.saveOrUpdate(news);
-		
+
 		message = "新闻更新成功";
 		return "update_success";
 	}
-	
-	/*获取新闻列表
+
+	/*
+	 * 获取新闻列表
+	 * 
 	 * @param count 记录总数
+	 * 
 	 * @param offset 每页首条记录的索引
+	 * 
 	 * @newsSet 新闻集合
-	**/
-	@SuppressWarnings({ })
-	public String listNews(){
+	 */
+	@SuppressWarnings({})
+	public String list_news() {
 		String hql = "from News";
 		int count = newsService.getCount(hql);
-		int offset = (page-1)*limit;
-		newsSet = (List<News>)newsService.pageNews(hql,offset,limit);
-		SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		int offset = (page - 1) * limit;
+		newsSet = (List<News>) newsService.pageNews(hql, offset, limit);
+		SimpleDateFormat dateformat = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
 		pageJson = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
 		JSONObject data;
-		for(News ns:newsSet){
-			//System.out.println(ns.getCategory().getName());
-			if(ns.getId() != null){
+		for (News ns : newsSet) {
+			// System.out.println(ns.getCategory().getName());
+			if (ns.getId() != null) {
 				data = new JSONObject();
-				data.put("id",ns.getId());
-				data.put("createid",ns.getCreateId());
+				data.put("id", ns.getId());
+				data.put("createid", ns.getCreateId());
 				data.put("title", ns.getTitle());
-				data.put("newsfrom",ns.getNewsfrom());
+				data.put("newsfrom", ns.getNewsfrom());
 				data.put("category", ns.getCategory().getName());
 				data.put("issue", ns.getIssue());
-				data.put("createTime",dateformat.format(ns.getCreateTime()));
-				data.put("updateTime",dateformat.format(ns.getUpdateTime()));
+				data.put("createTime", dateformat.format(ns.getCreateTime()));
+				data.put("updateTime", dateformat.format(ns.getUpdateTime()));
 				arrData.add(data);
-			}else{
+			} else {
 				System.out.println("查询数据失败");
 			}
 		}
@@ -203,36 +246,39 @@ public class NewsAction extends ActionSupport{
 		pageJson.put("msg", message);
 		pageJson.put("count", count);
 		pageJson.put("data", arrData);
-		//System.out.println("pageJson"+pageJson.toString());
-		return "pageJson";
+		// System.out.println("pageJson"+pageJson.toString());
+		return "page_json";
 	}
-	//删除新闻
-	public String delNews(){
-		news = (News)newsService.getById(newsid);
+
+	// 删除新闻
+	public String del_news() {
+		news = (News) newsService.getById(newsid);
 		newsService.delNews(news);
 		message = "新闻删除成功";
-		return "delNews";
+		return "del_news";
 	}
-	//更新发布(issue)状态
-	public String issueN(){
-		news = (News)newsService.getById(newsid);
+
+	// 更新发布(issue)状态
+	public String issue_news() {
+		news = (News) newsService.getById(newsid);
 		news.setIssue(issue);
 		newsService.saveOrUpdate(news);
 		return "issue_success";
 	}
-	
-	//预览新闻
-	public String newsPreview(){
-		news = (News)newsService.getById(newsid);
+
+	// 预览新闻
+	public String news_preview() {
+		news = (News) newsService.getById(newsid);
 
 		backnews.put("title", news.getTitle());
-		backnews.put("createTime",DateFormat2.format(news.getCreateTime()));
+		backnews.put("createTime", DateFormat2.format(news.getCreateTime()));
 		backnews.put("newsfrom", news.getNewsfrom());
 		backnews.put("content", news.getContent());
-		
+
 		ActionContext act = ActionContext.getContext();
 		act.put("preview", backnews);
-		return "preview";
+		
+		return "news_preview";
 	}
 
 	public String getTitle() {
@@ -250,26 +296,31 @@ public class NewsAction extends ActionSupport{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getNewsfrom() {
 		return newsfrom;
 	}
+
 	public void setNewsfrom(String newsfrom) {
 		this.newsfrom = newsfrom;
 	}
+
 	public Integer getNewsid() {
 		return newsid;
 	}
+
 	public void setNewsid(Integer newsid) {
 		this.newsid = newsid;
 	}
 
-	public String getResult(){
+	public String getResult() {
 		return status;
 	}
+
 	public List<News> getNewsSet() {
 		return newsSet;
 	}
+
 	public void setNewsSet(List<News> newsSet) {
 		this.newsSet = newsSet;
 	}
@@ -281,36 +332,47 @@ public class NewsAction extends ActionSupport{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 	public int getPage() {
 		return page;
 	}
+
 	public void setPage(int page) {
 		this.page = page;
 	}
+
 	public int getLimit() {
 		return limit;
 	}
+
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
+
 	public JSONObject getPageJson() {
 		return pageJson;
 	}
+
 	public long getCreateTime() {
 		return createTime;
 	}
+
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
 	}
+
 	public Map<Integer, Object> getCategory() {
 		return category;
 	}
+
 	public void setCategory(Map<Integer, Object> category) {
 		this.category = category;
 	}
+
 	public Integer getCid() {
 		return cid;
 	}
+
 	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
@@ -347,23 +409,21 @@ public class NewsAction extends ActionSupport{
 		this.pathList = pathList;
 	}
 
-	public Integer getNews_type() {
-		return news_type;
+	public Integer getNewstype() {
+		return newstype;
 	}
 
-	public void setNews_type(Integer news_type) {
-		this.news_type = news_type;
+	public void setNews_type(Integer newstype) {
+		this.newstype = newstype;
 	}
 
+	// public String getAllpath() {
+	// return allpath;
+	// }
+	//
+	// public void setAllpath(String allpath) {
+	// this.allpath = allpath;
+	// }
+	//
 
-
-//	public String getAllpath() {
-//		return allpath;
-//	}
-//
-//	public void setAllpath(String allpath) {
-//		this.allpath = allpath;
-//	}
-//	
-	
 }

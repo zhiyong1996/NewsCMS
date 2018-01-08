@@ -13,9 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <a class="layui-btn layui-btn-primary layui-btn-lg" href="">新建轮播新闻</a>
-    <a class="layui-btn layui-btn-primary layui-btn-lg" href="">新建热点新闻</a>
-    <a class="layui-btn layui-btn-primary layui-btn-lg" href="">新建普通新闻</a>
+  	<a class="layui-btn layui-btn-primary layui-btn-lg" href="new/go_add_news?newstype=0">新建普通新闻</a>
+    <a class="layui-btn layui-btn-primary layui-btn-lg" href="new/go_add_news?newstype=1">新建轮播新闻</a>
+    <a class="layui-btn layui-btn-primary layui-btn-lg" href="new/go_add_news?newstype=2">新建热点新闻</a>
     <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
   </body>
 </html>

@@ -13,8 +13,8 @@ import com.zzy.po.News;
 public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	
 	@Override
-	public void save(News news){
-		getHibernateTemplate().save(news);
+	public Integer save(News news){
+		return (Integer)getHibernateTemplate().save(news);
 	}
 	
 	@Override
@@ -73,5 +73,5 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	public List<News> getByCreateId(String createId) {
 		return (List<News>) getHibernateTemplate().find("from News where createId like "+createId);
 	}
-
+	
 }

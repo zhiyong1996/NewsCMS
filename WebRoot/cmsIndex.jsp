@@ -46,14 +46,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;" data-title="新闻管理"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
+                        	<dd>
+                                <a href="javascript:;" data-url="news/select_news" data-title="新建文章" kit-target data-id='3'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
+                            </dd>
                             <dd>
                                 <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='1'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="news/go_listN" data-title="文章管理" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章管理</span></a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;" data-url="" data-title="新建文章" kit-target data-id='3'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
+                                <a href="javascript:;" data-url="news/go_list_news" data-title="文章管理" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章管理</span></a>
                             </dd>
                         </dl>
                     </li>

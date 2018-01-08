@@ -5,7 +5,7 @@ import java.util.List;
 import com.zzy.po.News;
 
 public interface NewsService {
-	public void save(News news);
+	public Integer save(News news);
 	public void saveOrUpdate(News news);
 	public News getById(Integer id);
 	public void delNews(News news);

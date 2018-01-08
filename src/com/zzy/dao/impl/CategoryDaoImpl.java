@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
@@ -25,8 +26,8 @@ public class CategoryDaoImpl extends HibernateDaoSupport implements CategoryDao 
 	}
 
 	@Override
-	public void saveCategory(Category c) {
-		getHibernateTemplate().save(c);
+	public Integer saveCategory(Category c) {
+		return (Integer)getHibernateTemplate().save(c);
 	}
 
 	@Override

@@ -60,7 +60,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
 	  layedit = layui.layedit;
-	  //upload = layui.upload;
 	  layedit.set({
 		  uploadImage: {
 		    url: 'upload/uploadNewsImg' //接口url
@@ -81,31 +80,58 @@ layui.use(["form","layedit","upload"], function(){
 	  sub.addEventListener("click",function(e){
 		  e.preventDefault();
 		  
-		 var title = $("#title").val(),
-		 	newsfrom = $("#newsfrom").val(),
-		  	content = escape(layedit.getContent(edit));//获取正文内容转码
-			console.log(cid);
-		  	if(parseInt(cid)<1||title==""||newsform==""){
-		  		layer.msg("请选择新闻分类");
-		  		return;
-		  	}
+		  var newstype = 0
+		  	  ,title = $("#title").val()
+			  ,newsfrom = $("#newsfrom").val()
+			  ,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
+			  	
+			  if(content.indexOf("<img") == 0){
+				  console.log("无p标签包裹");
+				  content = "<p>"+content+"</p>"
+			  }else{
+				  console.log("有p标签包裹");
+			  }
+			  	
+			  var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
+			 
+			      pathList = [],//本地上传图片路径集合
+			      src = "";     //单个图片路径
+			      
+				if(imgs.length>0){
+				  for(var i=0;i<imgs.length;i++){
+					src = $(imgs[i]).attr("src");
+					src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
+					if($(imgs[i]).attr("datatype") == "Nupload"){
+						pathList.push(src);
+					}
+				  }
+					pathList = pathList.join(",");
+					console.log("pathList:"+pathList)
+				}else{
+					pathList = "";
+				}
+			      
+			  	if(title==""||newsfrom==""||parseInt(cid)<1){
+			  		layer.msg("请选择新闻分类");
+			  		return;
+		  		}
 		  		
 		 
 		 $.ajax({
 				type:"post",
-				url:"news/addNews",
+				url:"news/add_news",
 				dataType:"html",
 				data:{
 					title: title
 					,cid: cid
 					,newsfrom: newsfrom
 					,content: content
-					,news_type: 0
-				},
+					,newstype: newstype
+				},                                                                  
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");
 					setTimeout(function(){
-						location.href = location.origin+"/NewsCMS/news/go_listN"
+						location.href = location.origin+"/NewsCMS/news/go_list_news"
 						},3000);
 				},
 				error:function(){

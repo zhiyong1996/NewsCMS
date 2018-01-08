@@ -21,7 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="layui-btn-group demoTable">
 	
 	  <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
-	  <button class="layui-btn" data-type="newNews"><i class="layui-icon">&#xe608;</i>添加文章</button>
 	  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
 	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
 	</div>
@@ -55,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  //方法级渲染表格
 	  table.render({
 		  elem: "#table"
-		  ,url: "news/listNews"
+		  ,url: "news/list_news"
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
 		      ,{field: "id", title: "ID", width: 60, sort: true,fixed: true}
@@ -78,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  table.on('tool(demo)', function(obj){
 	    var data = obj.data;
 	    if(obj.event === 'detail'){
-	    	window.location.href = location.origin+"/NewsCMS/news/newsPreview?newsid="+data.id;
+	    	window.location.href = location.origin+"/NewsCMS/news/news_preview?newsid="+data.id;
 	    	console.log(data.id);
 	    } else if(obj.event === 'del'){
 	      layer.confirm('确定删除该行么', function(index){
@@ -101,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        });//ajax end  
 	      });  
 	    } else if(obj.event === 'edit'){
-	      window.location.href = location.origin+"/NewsCMS/news/goUpdate?newsid="+data.id;
+	      window.location.href = location.origin+"/NewsCMS/news/go_update?newsid="+data.id;
 	    }
 	  });
 	  
@@ -129,10 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	  //顶部按钮组的功能函数
 	  var active = { //active start
-	    newNews: function(){ //新建文章
-	    	window.location.href = location.origin+"/NewsCMS/news/go_addN";
-	    }
-	    ,getCheckLength: function(){ //获取选中数目
+	    getCheckLength: function(){ //获取选中数目
 	      var checkStatus = table.checkStatus("Reload")
 	      ,data = checkStatus.data;
 	      layer.msg('选中了：'+ data.length + ' 个');

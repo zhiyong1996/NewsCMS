@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-upload">
 		  <button type="button" class="layui-btn" id="upImg">上传封面图片</button>
 		  <div class="layui-upload-list">
-		    <img class="layui-upload-img" id="imgPre">
+		    <img class="layui-upload-img" id="imgPre" style="450px;,height:250px;">
 		    <p id="demoText"></p>
 		  </div>
 		</div> 

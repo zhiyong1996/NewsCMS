@@ -14,7 +14,7 @@
 		<property name="createTime" type="long"  not-null="true"/>
 		<property name="updateTime" type="long"  not-null="false"/>
 		<property name="issue" type="true_false"/>
-		<property name="newsPosition" type="integer" not-null="true"></property>
+		<property name="newstype" type="integer" not-null="true"></property>
 		
 		<many-to-one name="caimg" class="CaImg" column="caimg_id" unique="true" fetch="join"/>
 		<many-to-one name="category" class="Category" column="category_id" lazy="false" fetch="join"/>

@@ -6,7 +6,7 @@ import com.zzy.po.News;
 
 public interface NewsDao {
 	public void saveOrUpdate(News news);
-	public void save(News news);
+	public Integer save(News news);
 	public News getById(Integer id);
 	public List<News> listNews();
 	public void delNews(News news);
