@@ -413,7 +413,7 @@ public class NewsAction extends ActionSupport {
 		return newstype;
 	}
 
-	public void setNews_type(Integer newstype) {
+	public void setNewstype(Integer newstype) {
 		this.newstype = newstype;
 	}
 

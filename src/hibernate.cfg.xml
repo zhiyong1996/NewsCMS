@@ -24,6 +24,7 @@
     	<mapping resource="com/zzy/po/User.hbm.xml"/>
     	<mapping resource="com/zzy/po/Category.hbm.xml"/>
     	<mapping resource="com/zzy/po/AdImg.hbm.xml"/>
+    	<mapping resource="com/zzy/po/CaImg.hbm.xml"/>
     	<mapping resource="com/zzy/po/NewsImg.hbm.xml"/>
     	<mapping resource="com/zzy/po/Avatar.hbm.xml"/>
      </session-factory>

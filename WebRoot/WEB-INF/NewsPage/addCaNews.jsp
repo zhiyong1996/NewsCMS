@@ -12,16 +12,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>添加新闻</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/static/plugins/font-awesome/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
   </head>
   
   <body style="padding:30px;">
+  <div class="top" style="display: fixed;top: 0;left: 0;">
+  	<button class="layui-btn" onclick="history.go(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>  返回</button>
+  </div>
   <div class="layui-container">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   	 <legend>新建轮播新闻</legend>
 	</fieldset>
   <div class="layui-row">
-      <form class="layui-form" action="" method="post">
+      <form class="layui-form" action="" method="post" id="article">
         <div class="layui-form-item">
           <label class="layui-form-label">新闻标题</label>
           <div class="layui-input-block">
@@ -41,13 +45,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
         </div>
         <!-- 上传轮播大图 -->
-        <div class="layui-upload">
-		  <button type="button" class="layui-btn" id="upImg">上传封面图片</button>
-		  <div class="layui-upload-list">
-		    <img class="layui-upload-img" id="imgPre" style="450px;,height:250px;">
-		    <p id="demoText"></p>
-		  </div>
-		</div> 
+        <div class="layui-form-item">
+          <label class="layui-form-label">封面</label>
+          <div class="layui-input-block">
+            <div class="layui-upload">
+			  <button type="button" class="layui-btn" id="test1">上传封面图片</button>
+			  <div class="layui-upload-list">
+			    <img class="layui-upload-img" id="demo1" style="width: 450px; height: 250px;">
+			    <p id="demoText"></p>
+			  </div>
+			</div> 
+          </div>
+        </div>
+        
 		
         <div class="layui-form-item">
         	<label class="layui-form-label">正文</label>
@@ -58,7 +68,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
           <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo" id="submit">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
         </div>
       </form>
@@ -68,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
-	  layedit = layui.layedit;
+	  layedit = layui.layedit,
 	  upload = layui.upload;
 	  layedit.set({
 		  uploadImage: {
@@ -76,17 +85,22 @@ layui.use(["form","layedit","upload"], function(){
 		    ,type: 'post' //默认post
 		  }
 		});
+  
+	  //编辑器 start 
+	  var edit = layedit.build('demo', {
+		  tool: ['strong','italic','underline','del','|','left', 'center', 'right', '|', 'link','unlink','image'] //设置工具条
+	  	 ,height: 500 //设置高度
+	  }); //建立编辑器 end
 	  
 	//轮播图片上传
 	  var uploadInst = upload.render({
-	    elem: '#upImg'
-	    ,url: '/'
-	    ,auto: false
-	    ,bineAction: "#submit"
+	    elem: '#test1'
+	    ,url: 'upload/uploadNewsImg'
 	    ,before: function(obj){
 	      //预读本地文件示例，不支持ie8
-	      obj.preview(function(index, file, result){
-	        $('#imgPre').attr('src', result); //图片链接(base64)
+	      console.log(1)
+	      obj.preview(function(index, file, result){ console.log(2)
+	        $('#demo1').attr('src', result); //图片链接(base64)
 	      });
 	    }
 	    ,done: function(res){
@@ -98,20 +112,14 @@ layui.use(["form","layedit","upload"], function(){
 	    }
 	    ,error: function(){
 	      //演示失败状态，并实现重传
-	      /*var demoText = $('#demoText');
+	      var demoText = $('#demoText');
 	      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
 	      demoText.find('.demo-reload').on('click', function(){
 	        uploadInst.upload();
-	      });*/
+	      });
 	    }
 	  });
-	  
-	  //编辑器 start 
-	  var edit = layedit.build('demo', {
-		  tool: ['strong','italic','underline','del','|','left', 'center', 'right', '|', 'link','unlink','image'] //设置工具条
-	  	 ,height: 500 //设置高度
-	  }); //建立编辑器 end
-	  
+		
 	  //监听新闻分类选择框 start
 	  var cid = -1;//分类id
 	  form.on("select(test)", function(data){
@@ -120,21 +128,20 @@ layui.use(["form","layedit","upload"], function(){
 	  //监听新闻分类选择框 end
 	  
 	  //监听提交按钮 start
-	  var sub = $("#submit");
-	  sub.addEventListener("click",function(e){
+	  $("#submit").on("click",function(e){
 		  e.preventDefault();
 		  
 		 var title = $("#title").val(),
 		 	newsfrom = $("#newsfrom").val(),
 		  	content = escape(layedit.getContent(edit));//获取正文内容转码
 
-		  	if(parseInt(cid)<1||title==""||newsform==""){
+		  	if(parseInt(cid)<1||title==""||newsfrom==""){
 		  		layer.msg("请选择新闻分类");
 		  		return;
 		  	}
-		  		
-		 
-		 $.ajax({
+		 var formdata = new FormData(document.forms[0]);
+		 console.log(document.forms);
+		 /*$.ajax({
 				type:"post",
 				url:"news/addNews",
 				dataType:"html",
@@ -154,7 +161,7 @@ layui.use(["form","layedit","upload"], function(){
 				error:function(){
 					layer.msg("网络出错");
 				}
-			});//ajax
+			});//ajax*/
 	  });
 	  //监听提交 end
 	});

@@ -16,6 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="padding:30px;">
+  <div class="top" style="display: fixed;top: 0;left: 0;">
+  	<button class="layui-btn" onclick="history.go(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>  返回</button>
+  </div>
   <div class="layui-container">
   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   	 <legend>新建普通新闻</legend>
@@ -76,8 +79,7 @@ layui.use(["form","layedit","upload"], function(){
 		  cid = data.value;
 		});
 	  
-	  var sub = $("#submit");
-	  sub.addEventListener("click",function(e){
+	  $("#submit").on("click",function(e){
 		  e.preventDefault();
 		  
 		  var newstype = 0
