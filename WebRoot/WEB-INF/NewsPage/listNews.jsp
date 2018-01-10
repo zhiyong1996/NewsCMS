@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	layer.close(index);
 	        $.ajax({
 	        	type: "post",
-	        	url: "news/delNews",
+	        	url: "news/del_news",
 	        	dataType: "html",
 	        	data: {
 	        		newsid: data.id
@@ -110,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
 	    $.ajax({
 	        	type: "post",
-	        	url: "news/issueN",
+	        	url: "news/issue_news",
 	        	dataType: "html",
 	        	data: {
 	        		newsid: this.value,

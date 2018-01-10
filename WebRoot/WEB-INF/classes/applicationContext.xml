@@ -54,6 +54,11 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="imageService" class="com.zzy.service.impl.ImageServiceImpl"/>
+<!-- caimg业务bean -->
+	<bean id="pojoDao" class="com.zzy.dao.impl.PojoDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="caService" class="com.zzy.service.impl.CaImgServiceImpl"/>
 <!-- user业务bean -->	
 	<bean id="UserDao" class="com.zzy.dao.impl.UserDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>

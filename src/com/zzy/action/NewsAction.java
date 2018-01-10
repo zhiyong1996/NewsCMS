@@ -15,9 +15,11 @@ import net.sf.json.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.imgUtil.ImgUtil;
+import com.zzy.po.CaImg;
 import com.zzy.po.Category;
 import com.zzy.po.News;
 import com.zzy.po.NewsImg;
+import com.zzy.service.CaImgService;
 import com.zzy.service.CategoryService;
 import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
@@ -30,6 +32,8 @@ public class NewsAction extends ActionSupport {
 	NewsService newsService;
 	@Resource
 	ImageService imgService;
+	@Resource
+	CaImgService caService;
 
 	// 日期格式化
 	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat(
@@ -53,6 +57,7 @@ public class NewsAction extends ActionSupport {
 	private String pathList; // 本地上传的图片路径，以字符串拼接的形式传递
 	// private String allpath ; //所有图片路径，以字符串拼接的形式传递
 	private Integer newstype; // 位置码,用于区分新闻所属位置
+	private String caSrc;
 
 	// 公共参数
 	private int page;// 分页查询当前页
@@ -63,6 +68,7 @@ public class NewsAction extends ActionSupport {
 	private String status = "success";
 	private List<News> newsSet;// 新闻列表
 	private News news; // 新闻对象
+	private CaImg ci; //  轮播图像
 	private String message; // 待用信息
 	private JSONObject pageJson;// 返回的json数据
 	private Map<Integer, Object> category; // 更新/添加新闻时查询的分类Map格式数据
@@ -110,7 +116,9 @@ public class NewsAction extends ActionSupport {
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
 		news.setNewstype(newstype);
-
+		Integer nid = newsService.save(news);
+		
+		//移动新闻内容里面的图片
 		if (!pathList.equals("")) {
 
 			String[] imgList = pathList.split(","); // 旧的图片路径由客户端传递字符串切割
@@ -120,9 +128,8 @@ public class NewsAction extends ActionSupport {
 
 			for (int i = 0; i < imgList.length; i++) { // 循环遍历旧的图片路径,对图片进行移动
 
-				fileName = imgList[i]
-						.substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
-				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); // 调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
+				fileName = imgList[i].substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
+				new_src = ImgUtil.moveFile(nid, imgList[i], fileName); // 调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
 				targetArr[i] = new_src;
 				if (!targetArr[i].equals("")) { // 如果新路径不为空,则为新的图片,新建图片对象保存数据库。
 					setContent(getContent().replace(imgList[i], targetArr[i]));// 循环将图片引用替换成新路径
@@ -137,9 +144,20 @@ public class NewsAction extends ActionSupport {
 				}
 			}
 		}
-
-		newsService.save(news);
-
+		//移动轮播图片
+		if(newstype == CA_NEWS){
+			String fileName = caSrc.substring(caSrc.lastIndexOf("/")+1);
+			String new_src = ImgUtil.moveFile(nid, caSrc, fileName);
+			caSrc = new_src;
+			ci = new CaImg();
+			ci.setImgName(fileName);
+			ci.setPath(new_src);
+			ci.setNews(newsService.getById(nid));
+			caService.save(ci);
+			news.setCaimg(ci);
+			newsService.saveOrUpdate(news);
+		}
+		
 		return "add_news_suc";
 
 	}
@@ -415,6 +433,14 @@ public class NewsAction extends ActionSupport {
 
 	public void setNewstype(Integer newstype) {
 		this.newstype = newstype;
+	}
+
+	public String getCaSrc() {
+		return caSrc;
+	}
+
+	public void setCaSrc(String caSrc) {
+		this.caSrc = caSrc;
 	}
 
 	// public String getAllpath() {

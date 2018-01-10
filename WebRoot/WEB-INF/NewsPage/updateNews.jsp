@@ -92,7 +92,7 @@ layui.use(["form","layedit","upload"], function(){
 		}); //监听新闻类型选择
 		
 	  var sub = $("#submit");
-	  sub.addEventListener("click",function(e){
+	  sub.on("click",function(e){
 			  e.preventDefault();
 			  
 			  var newsid = "${update.id}"
