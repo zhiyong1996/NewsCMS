@@ -14,8 +14,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="padding:30px;">
+    <div class="top" style="display: fixed;top: 0;left: 0;">
+  	<button class="layui-btn" onclick="history.go(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>  返回</button>
+  </div>
   <div class="layui-container">
-  
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  	 <legend>新建轮播新闻</legend>
+	</fieldset>
+  <div class="layui-container">
   <div class="layui-row">
       <form class="layui-form" action="" method="post">
         <div class="layui-form-item">
@@ -40,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="layui-form-item">
         	<label class="layui-form-label">正文</label>
         	<div class="layui-input-block">
-        		<textarea id="demo" style="display: none;"></textarea>
+        		<textarea id="demo" style="display: none;">${update.content}</textarea>
         	</div>
         </div>
         <div class="layui-form-item">
@@ -65,9 +71,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 <script type="text/javascript">
 
-(function(){
-	var content = $("#demo").val("${update.content}");
-})();
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
 	  layedit = layui.layedit;
@@ -143,13 +146,13 @@ layui.use(["form","layedit","upload"], function(){
 						,content: content
 						,newsfrom: newsfrom
 						,pathList: pathList
-						//,allPath: allPath
+						,newstype: ${update.newstype}
 					},
 					success:function(data){
-						/*layer.msg("保存成功,3秒后自动跳转");
+						layer.msg("保存成功,3秒后自动跳转");
 						setTimeout(function(){
 							location.href = location.origin+"/NewsCMS/news/go_listN";
-						},3000);*/
+						},3000);
 
 					},
 					

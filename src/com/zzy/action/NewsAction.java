@@ -176,7 +176,16 @@ public class NewsAction extends ActionSupport {
 		news = newsService.getById(newsid);
 		ActionContext act = ActionContext.getContext();
 		act.put("update", news);
-		return "go_update";
+		Integer nt = news.getNewstype();
+		if(nt == COMMENT_NEWS){
+			return "go_update_com";
+		}else if(nt == CA_NEWS){//如果是轮播新闻单独获取轮播图片
+			String caSrc = news.getCaimg().getPath();
+			act.put("caSrc", caSrc);
+			return "go_update_ca";
+		}else{
+			return "go_update_hot";
+		}
 	}
 
 	// 更新新闻操作
@@ -214,6 +223,19 @@ public class NewsAction extends ActionSupport {
 					imgService.saveOrUpdate(ni);
 				}
 			}
+		}
+		
+		//移动轮播图片
+		if(newstype == CA_NEWS){
+			String fileName = caSrc.substring(caSrc.lastIndexOf("/")+1);
+			String new_src = ImgUtil.moveFile(newsid, caSrc, fileName);
+			caSrc = new_src;
+			ci = news.getCaimg();
+			ci.setImgName(fileName);
+			ci.setPath(new_src);
+			caService.saveOrUpdate(ci);
+			news.setCaimg(ci);
+			newsService.saveOrUpdate(news);
 		}
 		news.setContent(content);
 		newsService.saveOrUpdate(news);

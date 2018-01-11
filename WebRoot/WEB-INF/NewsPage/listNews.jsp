@@ -27,16 +27,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 	<table class="layui-table" id="table" lay-filter="demo"></table>
-
+	
+	<!-- 工具栏模板引擎 -->
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
-
+	
+	<!-- 表格表单模板引擎 -->
 	<script type="text/html" id="switchTpl">
   		<!-- 这里的 d为ajax获取到的数据对象 -->
   		<input type="checkbox" name="issue" value="{{d.id}}" lay-skin="switch" lay-text="on|off" lay-filter="sexDemo" {{ d.issue == true ? 'checked' : '' }}>
+	</script>
+	
+	<!-- 序列号模板引擎 -->
+	<script type="text/html" id="indexTpl">
+    	{{parseInt(d.LAY_TABLE_INDEX+1)}}
 	</script>
 	
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
@@ -57,7 +64,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,url: "news/list_news"
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
-		      ,{field: "id", title: "ID", width: 60, sort: true,fixed: true}
+		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl"}
+		      ,{field: "id", title: "ID", width: 60, sort: true}
 		      ,{field: "title", title: "标题", width: 280, align: "center"}
 		      ,{field: "newsfrom", title: "来源", width: 90, align: "center"}
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
@@ -131,6 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    getCheckLength: function(){ //获取选中数目
 	      var checkStatus = table.checkStatus("Reload")
 	      ,data = checkStatus.data;
+	    
 	      layer.msg('选中了：'+ data.length + ' 个');
 	    }
 	    ,isAll: function(){ //验证是否全选

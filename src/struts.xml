@@ -46,7 +46,9 @@
 			<result name="page_json" type="json">    <!-- 获取分页 -->
 				<param name="root">pageJson</param>
 			</result>
-			<result name="go_update">/WEB-INF/NewsPage/updateNews.jsp</result>   	<!-- 更新路由 -->
+			<result name="go_update_com">/WEB-INF/NewsPage/updateComNews.jsp</result>   	<!-- 更新普通路由 -->
+			<result name="go_update_ca">/WEB-INF/NewsPage/updateCaNews.jsp</result>   		<!-- 更新轮播路由 -->
+			<result name="go_update_hot">/WEB-INF/NewsPage/updateHotNews.jsp</result>   	<!-- 更新热点路由 -->
 			<result name="update_success" type="json" >   	<!-- 更新新闻 -->
 				<param name="root">message</param>
 			</result>
