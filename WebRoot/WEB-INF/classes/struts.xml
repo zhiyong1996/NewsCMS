@@ -95,7 +95,7 @@
 	<!-- 登录Action -->
 	<package name="login" extends="json-default,interce" namespace="/login">
 		<action name="loginAction" class="com.zzy.action.LoginAction"
-			method="login">
+			method="admin_login">
 			<result name="success" type="redirectAction">indexAdmin</result>
 			<result name="login">/admin_login.jsp</result>
 		</action>
@@ -103,7 +103,7 @@
 			method="go_index">
 			<result name="index" type="redirect">/cmsIndex.jsp</result>
 		</action>
-		<action name="quit" class="com.zzy.action.LoginAction" method="quitAdmin">
+		<action name="quit" class="com.zzy.action.LoginAction" method="quit_admin">
 			<result name="quit" type="redirect">/admin_login.jsp</result>
 		</action>
 	</package>

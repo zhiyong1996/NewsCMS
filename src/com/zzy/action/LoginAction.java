@@ -12,7 +12,7 @@ public class LoginAction extends ActionSupport{
 	private String error;
 	private Map<String,Object> session;
 	
-	public String login(){
+	public String admin_login(){
 		
 		if(username == null|| password == null){
 			ActionContext.getContext().put("msg", "帐号密码不能为空");
@@ -33,7 +33,7 @@ public class LoginAction extends ActionSupport{
 		}
 	}
 	
-	public String quitAdmin(){
+	public String quit_admin(){
 		session = ActionContext.getContext().getSession();
 		session.remove("admin");
 		return "quit";
