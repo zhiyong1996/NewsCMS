@@ -7,15 +7,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML>
 <html>
   <head>
-    <base href="<%=basePath%>">
     <title>新闻首页</title>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="News/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" type="text/css" href="News/Ncss/index.css"/>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-	<script src="News/bootstrap/js/bootstrap.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
   
   <body>

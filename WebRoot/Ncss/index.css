@@ -3,6 +3,9 @@
         font-family: 微软雅黑;
 	}
     ul,li{padding: 0;margin: 0;list-style: none}
+    .container{
+        width: 1170px !important
+    }
     .navbar{
         background: #fff;
         box-shadow: 0 -1px 8px #8c8c8c;
@@ -110,13 +113,13 @@
         border-right: 1px solid #ccc;
     }
     .foot {
-        background: #000;
-        color: #ddd;
+        margin: 80px 0 20px 0;
+        color: #bbb;
         text-align: center;
         font-size: 14px;
     }
     .foot a{
-        color: #ddd;
+        color: #bbb;
     }
     .foot p{
         margin: 10px 0;

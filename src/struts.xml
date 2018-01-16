@@ -92,7 +92,7 @@
 		</action>
 	</package>
 
-	<!-- 登录Action -->
+	<!-- 控制台登录Action -->
 	<package name="login" extends="json-default,interce" namespace="/login">
 		<action name="loginAction" class="com.zzy.action.LoginAction"
 			method="admin_login">
@@ -105,6 +105,15 @@
 		</action>
 		<action name="quit" class="com.zzy.action.LoginAction" method="quit_admin">
 			<result name="quit" type="redirect">/admin_login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 网站注册Action -->
+	<package name="resigter" extends="json-default,interce" namespace="/register">
+		<action name="has_username" class="com.zzy.action.RegisterAction" method="has_username">
+			<result name="has_N" type="json">
+				<param name="root">backjson</param>
+			</result>
 		</action>
 	</package>
 

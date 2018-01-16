@@ -1,5 +1,16 @@
 package com.zzy.service;
 
-public interface UserService {
+import java.util.List;
 
+import com.zzy.po.User;
+
+public interface UserService {
+	public Integer save(User user);
+	public void saveOrUpdate(User user);
+	public User getUserById(Integer id);
+	public void delUser(User user);
+	public List<User> listUser();
+	public List<User> pageUser(String hql,int offset,int length);
+	public int getCount(String hql);
+	public List<User> getUserByName(String name);
 }

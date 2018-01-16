@@ -39,6 +39,11 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
+<!-- PoJoDao -->
+	<bean id="pojoDao" class="com.zzy.dao.impl.PojoDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
 <!-- news业务bean -->
 	<bean id="newsDao" class="com.zzy.dao.impl.NewsDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -54,8 +59,9 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="imageService" class="com.zzy.service.impl.ImageServiceImpl"/>
+	
 <!-- caimg业务bean -->
-	<bean id="pojoDao" class="com.zzy.dao.impl.PojoDaoImpl">
+	<bean id="caImgDao" class="com.zzy.dao.impl.CaImgDaoImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="caService" class="com.zzy.service.impl.CaImgServiceImpl"/>
@@ -69,4 +75,5 @@
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>
 	<bean id="categoryAction" class="com.zzy.action.CategoryAction" scope="prototype"/>
 	<bean id="imageAction" class="com.zzy.action.ImageAction" scope="prototype"/>
+	<bean id="RegisterAction" class="com.zzy.action.RegisterAction" scope="prototype"/>
 </beans>
