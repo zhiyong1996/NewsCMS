@@ -10,67 +10,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>注册帐号</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/register.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
 <style>
-body {
-    padding-top: 20px;
-}
 
-.info-container {
-    padding-top: 40px;
-}
-
-.title {
-    padding-bottom: 30px;
-    box-shadow: 0px 4px 9px rgba(64, 64, 64, 0.1);
-}
-
-.title small {
-    padding-left: 10px;
-    margin-left: 10px;
-    font-size: 15px;
-    border-left: 1px solid #ccc;
-}
-
-.my-error .tip-origin {
-    position: relative;
-}
-
-.my-error .tip-origin .tip {
-    position: absolute;
-    top: 8px;
-    left: 100%;
-    width: 100px;
-    color: #a94442;
-    font-weight: bold;
-    display: block;
-}
-
-.tip {
-    display: none;
-}
-
-.help-block {
-    color: #737373;
-}
-
-.has-success.has-feedback .glyphicon-ok.form-control-feedback {
-    display: block;
-}
-
-.has-error.has-feedback.my-error .glyphicon-remove.form-control-feedback {
-    display: block;
-}
-
-.form-control-feedback {
-    display: none;
-}
-
-.submit {
-    margin-top: 30px;
-}
 </style>
 <!-- style end-->
 

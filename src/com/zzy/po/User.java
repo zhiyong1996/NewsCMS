@@ -7,6 +7,7 @@ public class User {
 	private Integer id;
 	private String username;
 	private String password;
+	private String Email;
 	private Avatar avatar;
 	private Boolean isLock;   //是否锁定
 	private Set<Comment> comments = new HashSet<Comment>(); 
@@ -28,6 +29,13 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getEmail() {
+		return Email;
+	}
+	public void setEmail(String email) {
+		Email = email;
 	}
 	public Avatar getAvatar() {
 		return avatar;

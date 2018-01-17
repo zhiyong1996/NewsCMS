@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.zzy.dao.PojoDao;
 import com.zzy.dao.UserDao;
 import com.zzy.po.User;
 import com.zzy.service.UserService;
 
+@Transactional(readOnly = false)
 public class UserServiceImpl implements UserService {
 	@Resource UserDao userDao;
 	@Resource PojoDao pojoDao;

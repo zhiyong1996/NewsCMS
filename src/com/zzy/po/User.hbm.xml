@@ -7,8 +7,9 @@
 		<id name="id">
 			<generator class="native"/>
 		</id>
-		<property name="username" type="java.lang.String" length="15" not-null="true"/>
-		<property name="password" type="java.lang.String" length="15" not-null="true"/>
+		<property name="username" type="java.lang.String" length="12" not-null="true"/>
+		<property name="password" type="java.lang.String" length="12" not-null="true"/>
+		<property name="email" type="java.lang.String" length="50" not-null="true"/>
 		<property name="isLock" type="true_false"/>
 		<many-to-one name="avatar" class="Avatar" column="avatar_id" unique="true" fetch="join"/>
 		<set name="comments" fetch="join" inverse="true" cascade="all">

@@ -115,6 +115,9 @@
 				<param name="root">backjson</param>
 			</result>
 		</action>
+		<action name="add_user" class="com.zzy.action.RegisterAction" method="add_user">
+			<result name="register_rs">/registe_suc.jsp</result>
+		</action>
 	</package>
 
 	<!-- 图片Action -->

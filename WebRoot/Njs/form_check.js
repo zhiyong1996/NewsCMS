@@ -6,8 +6,10 @@ $(function() {
 	   ,email_pass = false
 	   ,err_msg = "";
 	
+	var can_use ;
+	
 	//表单信息的三种状态
-	var common = 0,
+	const common = 0,
 		error = 1,
 		success = 2;
 	
@@ -28,22 +30,24 @@ $(function() {
         }
     }
 
-    function check_value(type,value){
-    	//非空验证
-    	if(value == "" || value.trim() == ""){
-    		err_msg = type+"不能为空";
-    		return false;
-    	}else if(value.length){}
+    function check_value(JQobj,type,value){
+
     }
 
     $("#username").on("change", function(e) {
         var value = this.value;
-        
+
         var gf_dom = $($(this).parent()).parent();
         if (value == "" || value == undefined) {
-        	show_msg(gf_dom,common,"");
+        	show_msg(gf_dom,error,"用户名不能为空");
+        	username_pass = false;
             return;
-        } else {
+        } else if(value.trim().length<6 || value.trim().length>12){
+        	show_msg(gf_dom,error,"长度应该为6-12位字符串");
+        	username_pass = false;
+            return;
+        }
+        else {
             $.ajax({
                  url: 'register/has_username',
                  type: 'post',
@@ -52,11 +56,13 @@ $(function() {
                      username: value
                  },
                  success: function(data) {
-                	 console.log(data);
                 	 if(data.has_name){
-                		 show_msg(gf_dom,error,"帐号已被可用");
+                		 show_msg(gf_dom,error,"帐号已被使用用");
+                		 username_pass = false;
                 	 }else{
                 		 show_msg(gf_dom,success,"帐号可使用");
+                		 can_use = value;
+                		 username_pass = true;
                 	 }
                  },
                  error: function() {
@@ -70,13 +76,16 @@ $(function() {
     	var gf_dom = $($(this).parent()).parent();
     	
     	if(value == "" || value == undefined){
-    		show_msg(gf_dom,common,"");
+    		password_pass = false;
+    		show_msg(gf_dom,error,"密码不能为空");
     		$("#passagain").val("").change();
     	}else if(!value.match(/^[a-z0-9_-]{6,12}$/)){
+    		password_pass = false;
     		show_msg(gf_dom,error,"密码格式不正确");
     		$("#passagain").change();
     	}else{
     		show_msg(gf_dom,success,"");
+    		password_pass = true;
     		$("#passagain").change();
     	}
     })
@@ -84,11 +93,14 @@ $(function() {
     	var value = this.value;
     	var gf_dom = $($(this).parent()).parent();
     	if(value == "" || value == undefined){
-    		show_msg(gf_dom,common,"");
+    		passagain_pass = false;
+    		show_msg(gf_dom,error,"密码不能为空");
     	}else if(this.value !== $("#password").val()){
+    		passagain_pass = false;
     		show_msg(gf_dom,error,"密码不一致");
     	}else{
     		show_msg(gf_dom,success,"");
+    		passagain_pass = true;
     	}
     });
 
@@ -96,20 +108,28 @@ $(function() {
     	var value = this.value;
     	var gf_dom = $($(this).parent()).parent();
     	if(value == "" || value == undefined){
-    		show_msg(gf_dom,common,"");
+    		email_pass = false;
+    		show_msg(gf_dom,error,"邮箱不能为空");
     	}
     	else if(!value.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)){
+    		email_pass = false;
     		show_msg(gf_dom,error,"邮箱格式不正确");
     	}else{
     		show_msg(gf_dom,success,"");
+    		email_pass = true;
     	}
     });
     
     $("#form").on("submit",function(e){
     	e.preventDefault();
-    	var formData = new FormData(this);
-    	console.log(typeof formData)
-    	
+    	$("#username").change();
+    	$("#password").change();
+    	$("#passagain").change();
+    	$("#email").change();
+    	if(username_pass && password_pass && passagain_pass && email_pass){
+    		$("#submit").attr("disabled","true");
+    		$(this).submit();
+    	}
     });
 
 });

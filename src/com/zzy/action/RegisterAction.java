@@ -4,7 +4,9 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.User;
 import com.zzy.service.UserService;
 
 @SuppressWarnings("serial")
@@ -15,15 +17,28 @@ public class RegisterAction extends ActionSupport{
 	private String username;
 	private String password;
 	private String passagain;
+	private String email;
 	
 	private JSONObject backjson = new JSONObject();
 	
-	public String sign_up(){
-		return "";
+	public String add_user(){
+		User u = new User();
+		u.setUsername(username);
+		u.setPassword(password);
+		u.setEmail(email);
+		Integer uid = uService.save(u);
+		if(uid instanceof Integer){
+			ActionContext.getContext().put("msg", username+"创建成功");
+			ActionContext.getContext().put("rs", true);
+		}else{
+			ActionContext.getContext().put("msg", "账户创建异常");
+			ActionContext.getContext().put("rs", false);
+		}
+		return "register_rs";
 	}
 	
-	public String sign_in(){
-		return "sign_in";
+	public String user_login(){
+		return "user_login";
 	}
 	
 	public String has_username(){
@@ -33,7 +48,7 @@ public class RegisterAction extends ActionSupport{
 			backjson.put("has_name", HAS_USERNAME);	
 			backjson.put("msg","账号已存在");
 		}else{
-			System.out.println("不存在");
+			System.out.println("帐号可用");
 			backjson.put("has_name", NO_USERNAME);
 			backjson.put("msg","账号可用");
 		}
@@ -62,6 +77,15 @@ public class RegisterAction extends ActionSupport{
 
 	public void setPassagain(String passagain) {
 		this.passagain = passagain;
+	}
+	
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public JSONObject getBackjson() {
