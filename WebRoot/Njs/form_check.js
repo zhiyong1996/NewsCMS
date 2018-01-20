@@ -120,15 +120,17 @@ $(function() {
     	}
     });
     
-    $("#form").on("submit",function(e){
-    	e.preventDefault();
+    $("#form").submit(function(e){
+    	//e.preventDefault();
+    	console.log("start");
     	$("#username").change();
+    	console.log("username change");
     	$("#password").change();
+    	console.log("ps change");
     	$("#passagain").change();
     	$("#email").change();
-    	if(username_pass && password_pass && passagain_pass && email_pass){
-    		$("#submit").attr("disabled","true");
-    		$(this).submit();
+    	if(!(username_pass && password_pass && passagain_pass && email_pass)){
+    		return false;
     	}
     });
 

@@ -74,4 +74,19 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 		return (List<News>) getHibernateTemplate().find("from News where createId like "+createId);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<News> getNewsByType(Integer typeId){
+		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? order by createTime desc",typeId);
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<News> getComNews(Integer cid, Integer typeId) {
+		return (List<News>) getHibernateTemplate().
+				find("from News n where n.newstype =? and n.cid = ?by createTime asc",new Object[]{typeId,cid});
+	}
+	
+	
 }

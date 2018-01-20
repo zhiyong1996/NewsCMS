@@ -22,19 +22,25 @@ public class RegisterAction extends ActionSupport{
 	private JSONObject backjson = new JSONObject();
 	
 	public String add_user(){
-		User u = new User();
-		u.setUsername(username);
-		u.setPassword(password);
-		u.setEmail(email);
-		Integer uid = uService.save(u);
-		if(uid instanceof Integer){
-			ActionContext.getContext().put("msg", username+"创建成功");
-			ActionContext.getContext().put("rs", true);
-		}else{
+		if(getUsername().equals("")||getPassword().equals("")){
 			ActionContext.getContext().put("msg", "账户创建异常");
 			ActionContext.getContext().put("rs", false);
+			return "register_rs";
+		}else{
+			User u = new User();
+			u.setUsername(username);
+			u.setPassword(password);
+			u.setEmail(email);
+			Integer uid = uService.save(u);
+			if(uid instanceof Integer){
+				ActionContext.getContext().put("msg", "帐号:["+username+"]创建成功");
+				ActionContext.getContext().put("rs", true);
+			}else{
+				ActionContext.getContext().put("msg", "账户创建异常");
+				ActionContext.getContext().put("rs", false);
+			}
+			return "register_rs";
 		}
-		return "register_rs";
 	}
 	
 	public String user_login(){

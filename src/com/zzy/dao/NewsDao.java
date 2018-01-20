@@ -13,4 +13,6 @@ public interface NewsDao {
 	public List<News> listPage(String hql,int offset,int length);
 	public int getCount(String hql);
 	public List<News> getByCreateId(String createId);
+	public List<News> getNewsByType(Integer typeId);
+	public List<News> getComNews(Integer cid,Integer typeId);
 }

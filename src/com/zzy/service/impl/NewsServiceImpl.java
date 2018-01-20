@@ -57,4 +57,9 @@ public class NewsServiceImpl implements NewsService {
 	public List<News> getByCreateId(String createId) {
 		return newsDao.getByCreateId(createId);
 	}
+
+	@Override
+	public List<News> getByType(Integer typeId) {
+		return newsDao.getNewsByType(typeId);
+	}
 }

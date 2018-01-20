@@ -99,8 +99,7 @@
 			<result name="success" type="redirectAction">indexAdmin</result>
 			<result name="login">/admin_login.jsp</result>
 		</action>
-		<action name="indexAdmin" class="com.zzy.action.NewsAction"
-			method="go_index">
+		<action name="indexAdmin" class="com.zzy.action.NewsAction" method="go_index">
 			<result name="index" type="redirect">/cmsIndex.jsp</result>
 		</action>
 		<action name="quit" class="com.zzy.action.LoginAction" method="quit_admin">
@@ -116,11 +115,18 @@
 			</result>
 		</action>
 		<action name="add_user" class="com.zzy.action.RegisterAction" method="add_user">
-			<result name="register_rs">/registe_suc.jsp</result>
+			<result name="register_rs" type="redirect">/register_rs.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 网站用户Action -->
+	<package name="readingNews" extends="json-default,interce" namespace="">
+		<action name="index" class="com.zzy.action.UserAction" method="loading_news">
+			<result name="loading_news">/index.jsp</result>
 		</action>
 	</package>
 
-	<!-- 图片Action -->
+	<!-- 图片上传Action -->
 	<package name="imgUpload" extends="json-default,interce"
 		namespace="/upload">
 		<action name="uploadNewsImg" class="com.zzy.action.ImageAction"

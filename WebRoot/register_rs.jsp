@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>注册成功</title>
+    <title>注册结果</title>
     
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
@@ -18,18 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <div class="jumbotron">
-  		<h1>News账户</h1>
-  		
-		<%
-			Map rs = ActionContext.getContext();
-			if(rs.get("rs")==true){
-		%>
-		<p>${msg}</p>
-  		<p><a class="btn btn-primary btn-lg" href="#" role="button">现在就去登录</a></p>
-  		<%}else{ %>
-  		<p>${msg}</p>
-  		<%} %>
+  	<div class="container">
+    	<div class="jumbotron">
+  			<h1>News账户</h1>
+			<p class="username">${msg}</p>
+  			<p><a class="btn btn-primary btn-lg" href="#" role="button">现在就去登录</a></p>
+		</div>
 	</div>
   </body>
 </html>

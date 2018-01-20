@@ -13,4 +13,6 @@ public interface NewsService {
 	public List<News> pageNews(String hql,int offset,int length);
 	public int getCount(String hql);
 	public List<News> getByCreateId(String createId);
+	
+	public List<News> getByType(Integer typeId);
 }

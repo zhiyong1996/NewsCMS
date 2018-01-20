@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <div class="container info-container">
-        <form class="form-horizontal" action="/aa" id="form">
+        <form class="form-horizontal" action="register/add_user" id="form" method="post">
             <div class="form-group">
                 <label for="username" class="control-label col-sm-2">
                     用户名

@@ -3,14 +3,13 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE HTML>
 <html>
   <head>
     <title>新闻首页</title>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
@@ -54,18 +53,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </ol>
                     <!-- 轮播（Carousel）项目 -->
                     <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://www.runoob.com/wp-content/uploads/2014/07/slide1.png" alt="First slide">
-                            <div class="carousel-caption">标题 1</div>
-                        </div>
+                        <% 
+                        	List<Object> list = ActionContext.getContext().get("ca_news");
+                        	for(int i=0;i<list.size();i++){
+                        %>
                         <div class="item">
-                            <img src="http://www.runoob.com/wp-content/uploads/2014/07/slide2.png" alt="Second slide">
-                            <div class="carousel-caption">标题 2</div>
+                        	111111111
                         </div>
-                        <div class="item">
-                            <img src="http://www.runoob.com/wp-content/uploads/2014/07/slide3.png" alt="Third slide">
-                            <div class="carousel-caption">标题 3</div>
-                        </div>
+                        <%} %>
                     </div>
                     <!-- 轮播（Carousel）导航 -->
                     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>

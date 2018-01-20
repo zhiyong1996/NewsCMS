@@ -41,10 +41,7 @@ public class NewsAction extends ActionSupport {
 	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
 
-	// 新闻位置
-	private final static Integer COMMENT_NEWS = 0; // 普通新闻
-	private final static Integer CA_NEWS = 1; // 轮播新闻
-	private final static Integer HOT_NEWS = 2; // 热点新闻
+	
 
 	// 从客户端接受的数据
 	private String title; // 新闻标题
@@ -92,11 +89,11 @@ public class NewsAction extends ActionSupport {
 				category.put(c.getId(), c.getName());
 			}
 		}
-		if (newstype == CA_NEWS) {
+		if (newstype == StaticParam.CA_NEWS) {
 			return "go_add_ca";
-		} else if (newstype == HOT_NEWS) {
+		} else if (newstype == StaticParam.HOT_NEWS) {
 			return "go_add_hot";
-		} else if (newstype == COMMENT_NEWS) {
+		} else if (newstype == StaticParam.COMMENT_NEWS) {
 			return "go_add_com";
 		} else {
 			return "select_news";
@@ -145,7 +142,7 @@ public class NewsAction extends ActionSupport {
 			}
 		}
 		//移动轮播图片
-		if(newstype == CA_NEWS){
+		if(newstype == StaticParam.CA_NEWS){
 			String fileName = caSrc.substring(caSrc.lastIndexOf("/")+1);
 			String new_src = ImgUtil.moveFile(nid, caSrc, fileName);
 			caSrc = new_src;
@@ -177,9 +174,9 @@ public class NewsAction extends ActionSupport {
 		ActionContext act = ActionContext.getContext();
 		act.put("update", news);
 		Integer nt = news.getNewstype();
-		if(nt == COMMENT_NEWS){
+		if(nt == StaticParam.COMMENT_NEWS){
 			return "go_update_com";
-		}else if(nt == CA_NEWS){//如果是轮播新闻单独获取轮播图片
+		}else if(nt == StaticParam.CA_NEWS){//如果是轮播新闻单独获取轮播图片
 			String caSrc = news.getCaimg().getPath();
 			act.put("caSrc", caSrc);
 			return "go_update_ca";
@@ -226,7 +223,7 @@ public class NewsAction extends ActionSupport {
 		}
 		
 		//移动轮播图片
-		if(newstype == CA_NEWS){
+		if(newstype == StaticParam.CA_NEWS){
 			String fileName = caSrc.substring(caSrc.lastIndexOf("/")+1);
 			String new_src = ImgUtil.moveFile(newsid, caSrc, fileName);
 			caSrc = new_src;
