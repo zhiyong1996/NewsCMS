@@ -16,7 +16,7 @@
 		<property name="issue" type="true_false"/>
 		<property name="newstype" type="integer" not-null="true"></property>
 		
-		<many-to-one name="caimg" class="CaImg" column="caimg_id" unique="true" fetch="join"/>
+		<many-to-one name="caimg" class="CaImg" column="caimg_id" unique="true" fetch="join" lazy="false"/>
 		<many-to-one name="category" class="Category" column="category_id" lazy="false" fetch="join"/>
 		
 		<set name="comments" fetch="join" inverse="true" cascade="all">

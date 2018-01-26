@@ -87,7 +87,7 @@ layui.use(["form","layedit","upload"], function(){
 			  ,newsfrom = $("#newsfrom").val()
 			  ,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 			  	
-			  if(content.indexOf("<img") == 0){
+			  if(content.indexOf("<p>") == -1){
 				  console.log("无p标签包裹");
 				  content = "<p>"+content+"</p>"
 			  }else{
@@ -129,6 +129,7 @@ layui.use(["form","layedit","upload"], function(){
 					,newsfrom: newsfrom
 					,content: content
 					,newstype: newstype
+					,pathList: pathList
 				},                                                                  
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");

@@ -61,4 +61,10 @@ public class CategoryDaoImpl extends HibernateDaoSupport implements CategoryDao 
 		return (List<Category>) getHibernateTemplate().find("from Category");
 	}
 
+	@Override
+	public List<News> listNewsByCategory(Category c) {
+		List<News> news = (List<News>) getHibernateTemplate().find("from Category");
+		return null;
+	}
+
 }

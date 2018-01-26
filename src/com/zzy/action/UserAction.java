@@ -4,45 +4,72 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.Category;
 import com.zzy.po.News;
+import com.zzy.service.CategoryService;
 import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class UserAction extends ActionSupport{
-	@Resource
-	NewsService nService;
-	List<News> ca_news ;
-	List<News> hot_news ;
+	@Resource NewsService nService;
+	@Resource CategoryService cService;
+	private List<News> ca_news ;
+	private List<News> hot_news ;
+	private List<Category> clist;
+	private News news ;
+	private String createId;
+	
+	//服务器接受客户端参数
+	private String createTime;
 	
 	public String loading_news(){
 		
 		ActionContext cx = ActionContext.getContext();
+		List<News> ca_n = nService.getByType(StaticParam.CA_NEWS);
+		List<News> hot_n = nService.getByType(StaticParam.HOT_NEWS);
+		int ca_size = ca_n.size()>=5? StaticParam.CA_NEWS_MAX:ca_n.size();//判断获取到的新闻数量是否大于5，大于5则限定为5
+		int hot_size = hot_n.size()>=5? StaticParam.HOT_NEWS_MAX:hot_n.size();//判断获取到的新闻数量是否大于5，大于5则限定为5
 		
-		String has_news = (String) cx.get("has_news");
-		if(has_news==null||has_news.equals("")){
-			ca_news = nService.getByType(StaticParam.CA_NEWS);
-			hot_news = nService.getByType(StaticParam.HOT_NEWS);
-			
-			News n ;
-			for(int i=0;i<ca_news.size();i++){
-				n = ca_news.get(i);
-				System.out.println(n.getTitle());
-			};
-			cx.put("has_news","true");
-			cx.put("ca_news", ca_news);
+		ca_news = new ArrayList<News>();//初始化一个list对象存放新闻
+		hot_news = new ArrayList<News>();//初始化一个list对象存放新闻
+		
+		for(int i=0;i<ca_size;i++){
+			ca_news.add(ca_n.get(i));
+			System.out.println("Ca-News:"+ca_n.get(i).getTitle()+";");
 		}
+		for(int i=0;i<hot_size;i++){
+			hot_news.add(hot_n.get(i));
+			System.out.println("Hot-News:"+hot_n.get(i).getTitle()+";");
+		}
+		cx.put("ca_news", ca_news);
+		cx.put("hot_news", hot_news);
+		
+		clist = cService.allCategory();
+		
+		Map<String, Object> allNews = new HashMap<String, Object>(); 
+		for(int i=0;i<clist.size();i++){
+			List<News> newss = (List<News>) clist.get(i).getNewss();
+
+		}
+
 		return "loading_news";
 	}
-	public String show_index(){
-		return "show_index";
-	}
+
 	public String detail_news(){
+		List<News> n = nService.getByCreateId(createId);
+		news = n.get(0);
+		createTime = StaticParam.DateFormat2.format(news.getCreateTime());
 		return "detail_suc";
+	}
+	
+	public String user_login(){
+		return "";
 	}
 	public List<News> getCa_news() {
 		return ca_news;
@@ -56,5 +83,30 @@ public class UserAction extends ActionSupport{
 	public void setHot_news(List<News> hot_news) {
 		this.hot_news = hot_news;
 	}
+
+	public String getCreateId() {
+		return createId;
+	}
+
+	public void setCreateId(String createId) {
+		this.createId = createId;
+	}
+
+	public News getNews() {
+		return news;
+	}
+
+	public void setNews(News news) {
+		this.news = news;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	
 	
 }

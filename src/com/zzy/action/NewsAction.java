@@ -35,11 +35,7 @@ public class NewsAction extends ActionSupport {
 	@Resource
 	CaImgService caService;
 
-	// 日期格式化
-	private static SimpleDateFormat DateFormat1 = new SimpleDateFormat(
-			"yyyyMMddHHmmssSSS");
-	private static SimpleDateFormat DateFormat2 = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	
 
 	
 
@@ -102,7 +98,7 @@ public class NewsAction extends ActionSupport {
 
 	public String add_news() throws Exception {
 		news = new News();
-		String createId = DateFormat1.format(new Date()).toString();
+		String createId = StaticParam.DateFormat1.format(new Date()).toString();
 		news.setCreateId(createId);
 		news.setTitle(title);
 		news.setContent(content);
@@ -226,7 +222,9 @@ public class NewsAction extends ActionSupport {
 		if(newstype == StaticParam.CA_NEWS){
 			String fileName = caSrc.substring(caSrc.lastIndexOf("/")+1);
 			String new_src = ImgUtil.moveFile(newsid, caSrc, fileName);
-			caSrc = new_src;
+			if(new_src.equals("")){   //如果返回的新链接为空，则表示图片已经存在,则caimg的path数据不需要变化
+				new_src = caSrc;
+			}
 			ci = news.getCaimg();
 			ci.setImgName(fileName);
 			ci.setPath(new_src);
@@ -269,6 +267,7 @@ public class NewsAction extends ActionSupport {
 				data.put("createid", ns.getCreateId());
 				data.put("title", ns.getTitle());
 				data.put("newsfrom", ns.getNewsfrom());
+				data.put("newstype", StaticParam.getPositionType(ns.getNewstype()));
 				data.put("category", ns.getCategory().getName());
 				data.put("issue", ns.getIssue());
 				data.put("createTime", dateformat.format(ns.getCreateTime()));
@@ -308,7 +307,7 @@ public class NewsAction extends ActionSupport {
 		news = (News) newsService.getById(newsid);
 
 		backnews.put("title", news.getTitle());
-		backnews.put("createTime", DateFormat2.format(news.getCreateTime()));
+		backnews.put("createTime", StaticParam.DateFormat2.format(news.getCreateTime()));
 		backnews.put("newsfrom", news.getNewsfrom());
 		backnews.put("content", news.getContent());
 

@@ -21,12 +21,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="" class="navbar-brand"><img class="logo" src="News/Nimg/logo.png" alt="logo"></a>
+                <a href="" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="javacript:;">新闻首页</a></li>
                 <li><a href="javacript:;">登录</a></li>
                 <li><a href="javacript:;">注册</a></li>
+                
             </ul>
         </div>
     </nav>
@@ -47,20 +48,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div id="myCarousel" class="carousel slide">
                 <!-- 轮播（Carousel）指标 -->
                     <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <s:iterator value="#ca_news" status="st" var="n">
+                        	<s:if test="#st.first">
+	                     		<li data-target="#myCarousel" data-slide-to="<s:property value='#st.index'/>" class="active"></li>
+	                     	</s:if>
+	                     	<s:else>
+	                     		<li data-target="#myCarousel" data-slide-to="<s:property value='#st.index'/>'/>"></li>
+	                     	</s:else>
+	                	</s:iterator>
                     </ol>
                     <!-- 轮播（Carousel）项目 -->
                     <div class="carousel-inner">
-                        <% 
-                        	List<Object> list = ActionContext.getContext().get("ca_news");
-                        	for(int i=0;i<list.size();i++){
-                        %>
-                        <div class="item">
-                        	111111111
-                        </div>
-                        <%} %>
+						<s:iterator value="#ca_news" status="st" var="n">     
+						<s:if test="#st.first">
+                     		<div class="item active">
+                     			<a href="show_detail?createId=<s:property value='#n.createId'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
+			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
+			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
+		      				  	</a>
+		    				</div>
+	                    </s:if>
+	                    <s:else>
+                     		<div class="item">
+                     			<a href="show_detail?createId=<s:property value='#n.createId'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
+			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
+			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
+		      				  	</a>
+		    				</div>
+	                    </s:else>               		
+	                    </s:iterator>
                     </div>
                     <!-- 轮播（Carousel）导航 -->
                     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
@@ -75,30 +93,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="hot-news-content">
                     <ul class="hot-items">
-                        <li class="hot-item">
-                            <p class="hot-item-title"><a href="">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></p>
+                    	<s:iterator value="#hot_news" status="st" var="n">
+							<li class="hot-item">
+								<a href="show_detail?createId=<s:property value='#n.createId'/>">
+                            		<p class="hot-item-title"><s:property value="#n.title"/></p>
+                            	</a>
                             <div class="keyword">
                                 <span class="label label-danger">关键字</span>
                             </div>
                         </li>
-                        <li class="hot-item">
-                            <p class="hot-item-title"><a href="">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></p>
-                            <div class="keyword">
-                                <span class="label label-danger">关键字</span>
-                            </div>
-                        </li>
-                        <li class="hot-item">
-                            <p class="hot-item-title"><a href="">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></p>
-                            <div class="keyword">
-                                <span class="label label-danger">关键字</span>
-                            </div>
-                        </li>
-                        <li class="hot-item">
-                            <p class="hot-item-title"><a href="">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></p>
-                            <div class="keyword">
-                                <span class="label label-danger">关键字</span>
-                            </div>
-                        </li>
+	                	</s:iterator>
                     </ul>
                 </div>
             </div>
@@ -196,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="row">
                 <div class="col-md-5">
                     <div class="footer-logo">
-                        <a href="javascript:;"><img src="News/Nimg/logoko.png" alt="logo"></a>
+                        <a href="javascript:;"><img src="Nimg/logoko.png" alt="logo"></a>
                     </div>
                 </div>
                 <div class="col-md-5 footer-cate">

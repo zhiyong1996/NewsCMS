@@ -71,7 +71,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> getByCreateId(String createId) {
-		return (List<News>) getHibernateTemplate().find("from News where createId like "+createId);
+		return (List<News>) getHibernateTemplate().find("from News n where n.createId =?",createId);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -84,8 +84,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> getComNews(Integer cid, Integer typeId) {
-		return (List<News>) getHibernateTemplate().
-				find("from News n where n.newstype =? and n.cid = ?by createTime asc",new Object[]{typeId,cid});
+		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.cid = ? order by createTime desc",new Object[]{typeId,cid});
 	}
 	
 	

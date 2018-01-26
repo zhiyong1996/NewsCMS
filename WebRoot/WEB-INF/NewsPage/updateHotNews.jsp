@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <div class="layui-container">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-  	 <legend>新建轮播新闻</legend>
+  	 <legend>更新热点新闻</legend>
 	</fieldset>
   <div class="layui-container">
   <div class="layui-row">
@@ -73,8 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
-	  layedit = layui.layedit;
-	  //upload = layui.upload;
+	  layedit = layui.layedit,
+	  upload = layui.upload;
 	  //设置图片上传接口
 	  layedit.set({
 		  uploadImage: {
@@ -103,7 +103,7 @@ layui.use(["form","layedit","upload"], function(){
 			 	,newsfrom = $("#newsfrom").val()
 			  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 			  	
-			  if(content.indexOf("<img") == 0){
+			  if(content.indexOf("<p>") == -1){
 				  console.log("无p标签包裹");
 				  content = "<p>"+content+"</p>"
 			  }else{

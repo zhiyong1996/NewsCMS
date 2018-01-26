@@ -26,11 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<p>来源:${backnews.newsfrom}&nbsp;&nbsp; ${backnews.createTime}</p> 
     	<hr/>
     	<div class="content" id="content">
-    		
+    		${backnews.content}
     	</div>
     </div>
     <script>
-    	$("#content").html(unescape("${backnews.content}"));
     </script>
   </body>
 </html>

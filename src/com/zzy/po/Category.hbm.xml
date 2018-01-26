@@ -11,7 +11,7 @@
 		<property name="updateTime" type="long" not-null="false"/>
 		<property name="name" type="java.lang.String" length="15" not-null="true"/>
 		
-		<set name="newss" fetch="join" inverse="true" cascade="all">
+		<set name="newss" fetch="join" inverse="true" cascade="all" lazy="false">
 			<key column="category_id"/>
 			<one-to-many class="News"/>
 		</set>

@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>添加新闻</title>
+    <title>更新新闻</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/static/plugins/font-awesome/css/font-awesome.min.css" media="all">
@@ -17,13 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="padding:30px;">
-    <div class="top" style="display: fixed;top: 0;left: 0;">
-  	<button class="layui-btn" onclick="history.go(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>  返回</button>
-  </div>
+
   <div class="layui-container">
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-  	 <legend>新建轮播新闻</legend>
-	</fieldset>
   <div class="top" style="display: fixed;top: 0;left: 0;">
   	<button class="layui-btn" onclick="history.go(-1)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>  返回</button>
   </div>
@@ -126,7 +121,7 @@ layui.use(["form","layedit","upload"], function(){
 	  });
 		
 	  //监听新闻分类选择框 start
-	  var cid = -1;//分类id
+	  var cid = ${update.category.id};//分类id
 	  form.on("select(test)", function(data){
 		  cid = data.value;
 		});
@@ -141,7 +136,7 @@ layui.use(["form","layedit","upload"], function(){
 		 	,newsfrom = $("#newsfrom").val()
 		  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 		  	
-		 	if(content.indexOf("<img") == 0){
+		 	if(content.indexOf("<p>") == -1){
 				  console.log("无p标签包裹");
 				  content = "<p>"+content+"</p>"
 			  }else{
@@ -177,10 +172,11 @@ layui.use(["form","layedit","upload"], function(){
 
 		 $.ajax({
 				type:"post",
-				url:"news/add_news",
+				url:"news/update_news",
 				dataType:"html",
 				data:{
-					title: title
+					newsid: ${update.id}
+					,title: title
 					,cid: cid
 					,newsfrom: newsfrom
 					,content: content

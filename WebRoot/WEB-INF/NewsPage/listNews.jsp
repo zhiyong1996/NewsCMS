@@ -23,6 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
 	  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
 	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
+	  <button class="layui-btn" data-type="add_new">新建新闻</button>
 	</div>
 
 
@@ -69,6 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      ,{field: "title", title: "标题", width: 280, align: "center"}
 		      ,{field: "newsfrom", title: "来源", width: 90, align: "center"}
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
+		      ,{field: "newstype", title: "位置", width: 90, align: "center"}
 		      ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		      ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
 		      ,{field: "issue", title: "是否发布", width:100, align: "center", templet: "#switchTpl"}
@@ -161,6 +163,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          }
 	        }); //执行重载end
 	      }  //根据搜索内容表格重载end
+	    ,add_new: function(){
+	    	  location.href = location.origin+"/NewsCMS/news/select_news";
+	      }
 	    	
 	    };//active end
 	

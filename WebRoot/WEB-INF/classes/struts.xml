@@ -124,11 +124,13 @@
 		<action name="index" class="com.zzy.action.UserAction" method="loading_news">
 			<result name="loading_news">/index.jsp</result>
 		</action>
+		<action name="show_detail" class="com.zzy.action.UserAction" method="detail_news">
+			<result name="detail_suc">/detail.jsp</result>
+		</action>
 	</package>
 
 	<!-- 图片上传Action -->
-	<package name="imgUpload" extends="json-default,interce"
-		namespace="/upload">
+	<package name="imgUpload" extends="json-default,interce" namespace="/upload">
 		<action name="uploadNewsImg" class="com.zzy.action.ImageAction"
 			method="uploadNewsImg">
 			<result name="uploadNewsImg" type="json">
