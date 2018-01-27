@@ -4,29 +4,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
+
+import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.po.Category;
 import com.zzy.po.News;
+import com.zzy.po.User;
 import com.zzy.service.CategoryService;
 import com.zzy.service.NewsService;
+import com.zzy.service.UserService;
 
 @SuppressWarnings("serial")
 public class UserAction extends ActionSupport{
 	@Resource NewsService nService;
 	@Resource CategoryService cService;
+	@Resource UserService uService;
+	
+	//服务器返回客户端数据
 	private List<News> ca_news ;
 	private List<News> hot_news ;
 	private List<Category> clist;
 	private News news ;
 	private String createId;
+	private JSONObject json;
+	private Map<String ,Object> session;
 	
 	//服务器接受客户端参数
 	private String createTime;
+	private String username;
+	private String password;
 	
 	public String loading_news(){
 		
@@ -53,10 +63,6 @@ public class UserAction extends ActionSupport{
 		clist = cService.allCategory();
 		
 		Map<String, Object> allNews = new HashMap<String, Object>(); 
-		for(int i=0;i<clist.size();i++){
-			List<News> newss = (List<News>) clist.get(i).getNewss();
-
-		}
 
 		return "loading_news";
 	}
@@ -69,8 +75,33 @@ public class UserAction extends ActionSupport{
 	}
 	
 	public String user_login(){
-		return "";
+		User user = uService.getByUsername(username).get(0);
+		json = new JSONObject();
+		if(!(user.getClass()==null)){
+			if(user.getPassword().equals(password)){
+				session = ActionContext.getContext().getSession();
+				session.put("user", username);
+				json.put("code", 0);
+				json.put("tip", "匹配成功");
+			}else{
+				json.put("code", 1);
+				json.put("tip", "密码错误");
+			}
+		}else{
+			json.put("code", 0);
+			json.put("tip", "用户不存在");
+		}
+		return "u_login";
 	}
+	
+	public String user_quit(){
+		json = new JSONObject();
+		json.put("code", 0);
+		session = ActionContext.getContext().getSession();
+		session.remove("user");
+		return "u_quit";
+	}
+	
 	public List<News> getCa_news() {
 		return ca_news;
 	}
@@ -106,6 +137,30 @@ public class UserAction extends ActionSupport{
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public JSONObject getJson() {
+		return json;
+	}
+
+	public void setJson(JSONObject json) {
+		this.json = json;
 	}
 	
 	

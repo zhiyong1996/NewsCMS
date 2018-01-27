@@ -3,6 +3,7 @@ package com.zzy.dao.impl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -85,6 +86,25 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@Override
 	public List<News> getComNews(Integer cid, Integer typeId) {
 		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.cid = ? order by createTime desc",new Object[]{typeId,cid});
+	}
+	
+	//根据分类分页查询
+	@Override
+	public List<News> listByCategory(final String hql, final int offset, final int length,final Integer cid) {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<News> rs = getHibernateTemplate().execute(new HibernateCallback(){
+
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createQuery(hql);
+				query.setParameter(0, cid);
+				query.setFirstResult(offset);
+				query.setMaxResults(length);
+				List<News> rs = query.list();
+				return rs;
+			}
+		});
+		return rs;
 	}
 	
 	

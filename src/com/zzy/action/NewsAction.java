@@ -26,18 +26,10 @@ import com.zzy.service.NewsService;
 
 @SuppressWarnings("serial")
 public class NewsAction extends ActionSupport {
-	@Resource
-	CategoryService cService;
-	@Resource
-	NewsService newsService;
-	@Resource
-	ImageService imgService;
-	@Resource
-	CaImgService caService;
-
-	
-
-	
+	@Resource CategoryService cService;
+	@Resource NewsService newsService;
+	@Resource ImageService imgService;
+	@Resource CaImgService caService;
 
 	// 从客户端接受的数据
 	private String title; // 新闻标题
@@ -254,8 +246,6 @@ public class NewsAction extends ActionSupport {
 		int count = newsService.getCount(hql);
 		int offset = (page - 1) * limit;
 		newsSet = (List<News>) newsService.pageNews(hql, offset, limit);
-		SimpleDateFormat dateformat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
 		pageJson = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
 		JSONObject data;
@@ -270,8 +260,8 @@ public class NewsAction extends ActionSupport {
 				data.put("newstype", StaticParam.getPositionType(ns.getNewstype()));
 				data.put("category", ns.getCategory().getName());
 				data.put("issue", ns.getIssue());
-				data.put("createTime", dateformat.format(ns.getCreateTime()));
-				data.put("updateTime", dateformat.format(ns.getUpdateTime()));
+				data.put("createTime", StaticParam.DateFormat2.format(ns.getCreateTime()));
+				data.put("updateTime", StaticParam.DateFormat2.format(ns.getUpdateTime()));
 				arrData.add(data);
 			} else {
 				System.out.println("查询数据失败");
@@ -315,6 +305,42 @@ public class NewsAction extends ActionSupport {
 		act.put("preview", backnews);
 		
 		return "news_preview";
+	}
+	
+	//根据分类查询新闻
+	public String list_news_cate(){
+		String hql = "from News n where n.category_id = ?";
+		
+		int offset = (page - 1) * limit;
+		newsSet = (List<News>) newsService.listByCategory(hql, offset, offset, cid);
+		int count = newsSet.size();
+		pageJson = new JSONObject();
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
+		JSONObject data;
+		for (News ns : newsSet) {
+			// System.out.println(ns.getCategory().getName());
+			if (ns.getId() != null) {
+				data = new JSONObject();
+				data.put("id", ns.getId());
+				data.put("createid", ns.getCreateId());
+				data.put("title", ns.getTitle());
+				data.put("newsfrom", ns.getNewsfrom());
+				data.put("newstype", StaticParam.getPositionType(ns.getNewstype()));
+				data.put("category", ns.getCategory().getName());
+				data.put("issue", ns.getIssue());
+				data.put("createTime", StaticParam.DateFormat2.format(ns.getCreateTime()));
+				data.put("updateTime", StaticParam.DateFormat2.format(ns.getUpdateTime()));
+				arrData.add(data);
+			} else {
+				System.out.println("查询数据失败");
+			}
+		}
+		message = "";
+		pageJson.put("code", 0);
+		pageJson.put("msg", message);
+		pageJson.put("count", count);
+		pageJson.put("data", arrData);
+		return "";
 	}
 
 	public String getTitle() {

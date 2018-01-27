@@ -15,4 +15,5 @@ public interface NewsDao {
 	public List<News> getByCreateId(String createId);
 	public List<News> getNewsByType(Integer typeId);
 	public List<News> getComNews(Integer cid,Integer typeId);
+	public List<News> listByCategory(String hql,int offset,int length,Integer cid);
 }

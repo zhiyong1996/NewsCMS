@@ -15,4 +15,5 @@ public interface NewsService {
 	public List<News> getByCreateId(String createId);
 	
 	public List<News> getByType(Integer typeId);
+	public List<News> listByCategory(String hql,int offset,int length,Integer cid);
 }

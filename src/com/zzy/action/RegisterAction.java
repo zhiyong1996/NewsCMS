@@ -48,7 +48,7 @@ public class RegisterAction extends ActionSupport{
 	}
 	
 	public String has_username(){
-		int size = uService.getUserByName(username).size();
+		int size = uService.getByUsername(username).size();
 		if(size>0){
 			System.out.println("已存在");
 			backjson.put("has_name", HAS_USERNAME);	

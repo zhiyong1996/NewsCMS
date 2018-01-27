@@ -127,6 +127,16 @@
 		<action name="show_detail" class="com.zzy.action.UserAction" method="detail_news">
 			<result name="detail_suc">/detail.jsp</result>
 		</action>
+		<action name="user_login" class="com.zzy.action.UserAction" method="user_login">
+			<result name="u_login" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="user_quit" class="com.zzy.action.UserAction" method="user_quit">
+			<result name="u_quit" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
 	</package>
 
 	<!-- 图片上传Action -->

@@ -24,6 +24,7 @@ public class StaticParam {
 	// 日期格式化
 	public static SimpleDateFormat DateFormat1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	public static SimpleDateFormat DateFormat2 = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+	public static SimpleDateFormat DateFormat3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public final static Integer CA_NEWS_MAX = 5; // 轮播新闻最大显示数量
 	public final static Integer HOT_NEWS_MAX = 5; // 热点新闻最大显示数量

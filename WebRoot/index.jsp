@@ -17,7 +17,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <!--顶部导航栏 navbar -->
+  	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>One fine body&hellip;</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 登录模态框end -->
+
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -25,21 +43,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="javacript:;">新闻首页</a></li>
-                <li><a href="javacript:;">登录</a></li>
-                <li><a href="javacript:;">注册</a></li>
-                
+                <s:if test="#session.user==null">
+                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;" data-toggle="modal" data-target="#myModal">登录</a></li>
+                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">注册</a></li>
+                </s:if>
+                <s:else>
+                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">${session.user}</a></li>
+                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">退出</a></li>
+                </s:else>
             </ul>
         </div>
     </nav>
     <!--顶部导航栏 navbar end-->
 
-    <!--头部广告位-->
     <div class="container advertise-top">
         <div class="ad-logo"><small>广告</small></div>
     </div>
     <!--头部广告位 end-->
 
-    <!--轮播 位置新闻-->
     <div class="container carousel">
         <div class="row">
 

@@ -12,8 +12,7 @@ import com.zzy.service.NewsService;
 
 @Transactional(readOnly = false)
 public class NewsServiceImpl implements NewsService {
-	@Resource
-	NewsDao newsDao;
+	@Resource NewsDao newsDao;
 
 	@Override
 	public void saveOrUpdate(News news) {
@@ -61,5 +60,10 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public List<News> getByType(Integer typeId) {
 		return newsDao.getNewsByType(typeId);
+	}
+
+	@Override
+	public List<News> listByCategory(String hql, int offset, int length,Integer cid) {
+		return newsDao.listByCategory(hql, offset, length, cid);
 	}
 }
