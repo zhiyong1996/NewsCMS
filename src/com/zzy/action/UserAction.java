@@ -32,6 +32,7 @@ public class UserAction extends ActionSupport{
 	private String createId;
 	private JSONObject json;
 	private Map<String ,Object> session;
+	private String debug;
 	
 	//服务器接受客户端参数
 	private String createTime;
@@ -161,6 +162,14 @@ public class UserAction extends ActionSupport{
 
 	public void setJson(JSONObject json) {
 		this.json = json;
+	}
+
+	public String getDebug() {
+		return debug;
+	}
+
+	public void setDebug(String debug) {
+		this.debug = debug;
 	}
 	
 	

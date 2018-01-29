@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  	<s:debug></s:debug>
   	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
