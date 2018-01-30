@@ -1,0 +1,49 @@
+  	.my-modal{
+  		z-index: 2000;
+  		display: none;
+  		position:fixed;
+  		left: 0;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  		background: rgba(0,0,0,.5);
+  	}
+  	.modal-wrap{
+  		position: relative;
+  		width: 350px;
+  		margin: 100px auto;
+  		background-color: #fff;
+  		padding: 2rem;
+  	}
+  	.my-modal .my-modal-content{
+  		position: relative;		
+  	}
+  	.my-modal-header{
+  		margin-bottom: 20px;
+  	}
+  	.my-modal-header h4{
+  		font-weight: bold;
+  	}
+  	.my-modal-header .modal-close{
+  		float: right;
+  		cursor:pointer;
+  		opacity: .4
+  	}
+  	.modal-close:hover{
+  		opacity: 1;
+  	}
+  	.tip{
+  		height: 20px;
+  	}
+  	.prompt-box{
+  		color: #8b9196;
+  		margin: 20px 0;
+  	}
+  	.to-register{
+  		cursor: pointer;
+  		color: #007fff;
+  	}
+  	.to-login{
+  		cursor: pointer;
+  		color: #007fff;
+  	}

@@ -32,7 +32,7 @@ public class UserAction extends ActionSupport{
 	private String createId;
 	private JSONObject json;
 	private Map<String ,Object> session;
-	private String debug;
+	private String flag;
 	
 	//服务器接受客户端参数
 	private String createTime;
@@ -60,7 +60,7 @@ public class UserAction extends ActionSupport{
 		}
 		cx.put("ca_news", ca_news);
 		cx.put("hot_news", hot_news);
-		
+		flag = "true";
 		clist = cService.allCategory();
 		
 		Map<String, Object> allNews = new HashMap<String, Object>(); 
@@ -89,7 +89,7 @@ public class UserAction extends ActionSupport{
 				json.put("tip", "密码错误");
 			}
 		}else{
-			json.put("code", 0);
+			json.put("code", 1);
 			json.put("tip", "用户不存在");
 		}
 		return "u_login";
@@ -164,12 +164,12 @@ public class UserAction extends ActionSupport{
 		this.json = json;
 	}
 
-	public String getDebug() {
-		return debug;
+	public String getFlag() {
+		return flag;
 	}
 
-	public void setDebug(String debug) {
-		this.debug = debug;
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 	
 	

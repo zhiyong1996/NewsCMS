@@ -12,45 +12,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/reset.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
-  
+  <script>
+   var flag = ${flag == null};
+  	if(flag){
+  		location.href = location.origin+"/NewsCMS/index";
+  	}
+  </script>
   <body>
-  	<s:debug></s:debug>
-  	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>One fine body&hellip;</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	<!-- 登录模态框end -->
-
+  	<div class="my-modal">
+  		<div class="modal-wrap">
+	  		<div class="my-modal-content">
+	  			<div class="my-modal-header">
+	  				<span class="glyphicon glyphicon-remove modal-close"></span>
+	  				<h4>登录</h4>
+	  			</div>
+	  			<div class="my-modal-body">
+	  				<form role="form" id="login-form">
+					  <div class="form-group">
+					    <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
+					  </div>
+					  <div class="form-group">
+					    <input type="password" name="password" class="form-control" id="password" placeholder="请输入密码">
+					  </div>
+					  <div class="tip"></div>
+					  <button type="submit" class="btn btn-primary btn-block">提交</button>
+					</form>
+					<p class="prompt-box">
+						没有帐号?<span class="to-register register-btn">注册</span>
+					</p>
+	  			</div>
+	  		</div>
+  		</div>
+  	</div>
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a href="" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="javacript:;">新闻首页</a></li>
+                <li><a href="index">新闻首页</a></li>
                 <s:if test="#session.user==null">
-                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;" data-toggle="modal" data-target="#myModal">登录</a></li>
-                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">注册</a></li>
+                	<li class="to-login"><a class="login-btn" >登录</a></li>
+                	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">${session.user}</a></li>
-                	<li><button class="btn btn-default navbar-btn" data-href="javacript:;">退出</a></li>
+                	<li><a href="javacript:;" class="" >${session.user}</a></li>
+                	<li><a href="javacript:;" class="" >退出</a></li>
                 </s:else>
             </ul>
         </div>
@@ -58,7 +70,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--顶部导航栏 navbar end-->
 
     <div class="container advertise-top">
-        <div class="ad-logo"><small>广告</small></div>
+    	<div class="ad-img">
+    		<a href="javascript:;"><img src="http://files.jb51.net/image/ali1000.png"/></a>
+    	</div>
+        <div class="ad-logo">
+        	<small>广告</small>
+        </div>
     </div>
     <!--头部广告位 end-->
 
@@ -128,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </ul>
                 </div>
             </div>
-        </div>
+        
     </div>
     <!--轮播 位置新闻 end-->
 
@@ -213,7 +230,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!--脚部广告位-->
     <div class="container advertise-top">
-        <div class="ad-logo"><small>广告</small></div>
+    	<div class="ad-img">
+    		<a href="javascript:;"><img src="http://files.jb51.net/image/ali1000.png"/></a>
+    	</div>
+        <div class="ad-logo">
+        	<small>广告</small>
+        </div>
     </div>
     <!--脚部广告位 end-->
 
@@ -244,5 +266,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p>@ 2017-2018 zzy版权所有 | 联系方式: 814793367@qq.com | <a href="javascript:;">意见反馈</a></p>
         </div>
     </div>
+	<script src="Njs/login.js"></script>
 </body>
 </html>

@@ -30,10 +30,6 @@ $(function() {
         }
     }
 
-    function check_value(JQobj,type,value){
-
-    }
-
     $("#username").on("change", function(e) {
         var value = this.value;
 
@@ -57,7 +53,7 @@ $(function() {
                  },
                  success: function(data) {
                 	 if(data.has_name){
-                		 show_msg(gf_dom,error,"帐号已被使用用");
+                		 show_msg(gf_dom,error,"帐号已被使用");
                 		 username_pass = false;
                 	 }else{
                 		 show_msg(gf_dom,success,"帐号可使用");
