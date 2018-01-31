@@ -94,12 +94,116 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			<div class="content" id="content">
     				${news.content}
     			</div>
+    			<div class="news-end">
+    				<h4>THE END</h4>
+    			</div>
     		</div>
     		<!-- 新闻内容 end-->
     		<div class="col-md-4"></div>
     	</div>
     </div>
     <!-- 新闻主体 end -->
+    <style>
+    	.left{
+    		float: left;
+    	}
+    	.right{
+    		float: right;
+    	}
+    	.clearfix{
+    		overflow: hidden;
+    	}
+    	.comment-warp{
+    		margin-bottom: 60px;
+    	}
+    	.comment-warp .row{
+    		margin: 0;
+    	}
+    	.news-comment{
+    		
+    	}
+    	.comment-header{
+    		overflow: hidden;
+    		height: 50px;
+    		padding-bottom: 22px;
+    	}
+    	.header-title{
+    		font-size: 26px;
+    		margin: 0 10px 0 0;
+    	}
+    	.comment-protocol{
+		    height: 100%;
+		    color: #ccc;
+		    font-size: 14px;
+		    line-height: 34px;	
+		    margin: 0 10px 0 0;
+    	}
+    	.comment-count{
+    		float: right;
+    		color: #379be9;
+		    height: 100%;
+		    line-height: 34px;
+		    font-size: 14px;
+    	}
+    	.comment-area{
+    		position: relative;
+    		height: 100px;
+    		border: 2px solid #ccc;
+    	}
+    	.comment-left{
+    		width: 84%;
+    		height: 72px;
+    		margin: 12px 110px 12px 12px;
+    	}
+    	.comment-left .comment-content{
+    		width: 100%;
+    		height: 100%;
+    	}
+    	.submit-btn{
+    		position: absolute;
+    		width: 102px;
+    		height: 102px;
+    		right: -3px;
+    		top: -3px;
+    		color: #fff;
+    		background-color: #379be9;
+    		text-align: center;
+    		cursor: pointer;
+    		line-height: 100px;
+    		font-size: 16px;
+    		font-weight: bold;
+    	}
+    	.submit-btn:hover{
+    		background-color: #328bd1;
+    	}
+    	.comment-content{
+    		resize: none;
+    		border: none;
+    		outline: none;
+    	}
+    </style>
+    <!-- 新闻评论部分 -->
+    <div class="container comment-warp">
+    	<div class="row">
+		    <div class="news-comment col-md-8">
+		    	<div class="comment-header">
+		    		<h1 class="header-title left">网友评论</h1>
+		    		<p class="comment-protocol left">文明上网理性发言，请遵守新闻评论服务协议</p>
+		    		<p class="comment-count right">12条评论</p>
+		    	</div>
+		    	<div class="comment-area clearfix">
+		    		<div class="comment-left left">
+		    			<textarea class="comment-content"></textarea>
+		    		</div>
+	    			<span class="submit-btn" id="submit-comment">
+	    				发表评论
+	    			</span>
+		    	</div>
+		    	<div class="comment-user"></div>
+		    </div>
+	    </div>
+	</div>
+    <!-- 评论结束 -->
     
     <!--脚部广告位-->
     <div class="container advertise-top">

@@ -1,6 +1,12 @@
 	.txt{
   		padding-bottom: 30px;
-  		margin: 0 30px;
+  		margin-top: 30px;
+  		margin-left: 0;
+  		margin-right: 0;
+  		margin-bottom: 50px;
+  	}
+  	.content p{
+  		font: 16px/28px "Microsoft Yahei";
   	}
   	.txt img{
   		max-width: 100%;
