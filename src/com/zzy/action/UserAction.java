@@ -25,6 +25,8 @@ public class UserAction extends ActionSupport{
 	@Resource UserService uService;
 	
 	//服务器返回客户端数据
+	private List<News> search_news;
+	private int size;
 	private List<News> ca_news ;
 	private List<News> hot_news ;
 	private List<Category> clist;
@@ -38,6 +40,7 @@ public class UserAction extends ActionSupport{
 	private String createTime;
 	private String username;
 	private String password;
+	private String search;
 	
 	public String loading_news(){
 		
@@ -103,6 +106,11 @@ public class UserAction extends ActionSupport{
 		return "u_quit";
 	}
 	
+	public String search_news(){
+		search_news = nService.searchNewsByTitle(search);
+		size = search_news.size();					
+		return "user_search";
+	}
 	public List<News> getCa_news() {
 		return ca_news;
 	}
@@ -170,6 +178,38 @@ public class UserAction extends ActionSupport{
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public List<Category> getClist() {
+		return clist;
+	}
+
+	public void setClist(List<Category> clist) {
+		this.clist = clist;
+	}
+
+	public List<News> getSearch_news() {
+		return search_news;
+	}
+
+	public void setSearchNews(List<News> search_news) {
+		this.search_news = search_news;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 	
 	

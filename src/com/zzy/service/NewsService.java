@@ -16,4 +16,5 @@ public interface NewsService {
 	
 	public List<News> getByType(Integer typeId);
 	public List<News> listByCategory(String hql,int offset,int length,Integer cid);
+	public List<News> searchNewsByTitle(String keyword);
 }

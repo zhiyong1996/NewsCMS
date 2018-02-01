@@ -7,6 +7,11 @@ public class StaticParam {
 	public final static Integer COMMENT_NEWS = 0; // 普通新闻
 	public final static Integer CA_NEWS = 1; // 轮播新闻
 	public final static Integer HOT_NEWS = 2; // 热点新闻
+	
+	//广告位置
+	public final static Integer AD_TOP = 0; // 顶部
+	public final static Integer AD_BOTTOM = 1; // 底部
+	public final static Integer AD_RIGHT = 2; // 右边
 
 	public static String getPositionType(Integer type) {
 		switch (type) {

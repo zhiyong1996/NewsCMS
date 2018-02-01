@@ -137,6 +137,9 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+		<action name="search" class="com.zzy.action.UserAction" method="search_news">
+			<result name="user_search">/search_result.jsp</result>
+		</action>
 	</package>
 
 	<!-- 图片上传Action -->

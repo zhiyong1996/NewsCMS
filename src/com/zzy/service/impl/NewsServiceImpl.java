@@ -66,4 +66,10 @@ public class NewsServiceImpl implements NewsService {
 	public List<News> listByCategory(String hql, int offset, int length,Integer cid) {
 		return newsDao.listByCategory(hql, offset, length, cid);
 	}
+
+	@Override
+	public List<News> searchNewsByTitle(String keyword) {
+		// TODO Auto-generated method stub
+		return newsDao.searchNewsByTitle(keyword);
+	}
 }

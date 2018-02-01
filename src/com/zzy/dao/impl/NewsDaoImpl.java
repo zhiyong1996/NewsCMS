@@ -106,6 +106,13 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 		});
 		return rs;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<News> searchNewsByTitle(String keyword) {
+		// TODO Auto-generated method stub
+		return (List<News>) getHibernateTemplate().find("from News n where n.newstype like ? order by createTime desc",keyword);
+	}
 	
 	
 }

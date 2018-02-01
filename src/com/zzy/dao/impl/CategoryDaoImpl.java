@@ -9,6 +9,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
@@ -61,10 +62,11 @@ public class CategoryDaoImpl extends HibernateDaoSupport implements CategoryDao 
 		return (List<Category>) getHibernateTemplate().find("from Category");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> listNewsByCategory(Category c) {
-		List<News> news = (List<News>) getHibernateTemplate().find("from Category");
-		return null;
+		return  (List<News>) getHibernateTemplate().find("from Category");
+
 	}
 
 }

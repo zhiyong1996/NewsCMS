@@ -95,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				${news.content}
     			</div>
     			<div class="news-end">
-    				<h4>THE END</h4>
+    				<h4 class="end">THE END</h4>
     			</div>
     		</div>
     		<!-- 新闻内容 end-->
@@ -103,85 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</div>
     </div>
     <!-- 新闻主体 end -->
-    <style>
-    	.left{
-    		float: left;
-    	}
-    	.right{
-    		float: right;
-    	}
-    	.clearfix{
-    		overflow: hidden;
-    	}
-    	.comment-warp{
-    		margin-bottom: 60px;
-    	}
-    	.comment-warp .row{
-    		margin: 0;
-    	}
-    	.news-comment{
-    		
-    	}
-    	.comment-header{
-    		overflow: hidden;
-    		height: 50px;
-    		padding-bottom: 22px;
-    	}
-    	.header-title{
-    		font-size: 26px;
-    		margin: 0 10px 0 0;
-    	}
-    	.comment-protocol{
-		    height: 100%;
-		    color: #ccc;
-		    font-size: 14px;
-		    line-height: 34px;	
-		    margin: 0 10px 0 0;
-    	}
-    	.comment-count{
-    		float: right;
-    		color: #379be9;
-		    height: 100%;
-		    line-height: 34px;
-		    font-size: 14px;
-    	}
-    	.comment-area{
-    		position: relative;
-    		height: 100px;
-    		border: 2px solid #ccc;
-    	}
-    	.comment-left{
-    		width: 84%;
-    		height: 72px;
-    		margin: 12px 110px 12px 12px;
-    	}
-    	.comment-left .comment-content{
-    		width: 100%;
-    		height: 100%;
-    	}
-    	.submit-btn{
-    		position: absolute;
-    		width: 102px;
-    		height: 102px;
-    		right: -3px;
-    		top: -3px;
-    		color: #fff;
-    		background-color: #379be9;
-    		text-align: center;
-    		cursor: pointer;
-    		line-height: 100px;
-    		font-size: 16px;
-    		font-weight: bold;
-    	}
-    	.submit-btn:hover{
-    		background-color: #328bd1;
-    	}
-    	.comment-content{
-    		resize: none;
-    		border: none;
-    		outline: none;
-    	}
-    </style>
+    
     <!-- 新闻评论部分 -->
     <div class="container comment-warp">
     	<div class="row">
@@ -189,17 +111,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	<div class="comment-header">
 		    		<h1 class="header-title left">网友评论</h1>
 		    		<p class="comment-protocol left">文明上网理性发言，请遵守新闻评论服务协议</p>
-		    		<p class="comment-count right">12条评论</p>
+		    		<p class="comment-count right"><a href="javascript:;">12条评论</a></p>
 		    	</div>
 		    	<div class="comment-area clearfix">
 		    		<div class="comment-left left">
-		    			<textarea class="comment-content"></textarea>
+		    			<textarea class="comment-content" id="comment"></textarea>
 		    		</div>
-	    			<span class="submit-btn" id="submit-comment">
-	    				发表评论
-	    			</span>
+		    		<s:if test="#session.user==null">
+		    			<span class="submit-btn" id="comment-login">
+		    				登录
+		    			</span>
+	    			</s:if><s:else>
+	    				<span class="submit-btn" id="submit-comment">
+		    				发表评论
+		    			</span>
+	    			</s:else>
 		    	</div>
-		    	<div class="comment-user"></div>
+		    	<div class="comment-user">
+	    			<ul>
+	    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
+	    				<li class="user-name"><span>user</span></li>
+	    				<li class="slide">|</li>
+	    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
+	    			</ul>
+		    	</div>
 		    </div>
 	    </div>
 	</div>

@@ -1,30 +1,158 @@
-	.txt{
-  		padding-bottom: 30px;
-  		margin-top: 30px;
-  		margin-left: 0;
-  		margin-right: 0;
-  		margin-bottom: 50px;
-  	}
-  	.content p{
-  		font: 16px/28px "Microsoft Yahei";
-  	}
-  	.txt img{
-  		max-width: 100%;
-  	}
-  	.from-time{
-  		font-size: 12px;
-  		color: #999;
-  	}
-  	.ctime{
-  		margin-left: 20px;
-  	}
-  	.breadcrumb{
-  		background-color: #fff;
-  		border-bottom: 1px solid #eee;
-  		border-radius: 0;
-  	}
-  	.breadcrumb > li + li:before {
-    padding: 0 5px;
-    color: #eee;
-    content: ">";
+.txt {
+	padding-bottom: 30px;
+	margin-top: 30px;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 50px;
+}
+
+.content p {
+	font: 16px/28px "Microsoft Yahei";
+}
+
+.txt img {
+	max-width: 100%;
+}
+
+.from-time {
+	font-size: 12px;
+	color: #999;
+}
+
+.ctime {
+	margin-left: 20px;
+}
+
+.breadcrumb {
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+	border-radius: 0;
+}
+
+.breadcrumb>li+li:before {
+	padding: 0 5px;
+	color: #eee;
+	content: ">";
+}
+
+.news-end {
+	text-align: center;
+	padding: 50px 0;
+	border-bottom: 1px solid #ccc;
+}
+
+.news-end .end {
+	font-size: 16px;
+}
+
+.comment-warp {
+	margin-bottom: 60px;
+}
+
+.comment-warp .row {
+	margin: 0;
+}
+
+.news-comment {
+	
+}
+
+.comment-header {
+	overflow: hidden;
+	height: 50px;
+	padding-bottom: 22px;
+}
+
+.header-title {
+	font-size: 26px;
+	margin: 0 10px 0 0;
+}
+
+.comment-protocol {
+	height: 100%;
+	color: #ccc;
+	font-size: 14px;
+	line-height: 34px;
+	margin: 0 10px 0 0;
+}
+
+.comment-count {
+	float: right;
+	color: #379be9;
+	height: 100%;
+	line-height: 34px;
+	font-size: 14px;
+}
+
+.comment-area {
+	position: relative;
+	height: 100px;
+	border: 2px solid #ccc;
+}
+
+.comment-left {
+	width: 84%;
+	height: 72px;
+	margin: 12px 110px 12px 12px;
+}
+
+.comment-left .comment-content {
+	width: 100%;
+	height: 100%;
+}
+
+.submit-btn {
+	position: absolute;
+	width: 102px;
+	height: 102px;
+	right: -3px;
+	top: -3px;
+	color: #fff;
+	background-color: #379be9;
+	text-align: center;
+	cursor: pointer;
+	line-height: 100px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.submit-btn:hover {
+	background-color: #328bd1;
+}
+
+.comment-content {
+	resize: none;
+	border: none;
+	outline: none;
+}
+
+.comment-user {
+	padding: 10px;
+	height: 50px;
+}
+
+.comment-user ul {
+	overflow: hidden;
+	height: 30px;
+	line-height: 30px
+}
+
+.comment-user ul li {
+	float: left;
+	height: 100%;
+	line-height: 25px;
+	margin: 0 10px;
+}
+
+.comment-user .avatar {
+	width: 25px;
+	border-radius: 50%;
+}
+
+.user-name {
+	margin: 0 10px;
+}
+
+.slide {
+	color: #ccc;
 }
