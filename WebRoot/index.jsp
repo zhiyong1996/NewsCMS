@@ -61,8 +61,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javacript:;" class="" >${session.user}</a></li>
-                	<li><a href="javacript:;" class="" >退出</a></li>
+                	<li><a href="javascript:;" class="user_name" >${session.user}</a></li>
+                	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
         </div>
@@ -266,6 +266,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p>@ 2017-2018 zzy版权所有 | 联系方式: 814793367@qq.com | <a href="javascript:;">意见反馈</a></p>
         </div>
     </div>
-	<script src="Njs/login.js"></script>
+	<script src="Njs/login_quit.js"></script>
 </body>
 </html>

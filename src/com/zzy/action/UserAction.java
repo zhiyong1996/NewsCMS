@@ -79,9 +79,11 @@ public class UserAction extends ActionSupport{
 	}
 	
 	public String user_login(){
-		User user = uService.getByUsername(username).get(0);
+		int size = uService.getByUsername(username).size();
+		
 		json = new JSONObject();
-		if(!(user.getClass()==null)){
+		if(size>0){
+			User user = uService.getByUsername(username).get(0);
 			if(user.getPassword().equals(password)){
 				session = ActionContext.getContext().getSession();
 				session.put("user", username);

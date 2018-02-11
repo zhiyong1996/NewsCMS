@@ -22,10 +22,27 @@ $(document).ready(function(){
 			}
 			,success:function(data){
 				if(data.code>0){
-					$("tip").txt(data.tip);
+					$(".tip").txt(data.tip);
 				}else{
 					location.reload();
 				}
+			}
+			,error:function(){
+				alert("网络异常,请稍后尝试");
+			}
+		});
+	})
+	
+	$("#quit").on("click",function(e){
+		$.ajax({
+			url: "user_quit"
+			,type: "post"
+			,datatype: "json"
+			,data:{
+			}
+			,success:function(data){
+				alert("退出成功");
+				location.reload();
 			}
 			,error:function(){
 				alert("网络异常,请稍后尝试");

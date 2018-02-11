@@ -1,8 +1,8 @@
 package com.zzy.po;
 
-public class AdImg {
+public class TopAdImg {
 	private Integer id;
-	private Advertisement ad;
+	private TopAd topad;
 	private String imgName;
 	private String path;
 	public Integer getId() {
@@ -13,12 +13,12 @@ public class AdImg {
 		this.id = id;
 	}
 
-	public Advertisement getAd() {
-		return ad;
+	public TopAd getTopad() {
+		return topad;
 	}
 
-	public void setAd(Advertisement ad) {
-		this.ad = ad;
+	public void setTopad(TopAd topad) {
+		this.topad = topad;
 	}
 
 	public String getImgName() {

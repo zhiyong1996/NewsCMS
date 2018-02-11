@@ -8,7 +8,7 @@ import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.zzy.dao.ImageDao;
-import com.zzy.po.AdImg;
+import com.zzy.po.TopAdImg;
 import com.zzy.po.Avatar;
 import com.zzy.po.News;
 import com.zzy.po.NewsImg;
@@ -62,7 +62,7 @@ public class ImageDaoImpl extends HibernateDaoSupport implements ImageDao {
 	}
 
 	@Override
-	public AdImg getAdImgById(Integer id) {
+	public TopAdImg getAdImgById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

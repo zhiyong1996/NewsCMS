@@ -23,10 +23,16 @@
     	<mapping resource="com/zzy/po/Comment.hbm.xml"/>
     	<mapping resource="com/zzy/po/User.hbm.xml"/>
     	<mapping resource="com/zzy/po/Category.hbm.xml"/>
-    	<mapping resource="com/zzy/po/AdImg.hbm.xml"/>
+    	
     	<mapping resource="com/zzy/po/CaImg.hbm.xml"/>
     	<mapping resource="com/zzy/po/NewsImg.hbm.xml"/>
     	<mapping resource="com/zzy/po/Avatar.hbm.xml"/>
+    	<mapping resource="com/zzy/po/TopAd.hbm.xml"/>
+    	<mapping resource="com/zzy/po/BottomAd.hbm.xml"/>
+    	<mapping resource="com/zzy/po/SideAd.hbm.xml"/>
+    	<mapping resource="com/zzy/po/TopAdImg.hbm.xml"/>
+    	<mapping resource="com/zzy/po/BotAdImg.hbm.xml"/>
+    	<mapping resource="com/zzy/po/SideAdImg.hbm.xml"/>
      </session-factory>
 
 </hibernate-configuration>

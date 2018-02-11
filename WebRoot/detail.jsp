@@ -128,12 +128,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			</s:else>
 		    	</div>
 		    	<div class="comment-user">
-	    			<ul>
-	    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
-	    				<li class="user-name"><span>user</span></li>
-	    				<li class="slide">|</li>
-	    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
-	    			</ul>
+		    		<s:if test="#session.user==null">
+		    			<ul></ul>
+		    		</s:if>
+		    		<s:else>
+		    			<ul>
+		    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
+		    				<li class="user-name"><span>user</span></li>
+		    				<li class="slide">|</li>
+		    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
+		    			</ul>
+	    			</s:else>
 		    	</div>
 		    </div>
 	    </div>
@@ -178,6 +183,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p>@ 2017-2018 zzy版权所有 | 联系方式: 814793367@qq.com | <a href="javascript:;">意见反馈</a></p>
         </div>
     </div>
-    <script src="Njs/login.js"></script>
+    <script src="Njs/login_quit.js"></script>
   </body>
 </html>

@@ -3,7 +3,7 @@ package com.zzy.dao;
 import java.util.List;
 
 import com.zzy.po.NewsImg;
-import com.zzy.po.AdImg;
+import com.zzy.po.TopAdImg;
 import com.zzy.po.Avatar;
 
 public interface ImageDao {
@@ -18,7 +18,7 @@ public interface ImageDao {
 	public void saveAvatar(Avatar avatar);
 	public void deleteAvatar(Avatar avatar);
 	
-	public AdImg getAdImgById(Integer id);
+	public TopAdImg getAdImgById(Integer id);
 	
 	public List<NewsImg> listPage(final String hql, final int offset, final int length);
 	public int getCount(String hql);

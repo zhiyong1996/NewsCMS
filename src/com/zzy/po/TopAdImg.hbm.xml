@@ -3,9 +3,12 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.zzy.po">
-	<class name="AdImg" table="adimg">
+	<class name="TopAdImg" table="topadimg">
 		<id name="id">
 			<generator class="native"/>
 		</id>
+		<property name="path" type="text" not-null="true"/>
+		<property name="imgName" type="text" not-null="true"/>
+		<one-to-one name="topad" class="TopAd" cascade="all"/>
 	</class>
 </hibernate-mapping>
