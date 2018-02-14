@@ -70,6 +70,11 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="userService" class="com.zzy.service.impl.UserServiceImpl"/>
+<!-- ad业务bean -->
+	<bean id="AdDao" class="com.zzy.dao.impl.AdDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="adservice" class="com.zzy.service.impl.AdServiceImpl"/>
 	
 <!-- ActionBean -->
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>

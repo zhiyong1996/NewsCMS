@@ -91,6 +91,22 @@
 			<allowed-methods>addCategory,pageCategory,updateCategory,delCategory,go_listC</allowed-methods>
 		</action>
 	</package>
+	
+	<!-- 广告 -->
+	<package name="advertisement" extends="json-default,interce" namespace="/ad">
+		<action name="ad_manager" class="com.zzy.action.AdvertiseAction" method="ad_manager">
+			<result name="ad_manager">/WEB-INF/NewsPage/adPage.jsp</result>
+			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
+		<interceptor-ref name="loginStack" />
+		</action>
+		<action name="ad_update" class="com.zzy.action.AdvertiseAction" method="update_ad">
+			<result type="json" name="update_ad">
+				<param name="root">json_ad</param>
+			</result>
+			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
+		<interceptor-ref name="loginStack" />
+		</action>
+	</package>
 
 	<!-- 控制台登录Action -->
 	<package name="login" extends="json-default,interce" namespace="/login">

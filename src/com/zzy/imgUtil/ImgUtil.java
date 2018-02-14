@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 
 public class ImgUtil {
 	private static String N_fileName = "NewsImg";//保存新闻图片的文件夹
+	private static String AD_fileName = "AdvertisementImg";//保存新闻图片的文件夹
 	//获取服务器绝对路径
 	@SuppressWarnings("deprecation")
 	public static String getSavePath(){
@@ -72,7 +73,50 @@ public class ImgUtil {
 	// moveFile 方法结束
 	
 	//
-	public static String moveCaNewsImg() throws IOException{
-		return "";
+	public static String MoveAdImg(Integer ad_type,String linkSrc,String filename) throws IOException{
+		linkSrc = linkSrc.replace("/NewsCMS","");
+		String source_path = getSavePath()+linkSrc.replaceAll("/", "\\\\");  //源文件
+		String target_path = getSavePath()+"\\"+AD_fileName+"\\"+ad_type; //目标目录
+		String target_source = target_path+"\\"+filename;            //目标文件
+		
+		File f = new File(target_path);
+		
+		if(new File(target_source).exists()){//如果图片已经存在就返回空字符串，否则返回新的图片引用路径
+			System.out.println("图片已存在");
+			return "";
+		}else{
+			if(!f.isDirectory()){//如果目录不存在就创建目录
+				boolean y1 = f.mkdirs(); //创建新目录
+				System.out.println("创建新目录结果:"+y1);
+				
+				FileInputStream is = new FileInputStream(source_path);
+				FileOutputStream os = new FileOutputStream(target_source);
+				byte buffer[] = new byte[1024];
+				int len = 0;
+				while((len = is.read(buffer))>0)
+					os.write(buffer, 0, len);
+				is.close();
+				os.close();
+				
+				System.out.println("移动到新目录1:");
+				return ServletActionContext.getRequest().getContextPath()+"/"+AD_fileName+"/"+ad_type+"/"+filename;
+					
+				
+			}else{
+				
+				FileInputStream is = new FileInputStream(source_path);
+				FileOutputStream os = new FileOutputStream(target_source);
+				byte buffer[] = new byte[1024];
+				int len = 0;
+				while((len = is.read(buffer))>0)
+					os.write(buffer, 0, len);
+				is.close();
+				os.close();
+				
+				System.out.println("移动到新目录1");
+				return ServletActionContext.getRequest().getContextPath()+"/"+AD_fileName+"/"+ad_type+"/"+filename;
+				
+			}
+		}
 	}
 }

@@ -98,8 +98,8 @@ public class ImageAction extends ActionSupport{
 		return "uploadUserImage";
 	}
 	
-	public String uploadAdvertiseImage(){
-		return "uploadAdvertiseImage";
+	public String uploadAdImage() throws Exception{
+		return "uploadAdImage";
 	}
 	
 	public String getFileFileName() {

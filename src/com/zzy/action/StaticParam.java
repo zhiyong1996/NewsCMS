@@ -11,7 +11,7 @@ public class StaticParam {
 	//广告位置
 	public final static Integer AD_TOP = 0; // 顶部
 	public final static Integer AD_BOTTOM = 1; // 底部
-	public final static Integer AD_RIGHT = 2; // 右边
+	public final static Integer AD_SIDE = 2; // 右边
 
 	public static String getPositionType(Integer type) {
 		switch (type) {

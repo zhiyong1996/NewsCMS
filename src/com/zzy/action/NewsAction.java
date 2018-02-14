@@ -192,8 +192,7 @@ public class NewsAction extends ActionSupport {
 
 			for (int i = 0; i < imgList.length; i++) { // 循环遍历旧的图片路径,对图片进行移动
 
-				fileName = imgList[i]
-						.substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
+				fileName = imgList[i].substring(imgList[i].lastIndexOf("/") + 1);// 通过字符串截取文件名
 				new_src = ImgUtil.moveFile(newsid, imgList[i], fileName); // 调用静态类方法移动文件，如果文件已存在则返回空字符串，否则返回新路径
 				targetArr[i] = new_src;
 				if (!targetArr[i].equals("")) { // 如果新路径不为空,则为新的图片,新建图片对象保存数据库。

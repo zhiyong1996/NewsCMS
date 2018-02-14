@@ -22,7 +22,7 @@ $(document).ready(function(){
 			}
 			,success:function(data){
 				if(data.code>0){
-					$(".tip").txt(data.tip);
+					$(".tip").text(data.tip);
 				}else{
 					location.reload();
 				}
