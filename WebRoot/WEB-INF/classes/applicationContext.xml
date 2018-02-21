@@ -75,6 +75,16 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="adservice" class="com.zzy.service.impl.AdServiceImpl"/>
+<!-- adimg业务bean -->
+	<bean id="adImgDao" class="com.zzy.dao.impl.AdImgDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="adImgService" class="com.zzy.service.impl.AdImgServiceImpl"/>
+<!-- comment -->
+	<bean id="comDao" class="com.zzy.dao.impl.CommentDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="comService" class="com.zzy.service.impl.CommentServiceImpl"/>
 	
 <!-- ActionBean -->
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>

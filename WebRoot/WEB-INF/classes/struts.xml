@@ -21,6 +21,7 @@
 	<package name="interce" extends="json-default">
 		<interceptors>
 			<interceptor name="adminLogin" class="com.zzy.interceptor.AdminInterceptor"></interceptor>
+			<interceptor name="userLogin" class="com.zzy.interceptor.UserInterceptor"></interceptor>
 			<interceptor-stack name="loginStack">
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="adminLogin" />
@@ -37,7 +38,6 @@
 			<result name="go_add_hot">/WEB-INF/NewsPage/addHotNews.jsp</result>
 			<result name="go_add_ca">/WEB-INF/NewsPage/addCaNews.jsp</result>
 			<result name="list_news">/WEB-INF/NewsPage/listNews.jsp</result>
-
 
 			<result name="add_news_suc" type="json">    <!-- 添加 -->
 				<param name="root">message</param>
@@ -93,9 +93,10 @@
 	</package>
 	
 	<!-- 广告 -->
-	<package name="advertisement" extends="json-default,interce" namespace="/ad">
+	<package name="advertisement" extends="json-default,interce" namespace="">
 		<action name="ad_manager" class="com.zzy.action.AdvertiseAction" method="ad_manager">
 			<result name="ad_manager">/WEB-INF/NewsPage/adPage.jsp</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 		<interceptor-ref name="loginStack" />
 		</action>
@@ -103,9 +104,11 @@
 			<result type="json" name="update_ad">
 				<param name="root">json_ad</param>
 			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 		<interceptor-ref name="loginStack" />
 		</action>
+
 	</package>
 
 	<!-- 控制台登录Action -->
@@ -137,8 +140,15 @@
 	
 	<!-- 网站用户Action -->
 	<package name="readingNews" extends="json-default,interce" namespace="">
+		<!-- 主页 -->
 		<action name="index" class="com.zzy.action.UserAction" method="loading_news">
 			<result name="loading_news">/index.jsp</result>
+		</action>
+		<!-- 读取广告 -->
+		<action name="get_ad" class="com.zzy.action.AdvertiseAction" method="get_ad">
+			<result type="json" name="get_ad">
+				<param name="root">json_ad</param>
+			</result>
 		</action>
 		<action name="show_detail" class="com.zzy.action.UserAction" method="detail_news">
 			<result name="detail_suc">/detail.jsp</result>
@@ -155,6 +165,11 @@
 		</action>
 		<action name="search" class="com.zzy.action.UserAction" method="search_news">
 			<result name="user_search">/search_result.jsp</result>
+		</action>
+		<action name="user_com" class="com.zzy.action.CommentAction" method="add_com">
+			<result name="add_com" type="json">
+				<param name="root">com_json</param>
+			</result>
 		</action>
 	</package>
 

@@ -1,14 +1,17 @@
 package com.zzy.dao.impl;
 
+import java.util.List;
+
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zzy.dao.AdDao;
-import com.zzy.dao.PojoDao;
 import com.zzy.po.BottomAd;
 import com.zzy.po.SideAd;
 import com.zzy.po.TopAd;
 
-public class AdDaoImpl extends HibernateDaoSupport implements AdDao,PojoDao{
+@Transactional(readOnly = false)
+public class AdDaoImpl extends HibernateDaoSupport implements AdDao{
 
 	@Override
 	public void show() {
@@ -51,7 +54,14 @@ public class AdDaoImpl extends HibernateDaoSupport implements AdDao,PojoDao{
 	@Override
 	public Integer getCount(String hql) {
 		// TODO Auto-generated method stub
-		return null;
+		return getHibernateTemplate().find(hql).size();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <O> List<O> listAd(String hql) {
+		// TODO Auto-generated method stub
+		return (List<O>) getHibernateTemplate().find("from "+hql);
 	}
 
 }

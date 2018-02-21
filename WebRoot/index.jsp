@@ -69,9 +69,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </nav>
     <!--顶部导航栏 navbar end-->
 
-    <div class="container advertise-top">
+    <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;"><img src="http://files.jb51.net/image/ali1000.png"/></a>
+    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -229,9 +229,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--分类 end-->
 
     <!--脚部广告位-->
-    <div class="container advertise-top">
+    <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;"><img src="http://files.jb51.net/image/ali1000.png"/></a>
+    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -267,5 +267,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 	<script src="Njs/login_quit.js"></script>
+	<script src="Njs/get_ad.js"></script>
 </body>
 </html>

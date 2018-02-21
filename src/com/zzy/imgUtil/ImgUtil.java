@@ -74,7 +74,10 @@ public class ImgUtil {
 	
 	//
 	public static String MoveAdImg(Integer ad_type,String linkSrc,String filename) throws IOException{
-		linkSrc = linkSrc.replace("/NewsCMS","");
+		if(linkSrc.indexOf("/upload")>-1){
+			linkSrc = linkSrc.substring(linkSrc.indexOf("/upload"));
+		}
+		System.out.println(linkSrc);
 		String source_path = getSavePath()+linkSrc.replaceAll("/", "\\\\");  //源文件
 		String target_path = getSavePath()+"\\"+AD_fileName+"\\"+ad_type; //目标目录
 		String target_source = target_path+"\\"+filename;            //目标文件

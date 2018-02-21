@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;" data-url="ad/ad_manager" data-title="广告管理" kit-target data-id='4'><i class="fa fa-life-buoy" aria-hidden="true"></i><span> 广告管理</span></a>
+                        <a href="javascript:;" data-url="ad_manager" data-title="广告管理" kit-target data-id='4'><i class="fa fa-life-buoy" aria-hidden="true"></i><span> 广告管理</span></a>
                         <!--  <dl class="layui-nav-child">
                             <dd><a href="javascript:;" kit-target data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
                             <dd><a href="javascript:;" kit-target data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a></dd>

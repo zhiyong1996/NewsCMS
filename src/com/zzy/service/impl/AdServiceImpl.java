@@ -1,11 +1,12 @@
 package com.zzy.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zzy.dao.AdDao;
-import com.zzy.dao.PojoDao;
 import com.zzy.po.BottomAd;
 import com.zzy.po.SideAd;
 import com.zzy.po.TopAd;
@@ -13,12 +14,11 @@ import com.zzy.service.AdService;
 
 @Transactional(readOnly = false)
 public class AdServiceImpl implements AdService{
-	@Resource PojoDao pojodao;
 	@Resource AdDao addao;
 	
 	@Override
 	public <O> void saveOrUpdateAd(O obj) {
-		pojodao.saveOrUpdate(obj);
+		addao.saveOrUpdate(obj);
 	}
 	@Override
 	public TopAd getTopById(Integer id) {
@@ -36,6 +36,16 @@ public class AdServiceImpl implements AdService{
 	public SideAd getSideById(Integer id) {
 		// TODO Auto-generated method stub
 		return addao.getSideById(id);
+	}
+	@Override
+	public Integer getCount(String ad) {
+		String hql = "from "+ad;
+		return addao.getCount(hql);
+	}
+	@Override
+	public <O> List<O> listAd(String hql) {
+		// TODO Auto-generated method stub
+		return addao.listAd(hql);
 	}
 
 }

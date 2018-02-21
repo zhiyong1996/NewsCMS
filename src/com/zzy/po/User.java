@@ -10,6 +10,7 @@ public class User {
 	private String Email;
 	private Avatar avatar;
 	private Boolean isLock;   //是否锁定
+	private String lastlogin;
 	private Set<Comment> comments = new HashSet<Comment>(); 
 	
 	public Integer getId() {
@@ -55,6 +56,12 @@ public class User {
 	}
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
+	}
+	public String getLastlogin() {
+		return lastlogin;
+	}
+	public void setLastlogin(String lastlogin) {
+		this.lastlogin = lastlogin;
 	}
 	
 }

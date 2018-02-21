@@ -28,13 +28,14 @@
 	width: 100px;
 }
 
-.advertise-top {
+.advertise {
 	position: relative;
 	background: #ddd;
 	margin-bottom: 30px;
+	display: none;
 }
 
-.advertise-top img {
+.advertise img {
 	width: 100%;
 }
 

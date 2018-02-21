@@ -1,6 +1,7 @@
 package com.zzy.action;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,11 @@ import net.sf.json.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.po.Category;
+import com.zzy.po.Comment;
 import com.zzy.po.News;
 import com.zzy.po.User;
 import com.zzy.service.CategoryService;
+import com.zzy.service.CommentService;
 import com.zzy.service.NewsService;
 import com.zzy.service.UserService;
 
@@ -23,6 +26,7 @@ public class UserAction extends ActionSupport{
 	@Resource NewsService nService;
 	@Resource CategoryService cService;
 	@Resource UserService uService;
+	@Resource CommentService comService;
 	
 	//服务器返回客户端数据
 	private List<News> search_news;
@@ -33,14 +37,19 @@ public class UserAction extends ActionSupport{
 	private News news ;
 	private String createId;
 	private JSONObject json;
+	private JSONObject com_json;
 	private Map<String ,Object> session;
 	private String flag;
-	
+
 	//服务器接受客户端参数
 	private String createTime;
 	private String username;
 	private String password;
 	private String search;
+	//评论
+	private String comment;
+	private Integer newsId;
+	private Integer userId;
 	
 	public String loading_news(){
 		
@@ -84,6 +93,8 @@ public class UserAction extends ActionSupport{
 		json = new JSONObject();
 		if(size>0){
 			User user = uService.getByUsername(username).get(0);
+			user.setLastlogin(StaticParam.DateFormat2.format(new Date()));
+			uService.saveOrUpdate(user);
 			if(user.getPassword().equals(password)){
 				session = ActionContext.getContext().getSession();
 				session.put("user", username);
@@ -109,9 +120,26 @@ public class UserAction extends ActionSupport{
 	}
 	
 	public String search_news(){
-		search_news = nService.searchNewsByTitle(search);
+		search_news = nService.getByTitle(search);
 		size = search_news.size();					
 		return "user_search";
+	}
+	
+	public String add_com(){
+		News n = nService.getById(newsId);
+		User u = uService.getUserById(userId);
+		System.out.println(comment+"|"+userId+newsId);
+		Comment c = new Comment();
+		c.setContent(comment);
+		c.setNews(n);
+		c.setUser(u);
+		c.setCreateTime(System.currentTimeMillis());
+		Integer comId = comService.save(c);
+		com_json = new JSONObject();
+		com_json.put("code", 0);
+		com_json.put("msg", "评论成功");
+		com_json.put("commentId",comId);
+		return "add_com";
 	}
 	public List<News> getCa_news() {
 		return ca_news;
@@ -212,6 +240,38 @@ public class UserAction extends ActionSupport{
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public JSONObject getCom_json() {
+		return com_json;
+	}
+
+	public void setCom_json(JSONObject com_json) {
+		this.com_json = com_json;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Integer getNewsId() {
+		return newsId;
+	}
+
+	public void setNewsId(Integer newsId) {
+		this.newsId = newsId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	
 	

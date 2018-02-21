@@ -68,7 +68,7 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> searchNewsByTitle(String keyword) {
+	public List<News> getByTitle(String keyword) {
 		// TODO Auto-generated method stub
 		return newsDao.searchNewsByTitle(keyword);
 	}

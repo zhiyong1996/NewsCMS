@@ -134,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		<s:else>
 		    			<ul>
 		    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
-		    				<li class="user-name"><span>user</span></li>
+		    				<li class="user-name"><span>${session.user}</span></li>
 		    				<li class="slide">|</li>
 		    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
 		    			</ul>
@@ -184,5 +184,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <script src="Njs/login_quit.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		var btn = $("#submit_comment");
+    	});
+    </script>
   </body>
 </html>

@@ -10,6 +10,6 @@
 		<property name="about" type="java.lang.String" length="50" not-null="true"/>
 		<property name="url" type="java.lang.String" not-null="true"/>
 		<property name="issue" type="true_false"/>
-		<many-to-one name="adimg" class="SideAdImg" column="adimg_id" unique="true" fetch="join"/>
+		<many-to-one name="adimg" class="SideAdImg" column="adimg_id" unique="true" fetch="join" lazy="false"/>
 	</class>
 </hibernate-mapping>
