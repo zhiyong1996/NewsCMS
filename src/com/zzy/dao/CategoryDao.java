@@ -11,5 +11,4 @@ public interface CategoryDao {
 	public Category findById(Integer cid);
 	public List<Category> pageCategory(String hql,int offset,int length);
 	public List<Category> allCategory();
-	public List<News> listNewsByCategory(Category c);
 }

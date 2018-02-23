@@ -17,5 +17,9 @@
 			<key column="comment_id"/>
 			<one-to-many class="Comment"/>
 		</set>
+		<set name="reportMessage" fetch="join" inverse="true" cascade="all">
+			<key column="report_id"/>
+			<one-to-many class="ReportMessage"/>
+		</set>
 	</class>
 </hibernate-mapping>

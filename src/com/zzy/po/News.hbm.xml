@@ -13,6 +13,8 @@
 		<property name="newsfrom" type="string" length="15" not-null="false"/>
 		<property name="createTime" type="long"  not-null="true"/>
 		<property name="updateTime" type="long"  not-null="false"/>
+		<property name="createTimeS" type="string"  not-null="false"/>
+		<property name="updateTimeS" type="string"  not-null="false"/>
 		<property name="issue" type="true_false"/>
 		<property name="newstype" type="integer" not-null="true"></property>
 		

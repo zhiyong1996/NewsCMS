@@ -5,6 +5,7 @@
 <struts>
 	<!-- /static 为存放静态资源的路径，意为不拦截对此文件夹下文件的请求 -->
 	<constant name="struts.action.excludePattern" value="/static/.*?" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
 
 	<!-- 该属性指定需要Struts2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。 如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开。 
 		<constant name="struts.action.extension" value="do" /> -->
@@ -166,10 +167,13 @@
 		<action name="search" class="com.zzy.action.UserAction" method="search_news">
 			<result name="user_search">/search_result.jsp</result>
 		</action>
-		<action name="user_com" class="com.zzy.action.CommentAction" method="add_com">
+		<action name="add_com" class="com.zzy.action.UserAction" method="add_com">
 			<result name="add_com" type="json">
 				<param name="root">com_json</param>
 			</result>
+		</action>
+		<action name="get_news_comment" class="com.zzy.action.UserAction" method="get_news_com">
+			<result name="get_n_c">/comment.jsp</result>
 		</action>
 	</package>
 

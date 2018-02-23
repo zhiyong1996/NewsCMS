@@ -11,7 +11,8 @@ public class User {
 	private Avatar avatar;
 	private Boolean isLock;   //是否锁定
 	private String lastlogin;
-	private Set<Comment> comments = new HashSet<Comment>(); 
+	private Set<Comment> comments = new HashSet<Comment>();
+	private Set<ReportMessage> reportMessage = new HashSet<ReportMessage>();
 	
 	public Integer getId() {
 		return id;
@@ -62,6 +63,12 @@ public class User {
 	}
 	public void setLastlogin(String lastlogin) {
 		this.lastlogin = lastlogin;
+	}
+	public Set<ReportMessage> getReportMessage() {
+		return reportMessage;
+	}
+	public void setReportMessage(Set<ReportMessage> reportMessage) {
+		this.reportMessage = reportMessage;
 	}
 	
 }

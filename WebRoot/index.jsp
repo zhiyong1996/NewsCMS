@@ -52,8 +52,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
+                <a href="index" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
+            <div>
+		        <form class="navbar-form navbar-left" role="search" method="post" action="search">
+		            <div class="form-group">
+		                <input id="keyword" name="keyword" type="text" class="form-control" placeholder="Search" required>
+		            </div>
+		            <button id="submit_key" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>搜索</button>
+		        </form>
+		    </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index">新闻首页</a></li>
                 <s:if test="#session.user==null">
@@ -61,14 +69,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javascript:;" class="user_name" >${session.user}</a></li>
+                	<li><a href="javascript:;" class="user_name" >${session.username}</a></li>
                 	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
         </div>
     </nav>
     <!--顶部导航栏 navbar end-->
-
+	
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
     		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
@@ -79,9 +87,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <!--头部广告位 end-->
 
-    <div class="container carousel">
+    <div class="container">
         <div class="row">
-
             <div class="col-md-8 left">
                 <!--轮播-->
                 <div id="myCarousel" class="carousel slide">
@@ -137,10 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<a href="show_detail?createId=<s:property value='#n.createId'/>">
                             		<p class="hot-item-title"><s:property value="#n.title"/></p>
                             	</a>
-                            <div class="keyword">
-                                <span class="label label-danger">关键字</span>
-                            </div>
-                        </li>
+                        	</li>
 	                	</s:iterator>
                     </ul>
                 </div>
@@ -152,78 +156,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--分类显示新闻-->
     <div class="container category">
         <div class="row">
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">时政</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">经济</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">军事</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">社会</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">国际</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
-            <div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
-                <div class="cateName panel-heading">
-                    <p class="cateN">健康</p>
-                </div>
-                <ul class="newss panel-body">
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                    <li class="newsItem"><a href="javascript:;">宜家涉嫌巨额逃税遭欧盟调查 逃税额可达10亿欧元</a></li>
-                </ul>
-            </div>
+        	<s:iterator value="comNews" var="all" status="st">
+        		<div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
+	                <div class="cateName panel-heading">
+	                    <p class="cateN"><s:property value="#all.key"/></p>
+	                </div>
+	                <ul class="newss panel-body">
+		        		<s:iterator value="#all.value" status="s" var="news">
+		        			<li class="newsItem"><a href="show_detail?createId=<s:property value='#news.createId'/>"><s:property value="#news.title"/></a></li>
+		        		</s:iterator>
+	        		</ul>
+	        	</div>
+        	</s:iterator>
         </div>
     </div>
     <!--分类 end-->

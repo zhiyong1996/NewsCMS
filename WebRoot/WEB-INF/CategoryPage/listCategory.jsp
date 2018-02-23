@@ -82,10 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					categoryName: value
 				},
 				success:function(data){
-					layer.msg("更新成功,3秒后自动刷新");
-					setTimeout(function(){
-						history.go(0);
-					},3000);
+					layer.msg("更新成功");
 				},
 				error:function(){
 					layer.msg("网络出错");

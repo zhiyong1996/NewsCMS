@@ -12,7 +12,8 @@ public interface NewsService {
 	public List<News> listNews();
 	public List<News> pageNews(String hql,int offset,int length);
 	public int getCount(String hql);
-	public List<News> getByCreateId(String createId);
+	public News getByCreateId(String createId);
+	public List<News> getComNews(Integer cid,Integer type);
 	
 	public List<News> getByType(Integer typeId);
 	public List<News> listByCategory(String hql,int offset,int length,Integer cid);

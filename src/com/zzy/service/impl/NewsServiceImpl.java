@@ -53,8 +53,14 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> getByCreateId(String createId) {
-		return newsDao.getByCreateId(createId);
+	public News getByCreateId(String createId) {
+		if(newsDao.getByCreateId(createId).size()>0){
+			System.out.println("有");
+			return newsDao.getByCreateId(createId).get(0);
+			
+		}else{
+			return null;
+		}
 	}
 
 	@Override
@@ -71,5 +77,11 @@ public class NewsServiceImpl implements NewsService {
 	public List<News> getByTitle(String keyword) {
 		// TODO Auto-generated method stub
 		return newsDao.searchNewsByTitle(keyword);
+	}
+
+	@Override
+	public List<News> getComNews(Integer cid, Integer type) {
+		// TODO Auto-generated method stub
+		return newsDao.getComNews(cid, type);
 	}
 }

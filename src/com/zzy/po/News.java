@@ -3,14 +3,17 @@ package com.zzy.po;
 import java.util.HashSet;
 import java.util.Set;
 
-public class News {
+
+public class News implements Comparable<News>{
 	private Integer id; // 新闻主键id
 	private String createId; // 自建id,新闻创建设定
 	private String title; // 新闻标题
 	private String content; // 新闻内容
 	private String newsfrom; // 新闻来源
-	private long createTime; // 创建时间
-	private long updateTime; // 更新时间
+	private long createTime; // 创建时间戳
+	private String createTimeS; // 创建时间S
+	private long updateTime; // 更新时间戳
+	private String updateTimeS; // 更新时间
 	private Boolean issue; // 是否展示
 
 	private CaImg caimg; // 轮播新闻图
@@ -19,6 +22,12 @@ public class News {
 	private Category category; // 分类
 	private Set<Comment> comments = new HashSet<Comment>(); // 新闻评论
 	private Set<NewsImg> newsimgs = new HashSet<NewsImg>(); // 新闻图片
+	
+	@Override
+	public int compareTo(News n) {
+		int result = (int) (n.createTime - this.createTime);
+		return result;
+	}
 
 	public Integer getId() {
 		return id;
@@ -124,4 +133,22 @@ public class News {
 		this.newstype = newstype;
 	}
 
+	public String getCreateTimeS() {
+		return createTimeS;
+	}
+
+	public void setCreateTimeS(String createTimeS) {
+		this.createTimeS = createTimeS;
+	}
+
+	public String getUpdateTimeS() {
+		return updateTimeS;
+	}
+
+	public void setUpdateTimeS(String updateTimeS) {
+		this.updateTimeS = updateTimeS;
+	}
+
+
+	
 }

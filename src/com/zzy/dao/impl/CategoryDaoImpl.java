@@ -1,15 +1,6 @@
 package com.zzy.dao.impl;
 
 import java.util.List;
-
-
-
-
-
-
-
-
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
@@ -59,14 +50,9 @@ public class CategoryDaoImpl extends HibernateDaoSupport implements CategoryDao 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> allCategory() {
-		return (List<Category>) getHibernateTemplate().find("from Category");
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<News> listNewsByCategory(Category c) {
-		return  (List<News>) getHibernateTemplate().find("from Category");
-
+		List<Category> rs = (List<Category>) getHibernateTemplate().find("from Category");
+		rs.remove(0);
+		return rs;
 	}
 
 }

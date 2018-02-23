@@ -78,14 +78,14 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> getNewsByType(Integer typeId){
-		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? order by createTime desc",typeId);
+		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.issue = true order by createTime desc",typeId);
 		
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<News> getComNews(Integer cid, Integer typeId) {
-		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.cid = ? order by createTime desc",new Object[]{typeId,cid});
+		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.category_id = ? order by createTime desc",new Object[]{typeId,cid});
 	}
 	
 	//根据分类分页查询
@@ -111,7 +111,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@Override
 	public List<News> searchNewsByTitle(String keyword) {
 		// TODO Auto-generated method stub
-		return (List<News>) getHibernateTemplate().find("from News n where n.title like ? order by createTime desc",keyword);
+		return (List<News>) getHibernateTemplate().find("from News where title like '%"+keyword+"%' order by createTime desc");
 	}
 	
 	

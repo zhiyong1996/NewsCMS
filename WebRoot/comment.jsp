@@ -4,12 +4,10 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <title>${news.title}</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head> 
+    <title>评论</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
@@ -18,16 +16,119 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="js/jquery-3.2.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
+  <style>
+  	.main-content{
+		margin-bottom: 50px;  		
+  	}
+  	.news-title{
+  		padding-bottom: 10px;
+  		margin-bottom: 25px;
+  		border-bottom: 2px solid #ccc; 
+  	}
+  	.all-comments{
+  		margin-bottom: 100px;
+  	}
+  	.comment-item{
+  		padding: 10px 0 20px 10px;
+    	border-bottom: 1px solid #ccc;
+  	}
+  	.comment-user-avatar{
+		width: 44px;
+		border-radius: 4px;
+	}
+  	.comment-time{
+  		margin-left: 20px;
+  	}
+  	.comment-item-content{
+		padding: 10px;  	
+  	}
+  	.media-heading{
+  		position: relative;
+  		padding-bottom: 5px;
+  		font-size: 16px;
+  	}
+  	.report{
+  		position: absolute;
+  		top: 2px;
+  		right: 20px;
+  		font-size: 12px;
+  	}
+  	.small{
+  		margin-left: 20px;
+  	}
+  	.report-warp{
+  		position: fixed;
+  		z-index: 1600;
+  		width: 460px;
+  		background: #fff;
+  		top: 20%;
+  		left: 50%;
+  		margin-left: -230px;
+  		padding: 0 10px 20px 10px;
+  		border: 1px solid #ccc;
+  		border-radius: 5px;
+  	}
+  	.report-header{
+  		padding-top: 20px;
+  		height: 50px;
+  	}
+  	.report-title{
+  		font-size: 18px;
+  		font-weight: bold;
+  		float: left;
+  	}
+  	.report-header-close{
+  		float: right;
+  		cursor: pointer;
+  		line-height: 30px;
+  	}
+  	.report-content{
+  		padding: 10px 20px;
+  	}
+  </style>
   <body>
-  	<div class="my-modal">
-  		<div class="modal-wrap">
-	  		<div class="my-modal-content">
-	  			<div class="my-modal-header">
-	  				<span class="glyphicon glyphicon-remove modal-close"></span>
-	  				<h4>登录</h4>
-	  			</div>
-	  			<div class="my-modal-body">
-	  				<form role="form" id="login-form">
+  	<div class="modal-bg"></div>
+  	<div class="report-warp">
+  		<div class="report-header clearfix">
+  			<div class="report-title report-header-item">评论举报</div>
+  			<div class="report-header-close" id="close-report"><span class="glyphicon glyphicon-remove modal-close"></span></div>
+		</div>
+		<div class="report-content">
+  			<form role="form" id="report-form">
+  				<p>您为什么要举报该评论</p>
+			    <div class="radio">
+					<label>
+						<input type="radio" name="report-type" id="re-type1" value="内容不适">内容不适
+					</label>
+				</div>
+			    <div class="radio">
+					<label>
+						<input type="radio" name="report-type" id="re-type2" value="内容不适">侮辱谩骂
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input type="radio" name="report-type" id="re-type3" value="内容不适">其他
+					</label>
+				</div>
+			  <div class="form-group">
+			    	<label for="state">举报说明(可选)</label>
+			    	<input type="text" class="form-control" id="state" placeholder="附加内容">
+			  </div>
+			  <div class="tip"></div>
+			  <button type="submit" class="btn btn-primary btn-block">提交</button>
+			</form>
+  		</div>
+  	</div>
+    <div class="my-modal">
+		<div class="modal-wrap">
+		 	<div class="my-modal-content">
+		 		<div class="my-modal-header">
+		 			<span class="glyphicon glyphicon-remove modal-close"></span>
+		 			<h4>登录</h4>
+		 		</div>
+		 		<div class="my-modal-body">
+		 			<form role="form" id="login-form">
 					  <div class="form-group">
 					    <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名">
 					  </div>
@@ -40,10 +141,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<p class="prompt-box">
 						没有帐号?<span class="to-register register-btn">注册</span>
 					</p>
-	  			</div>
-	  		</div>
-  		</div>
-  	</div>
+		 		</div>
+		 	</div>
+		</div>
+    </div>
         <!--顶部导航栏 navbar -->
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
@@ -71,8 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </ul>
         </div>
     </nav>
-    <!--顶部导航栏 navbar end-->
-	
+    
     <!--头部广告位-->
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
@@ -83,42 +183,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <!--头部广告位 end-->
+    
+    <!-- 面包屑导航 -->
     <div class="container">
 		<ol class="breadcrumb">
 			<li><a href="index">首页</a></li>
-			<li class="active">新闻阅览</li>
+			<li><a href="show_detail?createId=${news.createId}">新闻阅览</a></li>
+			<li class="active">评论查看</li>
 		</ol>
 	</div>
-    <!-- 新闻主体 -->
-    
-    <div class="container">
-    	<div class="row">
-    		<!-- 新闻内容 -->
-    		<div class="col-md-8 txt">
-    			<h2>${news.title}</h2>
-    			<p class="from-time"><span class="from">来源: ${news.newsfrom}</span><span class="ctime">${createTime}</span></p> 
-    			<hr/>
-    			<div class="content" id="content">
-    				${news.content}
-    			</div>
-    			<div class="news-end">
-    				<h4 class="end">THE END</h4>
-    			</div>
-    		</div>
-    		<!-- 新闻内容 end-->
-    		<div class="col-md-4"></div>
-    	</div>
-    </div>
-    <!-- 新闻主体 end -->
-    
-    <!-- 新闻评论部分 -->
-    <div class="container comment-warp">
-    	<div class="row">
-		    <div class="news-comment col-md-8">
-		    	<div class="comment-header">
+	<!-- end -->
+	
+	<!-- 内容 -->
+	<div class="container">
+		<div class="col-md-8 news-title"><h3>${news.title}<small class="small">[<a href="show_detail?createId=${news.createId}">查看原文</a>]</small></h3></div>
+	</div>
+	<div class="container main-content">
+		<div class="row">
+			<div class="col-md-8 comments-wrap">
+				<div class="all-comments">
+				<s:iterator value="news_com_json" status="st" var="n">   
+					<div class="media comment-item">
+					    <a class="media-left" href="javascript:;">
+					        <img class="media-object comment-user-avatar" src="Nimg/user.jpg" alt="媒体对象">
+					    </a>
+					    <div class="media-body">
+					        <h4 class="media-heading"><s:property value="#n.user.username"/><small class="comment-time">发布于:<s:property value="#n.createTimeS"/></small>
+					        	<span class="report">
+					    			<a href="javascript:;" class="report-btn"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
+					    		</span>
+					        </h4>
+							<div class="comment-item-content">
+								<s:property value="#n.content"/>
+							</div>
+					    	
+					    </div>
+					</div>
+				</s:iterator>
+				</div>
+				<div class="comment-header">
 		    		<h1 class="header-title left">网友评论</h1>
 		    		<p class="comment-protocol left">文明上网理性发言，请遵守新闻评论服务协议</p>
-		    		<p class="comment-count right"><a href="get_news_comment?createId=${news.createId}">${comment_count}条评论</a></p>
 		    	</div>
 		    	<div class="comment-area clearfix">
 		    		<div class="comment-left left">
@@ -148,11 +253,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    			</ul>
 	    			</s:else>
 		    	</div>
-		    </div>
-	    </div>
+			</div>	
+			<div class="col-md-4">
+			</div>
+		</div>
 	</div>
-    <!-- 评论结束 -->
-    
+        
     <!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
@@ -193,7 +299,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <script src="Njs/login_quit.js"></script>
     <script src="Njs/get_ad.js"></script>
-    <script>
+        <script>
     	$(document).ready(function(){
     		$("#comment-login").on("click",function(e){
     			$(".my-modal").fadeIn();
@@ -213,6 +319,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				success: function(data){
     					if(data.code==0){
     						alert(data.msg);
+    						location.reload();
     					}else{
     						alert(data.msg);
     					}

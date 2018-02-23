@@ -91,4 +91,5 @@
 	<bean id="categoryAction" class="com.zzy.action.CategoryAction" scope="prototype"/>
 	<bean id="imageAction" class="com.zzy.action.ImageAction" scope="prototype"/>
 	<bean id="RegisterAction" class="com.zzy.action.RegisterAction" scope="prototype"/>
+	<bean id="userAction" class="com.zzy.action.UserAction" scope="prototype"/>
 </beans>

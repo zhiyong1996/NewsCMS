@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(Integer id) {
-		return null;
+		return userDao.getById(id);
 	}
 
 	@Override
@@ -56,8 +56,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getByUsername(String name) {
-		return userDao.getByUsername(name);
+	public User getByUsername(String name) {
+		List<User> users = userDao.getByUsername(name);
+		if(users.size()>0){
+			return users.get(0);
+		}
+		return null;
 	}
 
 }

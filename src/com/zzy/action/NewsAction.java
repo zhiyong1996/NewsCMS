@@ -1,7 +1,6 @@
 package com.zzy.action;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -81,7 +80,7 @@ public class NewsAction extends ActionSupport {
 			return "go_add_ca";
 		} else if (newstype == StaticParam.HOT_NEWS) {
 			return "go_add_hot";
-		} else if (newstype == StaticParam.COMMENT_NEWS) {
+		} else if (newstype == StaticParam.COMMON_NEWS) {
 			return "go_add_com";
 		} else {
 			return "select_news";
@@ -100,6 +99,8 @@ public class NewsAction extends ActionSupport {
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
+		news.setCreateTimeS(StaticParam.DateFormat2.format(createTime));
+		news.setUpdateTimeS(StaticParam.DateFormat2.format(createTime));
 		news.setNewstype(newstype);
 		Integer nid = newsService.save(news);
 		
@@ -162,7 +163,7 @@ public class NewsAction extends ActionSupport {
 		ActionContext act = ActionContext.getContext();
 		act.put("update", news);
 		Integer nt = news.getNewstype();
-		if(nt == StaticParam.COMMENT_NEWS){
+		if(nt == StaticParam.COMMON_NEWS){
 			return "go_update_com";
 		}else if(nt == StaticParam.CA_NEWS){//如果是轮播新闻单独获取轮播图片
 			String caSrc = news.getCaimg().getPath();
@@ -182,6 +183,7 @@ public class NewsAction extends ActionSupport {
 		news.setCategory(cService.getById(cid));
 		long updateTime = System.currentTimeMillis();
 		news.setUpdateTime(updateTime);
+		news.setUpdateTimeS(StaticParam.DateFormat2.format(updateTime));
 
 		if (!pathList.equals("")) {
 

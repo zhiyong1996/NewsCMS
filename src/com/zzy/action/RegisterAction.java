@@ -48,15 +48,15 @@ public class RegisterAction extends ActionSupport{
 	}
 	
 	public String has_username(){
-		int size = uService.getByUsername(username).size();
-		if(size>0){
-			System.out.println("已存在");
-			backjson.put("has_name", HAS_USERNAME);	
-			backjson.put("msg","账号已存在");
-		}else{
+		User user = uService.getByUsername(username);
+		if(user == null){
 			System.out.println("帐号可用");
 			backjson.put("has_name", NO_USERNAME);
 			backjson.put("msg","账号可用");
+		}else{
+			System.out.println("已存在");
+			backjson.put("has_name", HAS_USERNAME);	
+			backjson.put("msg","账号已存在");
 		}
 		return "has_N";
 	}

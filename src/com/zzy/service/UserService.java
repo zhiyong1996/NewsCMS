@@ -12,5 +12,5 @@ public interface UserService {
 	public List<User> listUser();
 	public List<User> pageUser(String hql,int offset,int length);
 	public int getCount(String hql);
-	public List<User> getByUsername(String name);
+	public User getByUsername(String name);
 }
