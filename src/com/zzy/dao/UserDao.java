@@ -13,4 +13,5 @@ public interface UserDao {
 	
 	public List<User> pageList(final String hql, final int offset, final int length);
 	public List<User> getByUsername(String username);
+	public List<User> listBySQL(String sql,int offset,int limit);
 }

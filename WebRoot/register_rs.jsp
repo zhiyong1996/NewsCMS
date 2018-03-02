@@ -18,11 +18,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<div class="container">
+  	<div class="container" style="maring-top:100px;">
     	<div class="jumbotron">
-  			<h1>News账户</h1>
+  			<h1>News账户注册成功</h1>
 			<p class="username">${msg}</p>
-  			<p><a class="btn btn-primary btn-lg" href="#" role="button">现在就去登录</a></p>
+  			<p><a class="btn btn-primary btn-lg" href="load" role="button">现在就去登录</a></p>
 		</div>
 	</div>
   </body>

@@ -64,13 +64,8 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> getByType(Integer typeId) {
-		return newsDao.getNewsByType(typeId);
-	}
-
-	@Override
-	public List<News> listByCategory(String hql, int offset, int length) {
-		return newsDao.listByCategory(hql, offset, length);
+	public List<News> listBySQL(String hql, int offset, int length) {
+		return newsDao.listBySQL(hql, offset, length);
 	}
 
 	@Override
@@ -80,8 +75,16 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> getComNews(Integer cid, Integer type) {
+	public List<News> listByPosition(Integer typeId) {
 		// TODO Auto-generated method stub
-		return newsDao.getComNews(cid, type);
+		String sql = "select * from news where issue = 'T' and newstype = "+typeId;
+		return newsDao.listBySQL(sql, 0, 5);
+	}
+
+	@Override
+	public List<News> listComByCategory(Integer cateId) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM `news` where issue = 'T' and newstype = 0 and category_id = "+cateId;
+		return newsDao.listBySQL(sql, 0, 5);
 	}
 }

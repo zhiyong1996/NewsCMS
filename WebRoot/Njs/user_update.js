@@ -8,19 +8,19 @@ $(document).ready(function(e){
 				$("input[name='sex']").prop({checked:false})
 				if(data.sex === 0){
 					sex = "未知";
-				}else if(data.sex = 1){
+				}else if(data.sex == 1){
 					sex = "男";
 					$("#male").prop({checked: true});
 				}else {
 					sex= "女";
 					$("#female").prop({checked: true});
 				}			
-				$(".sex-wrap").find(".info-show").html(sex);
+				$(".sex-wrap").find(".info-show").text(sex);
 				
-				$(".headline-wrap").find(".info-show").html(data.headline);
+				$(".headline-wrap").find(".info-show").text(data.headline);
 				$("#headline").val(data.headline);
 				
-				$(".email-wrap").find(".info-show").html(data.email);
+				$(".email-wrap").find(".info-show").text(data.email);
 				$("#email").val(data.email);
 			}
 			$("#edit-btn").on("click",function(e){
@@ -29,6 +29,7 @@ $(document).ready(function(e){
 			$("#cancel-btn").on("click",function(e){
 				$("#profile").removeClass("edit");
 			});
+			//上传头像 start
 			$("#avatar-file").on("change",function(e){
 				var formdata = new FormData();
 				var fileObj = document.getElementById("avatar-file").files[0];
@@ -58,7 +59,7 @@ $(document).ready(function(e){
 					}
 				});
 			});
-			//头像上传
+			//头像上传 end
 			
 			$("#save-btn").on("click",function(){
 				var name = $("#name").val();
@@ -68,6 +69,7 @@ $(document).ready(function(e){
 				sex = sex ? sex: 0;
 				if(!sex){
 					alert("请选择性别");
+					return;
 				}
 				var uid = $("#uid").val();
 				$.ajax({

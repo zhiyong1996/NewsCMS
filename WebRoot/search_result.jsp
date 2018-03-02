@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="index" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
+                <a href="load" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
             <div>
 		        <form class="navbar-form navbar-left" role="search" method="post" action="search">
@@ -67,21 +67,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        </form>
 		    </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index">新闻首页</a></li>
+                <li><a href="load">新闻首页</a></li>
                 <s:if test="#session.user==null">
                 	<li class="to-login"><a class="login-btn" >登录</a></li>
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
                 	<li  class="nav-ava"><a href="user_info_page?username=${session.username}">
-                		<s:if test="avatar_path==''">
-								<img id="nav-avatar" src="Nimg/user.jpg">
-							</s:if><s:else>
-								<img id="nav-avatar" src="${avatar_path}">
-							</s:else>
+						<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
                 	</a></li>
                 	<li><a href="user_info_page?username=${session.username}" id="user_name" >${session.username}</a></li>
-                	<li><a href="javacript:;" id="quit" >退出</a></li>
+                	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
         </div>
@@ -91,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--头部广告位-->
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-‫img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -101,23 +97,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <div class="container">
 		<ol class="breadcrumb">
-			<li><a href="index">首页</a></li>
+			<li><a href="load">首页</a></li>
 			<li class="active">新闻搜索</li>
 		</ol>
 	</div>
 	
 	<!-- 主体 -->
 	<div class="container search-wrap">
-		<h3>站内搜索: ${keyword}</h3>
-		<hr/>
-		<p class="result-count">当前有${size}条相关新闻</p>
-		<div class="result-list">
-			<s:iterator value="search_news" status="s" var="n">
-				<div class="result-list-item">
-					<h4 class="news-title"><a href="show_detail?createId=<s:property value='#n.createId'/>"><s:property value="#n.title"/></a></h4>
-					<p class='time'><s:property value="#n.createTimeS"/></p>
-				</div>
-			</s:iterator>
+		<div class="col-md-8">
+			<h3>站内搜索: ${keyword}</h3>
+			<hr/>
+			<p class="result-count">当前有${size}条相关新闻</p>
+			<div class="result-list">
+				<s:iterator value="search_news" status="s" var="n">
+					<div class="result-list-item">
+						<h4 class="news-title"><a href="show_detail?createId=<s:property value='#n.createId'/>"><s:property value="#n.title"/></a></h4>
+						<p class='time'><s:property value="#n.createTimeS"/></p>
+					</div>
+				</s:iterator>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<!--侧栏广告位-->
+		    <div class="advertise advertise-side" id="ad-side">
+		    	<div class="ad-img">
+		    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
+		    	</div>
+		    	<span class="ad-title"></span>
+		        <div class="ad-logo">
+		        	<small>广告</small>
+		        </div>
+		    </div>
+		    <!--侧栏广告位 end-->
 		</div>
 	</div>
 	<!-- 主体end -->
@@ -125,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-‫img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>

@@ -92,7 +92,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	
 	//根据分类分页查询
 	@Override
-	public List<News> listByCategory(final String hql, final int offset, final int length) {
+	public List<News> listBySQL(final String hql, final int offset, final int length) {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<News> rs = getHibernateTemplate().execute(new HibernateCallback(){
 			@Override
@@ -120,7 +120,7 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@Override
 	public List<News> searchNewsByTitle(String keyword) {
 		// TODO Auto-generated method stub
-		return (List<News>) getHibernateTemplate().find("from News where title like '%"+keyword+"%' order by createTime desc");
+		return (List<News>) getHibernateTemplate().find("from News where title like '%"+keyword+"%' and issue = 'T' order by createTime desc");
 	}
 	
 	

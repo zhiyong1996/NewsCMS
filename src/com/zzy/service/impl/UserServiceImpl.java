@@ -1,8 +1,11 @@
 package com.zzy.service.impl;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import com.zzy.dao.UserDao;
 import com.zzy.po.User;
 import com.zzy.service.UserService;
@@ -57,6 +60,19 @@ public class UserServiceImpl implements UserService {
 			return users.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<User> listBySQL( String key, String value) {
+		// TODO Auto-generated method stub
+		String sql ;
+		if(key.equals("id")){
+			sql = "select * from user where "+key+" = "+value;
+		}else{
+			sql = "select * from user where "+key+" like '%"+value+"%'";
+		}
+		
+		return userDao.listBySQL(sql, 0, 10);
 	}
 
 }

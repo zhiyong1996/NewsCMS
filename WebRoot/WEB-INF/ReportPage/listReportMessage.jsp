@@ -14,10 +14,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="padding:30px;">
     <div style="margin-bottom: 5px;">
-		<div class="layui-btn-group demoTable">
+		<!--  <div class="layui-btn-group demoTable">
 		  <button class="layui-btn" data-type="readed">标记为已读</button>
 		  <button class="layui-btn" data-type="删除">删除</button>
-		</div>
+		</div>-->
 		
 		<!-- 表格容器 -->
 		<table class="layui-table" id="table" lay-filter="demo"></table>
@@ -60,8 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
 		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl"}
-		      ,{field: "id", title: "mid", width: 60, sort: true}
-		      ,{field: "reporter", title: "举报者", width: 280, align: "center"}
+		      ,{field: "id", title: "id", width: 90, sort: true}
+		      ,{field: "reporter", title: "举报者", width: 200, align: "center"}
 		      ,{field: "content", title: "理由", width: 90, align: "center"}
 		      ,{field: "checked", title: "状态", width: 90, align: "center"}
 		      ,{field: "createTimeS", title: "日期", width: 250, align: "center"}

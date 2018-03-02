@@ -141,7 +141,7 @@ layui.use(["form","layedit","upload"], function(){
 			 
 			 $.ajax({
 					type:"post",
-					url:"news/update_news",
+					url:"update_news",
 					dataType:"html",
 					data:{
 						newsid: newsid
@@ -157,7 +157,7 @@ layui.use(["form","layedit","upload"], function(){
 					success:function(data){
 						layer.msg("保存成功,3秒后自动跳转");
 						setTimeout(function(){
-							location.href = location.origin+"/NewsCMS/news/go_list_news";
+							location.href = location.origin+"/NewsCMS/go_list_news";
 						},3000);
 
 					},

@@ -13,9 +13,10 @@ public interface NewsService {
 	public List<News> pageNews(String hql,int offset,int length);
 	public int getCount(String hql);
 	public News getByCreateId(String createId);
-	public List<News> getComNews(Integer cid,Integer type);
 	
-	public List<News> getByType(Integer typeId);
-	public List<News> listByCategory(String hql,int offset,int length);
+	public List<News> listBySQL(String hql,int offset,int length);
 	public List<News> getByTitle(String keyword);
+	
+	public List<News> listByPosition(Integer typeId);
+	public List<News> listComByCategory(Integer cateId);
 }

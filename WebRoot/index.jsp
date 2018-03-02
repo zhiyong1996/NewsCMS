@@ -18,10 +18,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
   <script>
-   var flag = ${flag == null};
-  	if(flag){
-  		location.href = location.origin+"/NewsCMS/index";
-  	}
+	var flag = ${flag==null};
+		if(flag){
+			location.href = location.origin+"/NewsCMS/load"
+		}
   </script>
   <body>
   	<div class="my-modal">
@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="index" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
+                <a href="load" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
             <div>
 		        <form class="navbar-form navbar-left" role="search" method="post" action="search">
@@ -63,19 +63,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        </form>
 		    </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index">新闻首页</a></li>
+                <li><a href="load">新闻首页</a></li>
                 <s:if test="#session.user==null">
                 	<li class="to-login"><a class="login-btn" >登录</a></li>
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li  class="nav-ava"><a href="user_info_page?username=${session.username}">
-                		<s:if test="avatar_path==''">
-								<img id="nav-avatar" src="Nimg/user.jpg">
-							</s:if><s:else>
-								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
-							</s:else>
-                	</a></li>
+                	<li  class="nav-ava">
+                		<a href="user_info_page?username=${session.username}">
+						<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
+                		</a>
+                	</li>
                 	<li><a href="user_info_page?username=${session.username}" class="user_name" >${session.username}</a></li>
                 	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>

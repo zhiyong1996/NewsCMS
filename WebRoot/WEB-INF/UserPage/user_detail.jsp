@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="layui-form-item">
 				<label class="layui-form-label">昵称:</label>
 				<div class="layui-input-block">
-					<span class="data-show">${user.username}</span>
+					<span class="data-show">${user.name}</span>
 				</div>
 			</div>
 			<div class="layui-form-item">

@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<nav class="navbar navbar-danger navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="index" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
+                <a href="load" class="navbar-brand"><img class="logo" src="Nimg/logo.png" alt="logo"></a>
             </div>
             <div>
 		        <form class="navbar-form navbar-left" role="search" method="post" action="search">
@@ -92,22 +92,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        </form>
 		    </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index">新闻首页</a></li>
+                <li><a href="load">新闻首页</a></li>
                 <s:if test="#session.user==null">
                 	<li class="to-login"><a class="login-btn" >登录</a></li>
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li class="nav-ava"><a href="user_info_page?username=${session.username}">
-                		<s:if test="avatar_path==''">
-								<img id="nav-avatar" src="Nimg/user.jpg">
-							</s:if><s:else>
-								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
-							</s:else>
+                	<li class="nav-ava"><a href="user_info_page?username=${session.name}">
+						<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
                 	</a></li>
                 	<li><a href="user_info_page?username=${session.username}" id="user_name" >${session.username}</a></li>
                 	<input type="hidden" id="userid" value="<s:property value='#session.user.id'/>" />
-                	<li><a href="javacript:;" id="quit" >退出</a></li>
+                	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
         </div>
@@ -127,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- 面包屑导航 -->
     <div class="container">
 		<ol class="breadcrumb">
-			<li><a href="index">首页</a></li>
+			<li><a href="load">首页</a></li>
 			<li><a href="show_detail?createId=${news.createId}">新闻阅览</a></li>
 			<li class="active">评论查看</li>
 		</ol>
@@ -154,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					        		<span class="report">
 					        			<a href="javascript:;" class="report-btn" comid="<s:property value='#n.id'/>"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
 					        		</span>
-					        	</s:if><s:elseif test="!#session.user.id==#n.user.id">
+					        	</s:if><s:elseif test="#session.user.id!=#n.user.id">
 					        		<span class="report">
 					        			<a href="javascript:;" class="report-btn" comid="<s:property value='#n.id'/>"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
 					        		</span>
@@ -193,11 +189,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		<s:else>
 		    			<ul>
 		    				<li class="user-avatar">
-		    					<s:if test="avatar_path==''">
-								<img id="nav-avatar" src="Nimg/user.jpg">
-								</s:if><s:else>
-									<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
-								</s:else>
+								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
 							</li>
 		    				<li class="user-name"><span>${session.username}</span></li>
 		    				<input type="hidden" id="userId" value="${session.user.id}"/>

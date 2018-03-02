@@ -387,6 +387,7 @@ layui.define(['layer', 'form'], function(exports){
         var that = this;
         layui.use('upload', function(upload){
           var uploadImage = set.uploadImage || {};
+          console.log(uploadImage);
           upload.render({
             url: uploadImage.url
             ,method: uploadImage.type

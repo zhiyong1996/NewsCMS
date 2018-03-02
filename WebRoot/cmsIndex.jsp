@@ -43,13 +43,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <a href="javascript:;" data-title="新闻管理"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
                         	<dd>
-                                <a href="javascript:;" data-url="news/select_news" data-title="新建文章" kit-target data-id='1'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
+                                <a href="javascript:;" data-url="select_news" data-title="新建文章" kit-target data-id='1'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
                             </dd>
                             <dd>
                                 <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='2'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="news/go_list_news" data-title="新闻管理" kit-target data-id='3'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 新闻管理</span></a>
+                                <a href="javascript:;" data-url="go_list_news" data-title="新闻管理" kit-target data-id='3'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 新闻管理</span></a>
                             </dd>
                         </dl>
                     </li>
@@ -60,11 +60,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <a href="javascript:;" data-url="adminuser/go_list_page" data-title="用户管理" kit-target data-id='5'><i class="fa fa-user-o" aria-hidden="true"></i><span> 用户管理</span></a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="report/go_list" data-title="消息管理" kit-target data-id='6'><i class="fa fa-file-image-o" aria-hidden="true"></i><span> 消息管理</span><span class="layui-badge-dot"></span></a>
+                        <a href="javascript:;" data-url="report/go_list" data-title="消息管理" kit-target data-id='6'><i class="fa fa-volume-down" aria-hidden="true"></i><span> 消息管理</span><span class="layui-badge-dot"></span></a>
                     </li>
-                    <li class="layui-nav-item">
+                    <!--  <li class="layui-nav-item">
                         <a href="javascript:;" data-url="welcome.html" data-title="设置" kit-target data-id='7'><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span> 设置</span></a>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>

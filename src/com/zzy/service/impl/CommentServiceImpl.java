@@ -1,5 +1,7 @@
 package com.zzy.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,13 @@ public class CommentServiceImpl implements CommentService{
 	public void delCom(Comment com) {
 		// TODO Auto-generated method stub
 		comdao.delComment(com);
+	}
+
+	@Override
+	public List<Comment> listByUser(Integer uid) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM `comment` where user_id = "+uid+" order by createTimeS desc;";
+		return comdao.listComByUser(sql, 0, 10);
 	}
 
 }

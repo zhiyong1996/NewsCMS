@@ -14,17 +14,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="padding:30px;">
     <div style="margin-bottom: 5px;">
-	搜索用户名：
+    <form class="layui-form" id="searchUser">
 	  <div class="layui-inline">
-	    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+	  	<select name="searchType" lay-filter="searchType">
+	  		<option value="username">用户名</option>
+	  		<option value="id">ID</option>
+	  		<option value="name">昵称</option>
+	  	</select>
 	  </div>
-	<div class="layui-btn-group demoTable">
-	
-	  <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
-	  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-	</div>
-
+	  <div class="layui-inline">
+	    <input class="layui-input" id="searchValue" name="reloadValue" id="demoReload" autocomplete="off" required maxlength="12"/>
+	  </div>
+	  <button class="layui-btn" type="submit"><i class="layui-icon">&#xe615;</i>搜索</button>
+	</form>
 
 	<table class="layui-table" id="table" lay-filter="demo"></table>
 	
@@ -53,9 +55,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  var $ = layui.jquery;
 	  var table = layui.table,
 	  	  form = layui.form;
-	  //监听表格复选框选择
-	  table.on('checkbox(demo)', function(obj){
-	    console.log(obj)
+	  
+	  var defaultType = "username";
+	  
+	  form.on('select(searchType)', function(data){
+		  defaultType = data.value;
+		}); 
+	  
+	  $("#searchUser").on("submit",function(e){
+		  e.preventDefault();
+		  var reloadKey = defaultType;
+		  var reloadValue = $("#searchValue").val();
+			//执行重载start
+          table.reload('table', {
+          	page: {
+            	curr: 1 //重新从第 1 页开始
+          	}
+          	,where: {
+            	reloadKey: reloadKey,
+            	reloadValue: reloadValue
+          }
+        }); //执行重载end
 	  });
 	  
 	  //方法级渲染表格
@@ -85,86 +105,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    if(obj.event === 'detail'){
 	    	window.location.href = location.origin+"/NewsCMS/adminuser/user_detail?uid="+data.id;
 	    	console.log(data.id);
-	    } else if(obj.event === 'del'){
-	      layer.confirm('确定删除该行么', function(index){
-	    	layer.close(index);
-	        $.ajax({
-	        	type: "post",
-	        	url: "news/del_news",
-	        	dataType: "html",
-	        	data: {
-	        		newsid: data.id
-	        	},
-	        	success: function(data){     		
-	        		console.log(data);
-	        		layer.msg("删除成功");
-	        		obj.del();
-	        	},
-	        	error: function(){
-	        		layer.msg("删除失败");
-	        	}
-	        });//ajax end  
-	      });  
-	    } else if(obj.event === 'edit'){
-	    	layer.msg("编辑");
-	      //window.location.href = location.origin+"/NewsCMS/news/go_update?newsid="+data.id;
-	    }
-	  });
-	  
-	  //监听issue操作
-	  form.on('switch(sexDemo)', function(obj){
-		//console.log(obj);
-	    //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-	    $.ajax({
-	        	type: "post",
-	        	url: "news/issue_news",
-	        	dataType: "html",
-	        	data: {
-	        		newsid: this.value,
-	        		issue: obj.elem.checked
-	        	},
-	        	success: function(data){     		
-	        		console.log(data);
-	        		layer.msg("更新成功");
-	        	},
-	        	error: function(){
-	        		layer.msg("更新失败");
-	        	}
-	        });//ajax end  
+	    } 
 	  });
 	
-	  //顶部按钮组的功能函数
-	  var active = { //active start
-	    getCheckLength: function(){ //获取选中数目
-	      var checkStatus = table.checkStatus("table")
-	      ,data = checkStatus.data;
-	    
-	      layer.msg('选中了：'+ data.length + ' 个');
-	    }
-	    ,isAll: function(){ //验证是否全选
-	      var checkStatus = table.checkStatus("table");
-	      layer.msg(checkStatus.isAll ? '全选': '未全选')
-	    }
-	    ,reload: function(){ //根据搜索内容表格重载start
-	        var demoReload = $("#demoReload");
-	        
-	        //执行重载start
-	        table.reload('table', {
-	          page: {
-	            curr: 1 //重新从第 1 页开始
-	          }
-	          ,where: {
-	            username: demoReload.val()
-	          }
-	        }); //执行重载end
-	      }  //根据搜索内容表格重载end
-	    	
-	    };//active end
-	
-	  $('.demoTable .layui-btn').on('click', function(){
-	    var type = $(this).data('type');
-	    active[type] ? active[type].call(this) : '';
-	  });
+
 	});
 	</script>
 	</div>

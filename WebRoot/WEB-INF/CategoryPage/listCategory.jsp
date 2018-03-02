@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        ]]
 		  	  ,id: "Reload"
 			  ,page:true
-			  , height:332
+			  , height:"full"
 		  });
 		  
 		  //监听单元格编辑
@@ -128,9 +128,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				data:data.field,
 				success:function(data){
 					layer.msg("添加成功,3秒后自动更新");
-					setTimeout(function(){
-						history.go(0);
-					},3000);
+					table.reload('table', {
+			          page: {
+			            curr: 1 //重新从第 1 页开始
+			          }
+			        });
 				},
 				error:function(){
 					layer.msg("网络出错");

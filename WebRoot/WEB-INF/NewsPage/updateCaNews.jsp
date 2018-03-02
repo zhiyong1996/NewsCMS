@@ -177,7 +177,7 @@ layui.use(["form","layedit","upload"], function(){
 
 		 $.ajax({
 				type:"post",
-				url:"news/update_news",
+				url:"update_news",
 				dataType:"html",
 				data:{
 					newsid: ${update.id}
@@ -193,7 +193,7 @@ layui.use(["form","layedit","upload"], function(){
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");
 					setTimeout(function(){
-						location.href = location.origin+"/NewsCMS/news/go_list_news"
+						location.href = location.origin+"/NewsCMS/go_list_news"
 						},3000);
 				},
 				error:function(){

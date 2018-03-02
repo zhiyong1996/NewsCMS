@@ -8,7 +8,9 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.Avatar;
 import com.zzy.po.User;
+import com.zzy.service.AvatarService;
 import com.zzy.service.UserService;
 
 @SuppressWarnings("serial")
@@ -16,6 +18,7 @@ public class RegisterAction extends ActionSupport{
 	private final static boolean HAS_USERNAME = true;
 	private final static boolean NO_USERNAME = false;
 	@Resource UserService uService;
+	@Resource AvatarService avaService;
 	private String username;
 	private String password;
 	private String passagain;
@@ -36,6 +39,11 @@ public class RegisterAction extends ActionSupport{
 			u.setSex(0);
 			u.setEmail(email);
 			u.setCreateTime(StaticParam.DateFormat2.format(new Date()));
+			Avatar av = new Avatar();
+			av.setImgName("user.jpg");
+			av.setPath("/NewsCMS/Nimg/user.jpg");
+			avaService.save(av);
+			u.setAvatar(av);
 			Integer uid = uService.save(u);
 			if(uid instanceof Integer){
 				ActionContext.getContext().put("msg", "帐号:["+username+"]创建成功");

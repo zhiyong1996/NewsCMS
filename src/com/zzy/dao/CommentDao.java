@@ -12,5 +12,5 @@ public interface CommentDao {
 	
 	public void delComment(Comment com);
 	public List<Comment> listComment(String hql,int offset,int length);
-	public List<Comment> listComByUser();
+	public List<Comment> listComByUser(String hql,int offset,int length);
 }

@@ -17,11 +17,11 @@
 		<property name="lastlogin" type="java.lang.String" length="50" not-null="false"/>
 		<property name="createTime" type="java.lang.String" length="50" not-null="false"/>
 		<many-to-one name="avatar" class="Avatar" column="avatar_id" unique="true" lazy="false" fetch="join"/>
-		<set name="comments" fetch="join" inverse="true" cascade="all">
+		<set name="comments" fetch="join" inverse="true" cascade="all" lazy="false">
 			<key column="comment_id"/>
 			<one-to-many class="Comment"/>
 		</set>
-		<set name="reportMessage" fetch="join" inverse="true" cascade="all">
+		<set name="reportMessage" fetch="join" inverse="true" cascade="all" lazy="false">
 			<key column="report_id"/>
 			<one-to-many class="ReportMessage"/>
 		</set>

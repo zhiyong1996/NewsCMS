@@ -170,7 +170,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	},
 	        	success: function(data){     		
 	        		console.log(data);
-	        		layer.msg(data);
+	        		layer.msg(data.msg);
+	        		setTimeout(function(e){
+	        			history.go(0);
+	        		},2000);
 	        	},
 	        	error: function(){
 	        		layer.msg("网络异常");

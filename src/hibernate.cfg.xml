@@ -22,6 +22,7 @@
     	<mapping resource="com/zzy/po/News.hbm.xml"/>
     	<mapping resource="com/zzy/po/Comment.hbm.xml"/>
     	<mapping resource="com/zzy/po/User.hbm.xml"/>
+    	<mapping resource="com/zzy/po/Admin.hbm.xml"/>
     	<mapping resource="com/zzy/po/Category.hbm.xml"/>
     	<mapping resource="com/zzy/po/ReportMessage.hbm.xml"/>
     	<mapping resource="com/zzy/po/CaImg.hbm.xml"/>

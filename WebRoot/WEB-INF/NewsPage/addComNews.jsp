@@ -60,7 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 layui.use(["form","layedit","upload"], function(){
 	  var form = layui.form,
-	  layedit = layui.layedit;
+	  layedit = layui.layedit,
+	  upload = layui.upload;
 	  layedit.set({
 		  uploadImage: {
 		    url: 'upload/uploadNewsImg' //接口url

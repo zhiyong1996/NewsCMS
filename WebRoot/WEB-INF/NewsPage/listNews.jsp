@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 工具栏模板引擎 -->
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">预览</a>
-		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="more">查看更多</a>
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="more">评论</a>
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
@@ -108,12 +108,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,url: "news/list_news"
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
-		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl"}
-		      ,{field: "id", title: "ID", width: 60, sort: true}
+		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl",align: "center"}
+		      ,{field: "id", title: "ID", width: 60, sort: true,align: "center"}
 		      ,{field: "title", title: "标题", width: 280, align: "center"}
-		      ,{field: "newsfrom", title: "来源", width: 90, align: "center"}
-		      ,{field: "category", title: "类型", width: 90, align: "center"}
-		      ,{field: "newstype", title: "位置", width: 90, align: "center"}
+		      ,{field: "newsfrom", title: "来源", width: 100, align: "center"}
+		      ,{field: "category", title: "类型", width: 60, align: "center"}
+		      ,{field: "newstype", title: "位置", width: 60, align: "center"}
+		      ,{field: "commentSize", title: "评论", width: 60, align: "center"}
 		      //,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		      //,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
 		      ,{field: "issue", title: "是否发布", width:100, align: "center", templet: "#switchTpl"}
@@ -155,7 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    } else if(obj.event === 'edit'){
 	      window.location.href = location.origin+"/NewsCMS/news/go_update?newsid="+data.id;
 	    }else if(obj.event === 'more'){
-	    	window.location.href = location.origin+"/NewsCMS/news/news_more?newsid="+data.id;
+	    	window.location.href = location.origin+"/NewsCMS/news/news_comment?newsid="+data.id;
 	    }
 	  });
 	  

@@ -3,10 +3,8 @@ package com.zzy.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import javax.annotation.Resource;
@@ -50,7 +48,7 @@ public class UserAction extends ActionSupport{
 	private String flag;
 	private int comment_count;
 	private User user;
-	private String avatar_path;
+	private List<Comment> my_comment;
 
 	//服务器接受客户端参数
 	private String createTime;
@@ -61,6 +59,8 @@ public class UserAction extends ActionSupport{
 	private Integer sex;
 	private Integer uid;
 	private String name;
+	//更新密码
+	private String newpassword;
 	
 	//举报信息
 	private String content;
@@ -76,60 +76,35 @@ public class UserAction extends ActionSupport{
 	public String loading_news(){
 		
 		ActionContext cx = ActionContext.getContext();
-		List<News> ca_n = nService.getByType(StaticParam.CA_NEWS);
-		List<News> hot_n = nService.getByType(StaticParam.HOT_NEWS);
-		int ca_size = ca_n.size()>=5? StaticParam.CA_NEWS_MAX:ca_n.size();//判断获取到的新闻数量是否大于5，大于5则限定为5
-		int hot_size = hot_n.size()>=5? StaticParam.HOT_NEWS_MAX:hot_n.size();//判断获取到的新闻数量是否大于5，大于5则限定为5
-		
-		ca_news = new ArrayList<News>();//初始化一个list对象存放新闻
-		hot_news = new ArrayList<News>();//初始化一个list对象存放新闻
-		
-		for(int i=0;i<ca_size;i++){
-			ca_news.add(ca_n.get(i));
-			//System.out.println("Ca-News:"+ca_n.get(i).getTitle()+";");
-		}
-		for(int i=0;i<hot_size;i++){
-			hot_news.add(hot_n.get(i));
-			//System.out.println("Hot-News:"+hot_n.get(i).getTitle()+";");
-		}
+		ca_news = nService.listByPosition(StaticParam.CA_NEWS);
+		hot_news = nService.listByPosition(StaticParam.HOT_NEWS);
 		cx.put("ca_news", ca_news);
 		cx.put("hot_news", hot_news);
 		flag = "true";
 		clist = cService.allCategory();
+		List<News> c_news;
 		comNews = new HashMap<String,Object>();
 		for(Category c : clist){ //遍历新闻类别,循环获取该分类下的新闻
-			Set<News> ns = c.getNewss();
-			if(ns.size()>0){
-				TreeSet<News> tn = new TreeSet<News>();//对set集合进行排序
-				tn.addAll(ns);			
-				int size = tn.size()>=StaticParam.CA_NEWS_MAX? StaticParam.CA_NEWS_MAX:tn.size();//限定集合大小
-				System.out.println(c.getName()+"新闻有"+size);
-				int sum = 0;   //需要获取前5个新闻对象,设定一个标志
-				Iterator<News> it = tn.iterator();
-				List<News> n = new ArrayList<News>();
-				while(it.hasNext()){
-					if(sum<=size){
-						News single = it.next();
-						if(single.getNewstype()==StaticParam.COMMON_NEWS){
-						  n.add(single);
-						}
-					}else{
-						break;
-					}
-				}
-				if(n.size()>0){
-					comNews.put(c.getName(), n);
-				}
+			c_news = nService.listComByCategory(c.getId());
+			if(c_news.size()>0){
+				comNews.put(c.getName(), c_news);
 			}
 		}
 		return "loading_news";
 	}
 
 	public String detail_news(){
-		news = nService.getByCreateId(createId);
-		comment_count = news.getComments().size();
-		createTime = StaticParam.DateFormat2.format(news.getCreateTime());
-		return "detail_suc";
+		if(createId==null||createId.equals("")){
+			return "index";
+		}else{
+			news = nService.getByCreateId(createId);
+			if(news==null){
+				return "index";
+			}
+			comment_count = news.getComments().size();
+			createTime = StaticParam.DateFormat2.format(news.getCreateTime());
+			return "detail_suc";
+		}
 	}
 	
 	public String user_login(){
@@ -209,8 +184,13 @@ public class UserAction extends ActionSupport{
 		
 	public String user_info_page(){
 		user = uService.getByUsername(username);
-		avatar_path = user.getAvatar()==null? "" : user.getAvatar().getPath();
-		return "user_info_page";
+		if(user == null){
+			return "index";
+		}else{
+			my_comment = comService.listByUser(user.getId());
+			size = my_comment.size();
+			return "user_info_page";
+		}
 	}
 
 	public String update_user_info(){
@@ -261,6 +241,22 @@ public class UserAction extends ActionSupport{
 			json.put("msg", "举报失败，稍后尝试");
 		}
 		return "submit_report";
+	}
+	
+	public String update_password(){
+		user = uService.getUserById(uid);
+		json = new JSONObject();
+		if(password.equals(user.getPassword())&&!(password.equals(""))){
+			user.setPassword(newpassword);
+			json.put("code", 0);
+			json.put("msg", "修改成功");
+			uService.saveOrUpdate(user);
+			ActionContext.getContext().getSession().remove("user");
+		}else{
+			json.put("code", 1);
+			json.put("msg", "修改失败，原密码错误");
+		}
+		return "update_password";
 	}
 	
 	public List<News> getCa_news() {
@@ -468,14 +464,6 @@ public class UserAction extends ActionSupport{
 		this.name = name;
 	}
 
-	public String getAvatar_path() {
-		return avatar_path;
-	}
-
-	public void setAvatar_path(String avatar_path) {
-		this.avatar_path = avatar_path;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -498,6 +486,22 @@ public class UserAction extends ActionSupport{
 
 	public void setComid(Integer comid) {
 		this.comid = comid;
+	}
+
+	public List<Comment> getMy_comment() {
+		return my_comment;
+	}
+
+	public void setMy_comment(List<Comment> my_comment) {
+		this.my_comment = my_comment;
+	}
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
 	}
 
 	

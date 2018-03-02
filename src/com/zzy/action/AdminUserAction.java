@@ -18,9 +18,12 @@ public class AdminUserAction extends ActionSupport {
 	private int limit;
 	private int page;
 	private Integer uid;
+	private String reloadKey;
+	private String reloadValue;
 	
 	//服务器返回数据
 	private JSONObject json;
+	private JSONObject search_json;
 	private String message;
 	private List<User> userSet;
 	private User user;
@@ -31,9 +34,13 @@ public class AdminUserAction extends ActionSupport {
 	}
 	
 	public String page_user(){
-		String hql = "from User";
-		int offset = (page - 1) * limit;
-		userSet = (List<User>) uService.pageUser(hql, offset, limit);
+		if(reloadKey==null||reloadKey.equals("")){
+			String hql = "from User";
+			int offset = (page - 1) * limit;
+			userSet = (List<User>) uService.pageUser(hql, offset, limit);
+		}else{
+			userSet = uService.listBySQL(reloadKey, reloadValue);
+		}
 		int count = userSet.size();
 		json = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
@@ -64,6 +71,28 @@ public class AdminUserAction extends ActionSupport {
 		user = uService.getUserById(uid);
 		avatar_path = user.getAvatar()==null? "Nimg/user.jpg":user.getAvatar().getPath();
 		return "user_detail";
+	}
+	
+	public String searchUser(){
+		userSet = uService.listBySQL(reloadKey, reloadValue);
+		search_json = new JSONObject();
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
+		JSONObject data;
+		for (User u : userSet) {
+			data = new JSONObject();
+			data.put("id", u.getId());
+			data.put("username", u.getUsername());
+			data.put("name", u.getName());
+			data.put("isLock", u.getIsLock());
+			data.put("lastlogin", u.getLastlogin());
+			arrData.add(data);
+		}
+		message = "";
+		search_json.put("code", 0);
+		search_json.put("msg", message);
+		search_json.put("count", userSet.size());
+		search_json.put("data", arrData);
+		return "searchUser";
 	}
 
 	public int getLimit() {
@@ -120,6 +149,30 @@ public class AdminUserAction extends ActionSupport {
 
 	public void setAvatar_path(String avatar_path) {
 		this.avatar_path = avatar_path;
+	}
+
+	public String getReloadKey() {
+		return reloadKey;
+	}
+
+	public void setReloadKey(String reloadKey) {
+		this.reloadKey = reloadKey;
+	}
+
+	public String getReloadValue() {
+		return reloadValue;
+	}
+
+	public void setReloadValue(String reloadValue) {
+		this.reloadValue = reloadValue;
+	}
+
+	public JSONObject getSearch_json() {
+		return search_json;
+	}
+
+	public void setSearch_json(JSONObject search_json) {
+		this.search_json = search_json;
 	}
 	
 	

@@ -62,6 +62,8 @@ public class NewsAction extends ActionSupport {
 	private Map<Integer, Object> category; // 更新/添加新闻时查询的分类Map格式数据
 	private Map<Integer, Object> newsposition; // 更新/添加新闻时查询的位置类型Map格式数据
 	private Map<String, String> backnews = new HashMap<String, String>(); // 返回的新闻对象
+	private List<Comment> commentList;
+	private int commentSize;
 
 	public String go_index() {
 		return "index";
@@ -278,14 +280,14 @@ public class NewsAction extends ActionSupport {
 			System.out.println(reloadkey+":"+reloadvalue);
 			//如果重载key为category则为根据新闻类型获取新闻
 			String hql = "SELECT * FROM news where category_id = "+reloadvalue;
-			newsSet = newsService.listByCategory(hql, offset, limit);
+			newsSet = newsService.listBySQL(hql, offset, limit);
 			count = newsSet.size();
 			
 		}else if(reloadkey.equals("newsposition")){
 			System.out.println(reloadkey+":"+reloadvalue);
 			//如果重载key为newsposition则为根据新闻位置获取新闻
 			String hql = "SELECT * FROM news where newstype = "+reloadvalue;
-			newsSet = newsService.listByCategory(hql, offset, limit);
+			newsSet = newsService.listBySQL(hql, offset, limit);
 			count = newsSet.size();
 			
 		}else if(reloadkey.equals("title")){
@@ -307,6 +309,7 @@ public class NewsAction extends ActionSupport {
 				data.put("newsfrom", ns.getNewsfrom());
 				data.put("newstype", StaticParam.getPositionType(ns.getNewstype()));
 				data.put("category", ns.getCategory().getName());
+				data.put("commentSize", ns.getComments().size());
 				data.put("issue", ns.getIssue());
 				data.put("createTime", StaticParam.DateFormat2.format(ns.getCreateTime()));
 				data.put("updateTime", StaticParam.DateFormat2.format(ns.getUpdateTime()));
@@ -353,12 +356,17 @@ public class NewsAction extends ActionSupport {
 		return "news_preview";
 	}
 	
-	//查看更多新闻资料
-	public String news_more(){
+	//查看新闻评论
+	public String news_comment(){
 		news = newsService.getById(newsid);
 		TreeSet<Comment> ts = new TreeSet<Comment>();
 		ts.addAll(news.getComments());
-		return "news_more";
+		commentSize = ts.size();
+		commentList = new ArrayList<Comment>();
+		for(Comment c:ts){
+			commentList.add(c);
+		}
+		return "news_comment";
 	}
 	
 	//根据分类查询新闻
@@ -366,7 +374,7 @@ public class NewsAction extends ActionSupport {
 		String hql = "SELECT * FROM news where category_id = "+cid;
 		System.out.println(hql);
 		int offset = (page - 1) * limit;
-		newsSet = (List<News>) newsService.listByCategory(hql, offset, limit);
+		newsSet = (List<News>) newsService.listBySQL(hql, offset, limit);
 		int count = newsSet.size();
 		pageJson = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
@@ -600,6 +608,30 @@ public class NewsAction extends ActionSupport {
 
 	public void setComSet(TreeSet<Comment> comSet) {
 		this.comSet = comSet;
+	}
+
+	public List<Comment> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
+	}
+
+	public int getCommentSize() {
+		return commentSize;
+	}
+
+	public void setCommentSize(int commentSize) {
+		this.commentSize = commentSize;
+	}
+
+	public News getNews() {
+		return news;
+	}
+
+	public void setNews(News news) {
+		this.news = news;
 	}
 	
 }

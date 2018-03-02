@@ -34,7 +34,7 @@
 		</interceptors>
 	</package>
 	<!-- 新闻管理 -->
-	<package name="news" extends="json-default,interce" namespace="/news">
+	<package name="news" extends="json-default,interce" namespace="/">
 		<!-- 新闻Action -->
 		<action name="*" class="com.zzy.action.NewsAction" method="{1}">
 			<result name="select_news">/WEB-INF/NewsPage/selectNews.jsp</result> <!-- 选择新闻类型 -->
@@ -61,7 +61,7 @@
 				<param name="root">message</param>
 			</result>
 			<result name="news_preview">/WEB-INF/NewsPage/newsPreview.jsp</result>   	<!-- 预览新闻 -->
-			<result name="news_more">/WEB-INF/NewsPage/newsMore.jsp</result>   	<!-- 查看更多新闻信息 -->
+			<result name="news_comment">/WEB-INF/NewsPage/newsComment.jsp</result>   	<!-- 查看更多新闻信息 -->
 			<result name="del_news" type="json">	<!-- 删除新闻 -->
 				<param name="root">status</param>
 			</result>
@@ -76,7 +76,7 @@
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 			<interceptor-ref name="loginStack" />
 			<!-- 对应方法 -->
-			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news,batch_handle,list_by_cate,news_more</allowed-methods>
+			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news,batch_handle,list_by_cate,news_comment</allowed-methods>
 		</action>
 	</package>
 	
@@ -90,13 +90,17 @@
 			</result>
 			<!-- 用户详细资料 -->
 			<result name="user_detail">/WEB-INF/UserPage/user_detail.jsp</result>
+			<!-- 用户表格重载-->
+			<result name="searchUser" type="json">
+				<param name="root">json</param>
+			</result>
 			
 			<!-- 拦截器返回登陆界面 -->
 			<result name="login" type="redirect" >/admin_login.jsp</result>	
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 			<interceptor-ref name="loginStack" />
 			<!-- 对应方法 -->
-			<allowed-methods>page_user,go_list_page,user_detail</allowed-methods>
+			<allowed-methods>page_user,go_list_page,user_detail,searchUser</allowed-methods>
 		</action>
 	</package>
 	
@@ -196,7 +200,7 @@
 	<!-- 网站用户Action -->
 	<package name="readingNews" extends="json-default,interce" namespace="">
 		<!-- 主页 -->
-		<action name="index" class="com.zzy.action.UserAction" method="loading_news">
+		<action name="load" class="com.zzy.action.UserAction" method="loading_news">
 			<result name="loading_news">/index.jsp</result>
 		</action>
 		<!-- 读取广告 -->
@@ -205,32 +209,41 @@
 				<param name="root">json_ad</param>
 			</result>
 		</action>
+		<!-- 新闻详情查看 -->
 		<action name="show_detail" class="com.zzy.action.UserAction" method="detail_news">
 			<result name="detail_suc">/detail.jsp</result>
+			<result name="index" type="redirectAction">load</result>
 		</action>
+		<!-- 用户登录 -->
 		<action name="user_login" class="com.zzy.action.UserAction" method="user_login">
 			<result name="u_login" type="json">
 				<param name="root">json</param>
 			</result>
 		</action>
+		<!-- 用户退出 -->
 		<action name="user_quit" class="com.zzy.action.UserAction" method="user_quit">
 			<result name="u_quit" type="json">
 				<param name="root">json</param>
 			</result>
 		</action>
+		<!-- 搜索新闻 -->
 		<action name="search" class="com.zzy.action.UserAction" method="search_news">
 			<result name="user_search">/search_result.jsp</result>
 		</action>
+		<!-- 添加评论 -->
 		<action name="add_com" class="com.zzy.action.UserAction" method="add_com">
 			<result name="add_com" type="json">
 				<param name="root">com_json</param>
 			</result>
 		</action>
+		<!-- 获取评论 -->
 		<action name="get_news_comment" class="com.zzy.action.UserAction" method="get_news_com">
 			<result name="get_n_c">/comment.jsp</result>
 		</action>
+		<!-- 查看用户信息 -->
 		<action name="user_info_page" class="com.zzy.action.UserAction" method="user_info_page">
 			<result name="user_info_page">/user_info.jsp</result>
+			<result name="index" type="redirectAction">load</result>
 		</action>
 		<!-- 更新用户信息 -->
 		<action name="update_user_info" class="com.zzy.action.UserAction" method="update_user_info">
@@ -238,6 +251,12 @@
 				<param name="root">json</param>
 			</result>
 		</action>
+		<action name="update_password" class="com.zzy.action.UserAction" method="update_password">
+			<result name="update_password" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<!-- 提交举报 -->
 		<action name="submit_report" class="com.zzy.action.UserAction" method="submit_report">
 			<result name="submit_report" type="json">
 				<param name="root">json</param>

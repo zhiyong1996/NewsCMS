@@ -1,13 +1,18 @@
 package com.zzy.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import com.zzy.dao.UserDao;
+
 import com.zzy.po.User;
 
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
@@ -61,6 +66,30 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
 	public Integer getCount(String hql) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<User> listBySQL(final String sql, final int offset, final int limit) {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		List<User> rs = getHibernateTemplate().execute(new HibernateCallback(){
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException{
+				SQLQuery query = session.createSQLQuery(sql);
+				query.setFirstResult(offset);
+				query.setMaxResults(limit);
+				query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+				query.addEntity(User.class);
+				System.out.println(query.list().size());
+				List<User> n_rs = new ArrayList<User>();
+				for(int i=0;i<query.list().size();i++){
+					Map map = (Map) query.list().get(i);
+					n_rs.add((User) map.get("User"));
+				}
+				//List<News> rs = query.list();
+				return n_rs;
+			}
+		});
+		return rs;
 	}
 
 }
