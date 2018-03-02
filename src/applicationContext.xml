@@ -85,6 +85,16 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	<bean id="comService" class="com.zzy.service.impl.CommentServiceImpl"/>
+<!-- reportmsg -->
+	<bean id="reportDao" class="com.zzy.dao.impl.ReportDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="reportService" class="com.zzy.service.impl.ReportServiceImpl"/>
+<!-- avatar -->
+	<bean id="avaDao" class="com.zzy.dao.impl.AvaDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	<bean id="avaService" class="com.zzy.service.impl.AvatarServiceImpl"/>
 	
 <!-- ActionBean -->
 	<bean id="newsAction" class="com.zzy.action.NewsAction" scope="prototype"/>
@@ -92,4 +102,8 @@
 	<bean id="imageAction" class="com.zzy.action.ImageAction" scope="prototype"/>
 	<bean id="RegisterAction" class="com.zzy.action.RegisterAction" scope="prototype"/>
 	<bean id="userAction" class="com.zzy.action.UserAction" scope="prototype"/>
+	<bean id="reportAction" class="com.zzy.action.ReportMessageAction" scope="prototype"/>
+	<bean id="adminUserAction" class="com.zzy.action.AdminUserAction" scope="prototype"/>
+	<bean id="advertiseAction" class="com.zzy.action.AdvertiseAction" scope="prototype"/>
+	<bean id="admminLoingAction" class="com.zzy.action.LoginAction" scope="prototype"/>
 </beans>

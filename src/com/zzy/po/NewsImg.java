@@ -4,6 +4,7 @@ public class NewsImg {
 	private Integer id;   //唯一id
 	private String name;  //文件名
 	private String path; //存储路径
+	private String source; //图片来源本地上传或者网络
 	private News news;   //所属新闻
 	
 	public Integer getId() {
@@ -29,6 +30,12 @@ public class NewsImg {
 	}
 	public void setNews(News news) {
 		this.news = news;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
 	}
 	
 }

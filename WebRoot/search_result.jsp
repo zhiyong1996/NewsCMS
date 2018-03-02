@@ -73,7 +73,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javacript:;" id="user_name" >${session.username}</a></li>
+                	<li  class="nav-ava"><a href="user_info_page?username=${session.username}">
+                		<s:if test="avatar_path==''">
+								<img id="nav-avatar" src="Nimg/user.jpg">
+							</s:if><s:else>
+								<img id="nav-avatar" src="${avatar_path}">
+							</s:else>
+                	</a></li>
+                	<li><a href="user_info_page?username=${session.username}" id="user_name" >${session.username}</a></li>
                 	<li><a href="javacript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>

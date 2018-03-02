@@ -2,8 +2,9 @@ $(document).ready(function(){
 	function renderAd(elem,data){
 		if(elem){
 			console.log(data.url+"\n"+data.img)
-			elem.find("#ad-url").prop({href: data["url"]});
-			elem.find("#ad-img").prop({src: data["img"]});
+			elem.find(".ad-url").prop({href: data["url"]});
+			elem.find(".ad-img").prop({src: data["img"]});
+			elem.find(".ad-title").html(data["about"]);
 			elem.css("display","block");
 		}else
 			return;

@@ -27,26 +27,30 @@
 				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="adminLogin" />
 			</interceptor-stack>
+			<interceptor-stack name="userloginStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="userLogin" />
+			</interceptor-stack>
 		</interceptors>
 	</package>
+	<!-- 新闻管理 -->
 	<package name="news" extends="json-default,interce" namespace="/news">
-
 		<!-- 新闻Action -->
 		<action name="*" class="com.zzy.action.NewsAction" method="{1}">
-
-			<result name="select_news">/WEB-INF/NewsPage/selectNews.jsp</result>
+			<result name="select_news">/WEB-INF/NewsPage/selectNews.jsp</result> <!-- 选择新闻类型 -->
 			<result name="go_add_com">/WEB-INF/NewsPage/addComNews.jsp</result>
 			<result name="go_add_hot">/WEB-INF/NewsPage/addHotNews.jsp</result>
 			<result name="go_add_ca">/WEB-INF/NewsPage/addCaNews.jsp</result>
-			<result name="list_news">/WEB-INF/NewsPage/listNews.jsp</result>
-
-			<result name="add_news_suc" type="json">    <!-- 添加 -->
+			<result name="list_news">/WEB-INF/NewsPage/listNews.jsp</result>   <!-- 新闻列表路由 -->
+		<!-- 添加 -->
+			<result name="add_news_suc" type="json">    
 				<param name="root">message</param>
 			</result>
-
-			<result name="page_json" type="json">    <!-- 获取分页 -->
+		<!-- 获取分页 -->
+			<result name="page_json" type="json">
 				<param name="root">pageJson</param>
 			</result>
+			
 			<result name="go_update_com">/WEB-INF/NewsPage/updateComNews.jsp</result>   	<!-- 更新普通路由 -->
 			<result name="go_update_ca">/WEB-INF/NewsPage/updateCaNews.jsp</result>   		<!-- 更新轮播路由 -->
 			<result name="go_update_hot">/WEB-INF/NewsPage/updateHotNews.jsp</result>   	<!-- 更新热点路由 -->
@@ -56,20 +60,74 @@
 			<result name="issue_success" type="json">   	<!-- 更新新闻issue -->
 				<param name="root">message</param>
 			</result>
-			<result name="news_preview">/WEB-INF/NewsPage/newsPreview.jsp
-			</result>   	<!-- 预览新闻 -->
+			<result name="news_preview">/WEB-INF/NewsPage/newsPreview.jsp</result>   	<!-- 预览新闻 -->
+			<result name="news_more">/WEB-INF/NewsPage/newsMore.jsp</result>   	<!-- 查看更多新闻信息 -->
 			<result name="del_news" type="json">	<!-- 删除新闻 -->
 				<param name="root">status</param>
+			</result>
+			<result name="batch_handle" type="json">
+				<param name="root">message</param>
+			</result>
+			<result name="list_by_cate" type="json">
+				<param name="root">pageJson</param>
 			</result>
 			<result name="login" type="redirect" >/admin_login.jsp</result>
 			
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 			<interceptor-ref name="loginStack" />
 			<!-- 对应方法 -->
-			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news</allowed-methods>
+			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news,batch_handle,list_by_cate,news_more</allowed-methods>
 		</action>
 	</package>
-
+	
+	<!-- 后台用户管理 -->
+	<package name="adminuser" extends="json-default,interce" namespace="/adminuser">
+		<action name="*" class="com.zzy.action.AdminUserAction" method="{1}">
+			<result name="go_list_page">/WEB-INF/UserPage/listUser.jsp</result>
+			<!-- ajax获取用户列表分页 -->
+			<result name="page_user" type="json">
+				<param name="root">json</param>
+			</result>
+			<!-- 用户详细资料 -->
+			<result name="user_detail">/WEB-INF/UserPage/user_detail.jsp</result>
+			
+			<!-- 拦截器返回登陆界面 -->
+			<result name="login" type="redirect" >/admin_login.jsp</result>	
+			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
+			<interceptor-ref name="loginStack" />
+			<!-- 对应方法 -->
+			<allowed-methods>page_user,go_list_page,user_detail</allowed-methods>
+		</action>
+	</package>
+	
+	<!-- 后台举报信息管理 -->
+	<package name="reportmsg" extends="json-default,interce" namespace="/report">
+		<action name="*" class="com.zzy.action.ReportMessageAction" method="{1}">
+			<result name="go_list">/WEB-INF/ReportPage/listReportMessage.jsp</result>
+			<!-- ajax获取列表分页 -->
+			<result name="list_report_msg" type="json">
+				<param name="root">json</param>
+			</result>
+			<result name="batch_handle">/welcome.html</result>
+			<!-- 用户详细资料 -->
+			<result name="msg_detail">/WEB-INF/ReportPage/msg_detail.jsp</result>
+			<!-- ajax删除 -->
+			<result name="del_single" type="json">
+				<param name="root">json</param>
+			</result>
+			<!-- ajax提交处理结果 -->
+			<result name="handle_result" type="json">
+				<param name="root">json</param>
+			</result>
+			
+			<!-- 拦截器返回登陆界面 -->
+			<result name="login" type="redirect" >/admin_login.jsp</result>	
+			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
+			<interceptor-ref name="loginStack" />
+			<!-- 对应方法 -->
+			<allowed-methods>go_list,list_report_msg,batch_handle,handle_result,msg_detail,del_single</allowed-methods>
+		</action>
+	</package>
 	<!-- 分类Action -->
 	<package name="category" extends="json-default,interce"
 		namespace="/category">
@@ -98,16 +156,12 @@
 		<action name="ad_manager" class="com.zzy.action.AdvertiseAction" method="ad_manager">
 			<result name="ad_manager">/WEB-INF/NewsPage/adPage.jsp</result>
 			<result name="login" type="redirect" >/admin_login.jsp</result>
-			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
-		<interceptor-ref name="loginStack" />
 		</action>
 		<action name="ad_update" class="com.zzy.action.AdvertiseAction" method="update_ad">
 			<result type="json" name="update_ad">
 				<param name="root">json_ad</param>
 			</result>
 			<result name="login" type="redirect" >/admin_login.jsp</result>
-			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
-		<interceptor-ref name="loginStack" />
 		</action>
 
 	</package>
@@ -175,12 +229,25 @@
 		<action name="get_news_comment" class="com.zzy.action.UserAction" method="get_news_com">
 			<result name="get_n_c">/comment.jsp</result>
 		</action>
+		<action name="user_info_page" class="com.zzy.action.UserAction" method="user_info_page">
+			<result name="user_info_page">/user_info.jsp</result>
+		</action>
+		<!-- 更新用户信息 -->
+		<action name="update_user_info" class="com.zzy.action.UserAction" method="update_user_info">
+			<result name="update_user_info" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
+		<action name="submit_report" class="com.zzy.action.UserAction" method="submit_report">
+			<result name="submit_report" type="json">
+				<param name="root">json</param>
+			</result>
+		</action>
 	</package>
 
 	<!-- 图片上传Action -->
 	<package name="imgUpload" extends="json-default,interce" namespace="/upload">
-		<action name="uploadNewsImg" class="com.zzy.action.ImageAction"
-			method="uploadNewsImg">
+		<action name="uploadNewsImg" class="com.zzy.action.ImageAction" method="uploadNewsImg">
 			<result name="uploadNewsImg" type="json">
 				<param name="root">imgJson</param>
 			</result>
@@ -194,6 +261,19 @@
 				<param name="maximumSize">1027*1027*3</param>
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack" />
+		</action>
+		<action name="uploadUserImg" class="com.zzy.action.ImageAction" method="uploadUserImg">
+			<result name="uploadUserImg" type="json">
+				<param name="root">imgJson</param>
+			</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">
+					image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg
+					,image/bmp, image/gif, image/x-png
+				</param>
+				<param name="maximumSize">1027*1027*3</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"/>
 		</action>
 	</package>
 

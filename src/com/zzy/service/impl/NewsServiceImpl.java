@@ -69,8 +69,8 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> listByCategory(String hql, int offset, int length,Integer cid) {
-		return newsDao.listByCategory(hql, offset, length, cid);
+	public List<News> listByCategory(String hql, int offset, int length) {
+		return newsDao.listByCategory(hql, offset, length);
 	}
 
 	@Override

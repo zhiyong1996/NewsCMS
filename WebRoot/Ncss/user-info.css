@@ -1,0 +1,117 @@
+ 	.bread-nav{
+  		margin-top: 25px;
+  	}
+  	.tabs-left{
+  		margin-top: 20px;
+  	}
+  	.tabs-left .nav-stacked{
+  		max-width: 200px;
+  		text-align: center;
+  	}
+  	.row{
+  		margin-left: 0;
+  		margin-right: 0;
+   	}
+   	.nav-pills > li > a {
+    	border-radius: 4px;
+    	background: #f4f3fb;
+    }
+    
+    .avatar-username-wrap{
+    	height: 160px;
+    }
+    .user-avatar{
+    	position: relative;
+    	width: 160px;
+    	height: 160px;
+    	border-radius: 4px;
+    }
+    .avatar-img{
+    	width: 100%;
+    	height: 100%;
+    	border-radius: 4px;
+    }
+    .avatar-upload{
+    	position: absolute;
+    	left: 0;
+    	top: 0;
+    	width: 100%;
+    	height: 100%;
+    	background: rgba(0,0,0,.3);
+    	border-radius: 5px;
+    }
+    .ui-btn{
+    	position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	margin-top: -17px;
+    	margin-left: -50px;
+    	display: inline-block;
+    	width: 100px;
+    	height: 35px;
+    	line-height: 25px;
+    	margin-bottom: 0;
+    	padding: 5px;
+    	color: #fff;
+    	text-align: center;
+    	border: 1px solid #fff;
+    	cursor: pointer;
+    	border-radius: 5px;
+    }
+    .username-wrap{
+    	margin: 0;
+    	padding-top: 30px;
+    	margin-left: 50px;
+    }
+    .jointime{
+    	color: #9c9c9c;
+    }
+    .info-item{
+    	position: relative;
+    	margin: 0 0 0 160px;
+    	height: 60px;
+    	line-height: 60px;
+    	border-bottom: 1px solid #ebebeb;
+    }
+    .info-field{
+    	position: absolute;
+    	left: 50px;
+    	margin: 0;
+    	line-height: 60px;
+    }
+    .info-content{
+    	padding: 0 0 0 150px;
+    }
+    .info-edit-btn{
+    	padding-left: 30px;
+    	cursor: pointer;
+    }
+    .main-content{
+    	height: 400px;
+    }
+    .form-group{
+    	padding: 0 20px;
+    }
+    .info-item input[type=text]{
+    	margin: 13px 0;
+    }
+    .info-item input[type=email]{
+    	margin: 13px 0;
+    }
+    
+    .edit .info-show{
+    	display: none;
+    }
+    .edit .info-edit{
+    	display: inline-block;
+    }
+    .info-edit{
+    	display:none;
+    }
+    
+    .edit-btn{
+    	padding-left: 210px
+    }
+    .edit-btn-group{
+    	padding: 10px 0;
+    }

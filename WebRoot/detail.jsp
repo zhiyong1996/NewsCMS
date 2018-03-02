@@ -19,6 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
   <body>
+  	<!-- 登陆模态框 -->
   	<div class="my-modal">
   		<div class="modal-wrap">
 	  		<div class="my-modal-content">
@@ -65,7 +66,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javacript:;" id="user_name" >${session.username}</a></li>
+                	<li  class="nav-ava"><a href="user_info_page?username=${session.username}">
+                		<s:if test="avatar_path==''">
+								<img id="nav-avatar" src="Nimg/user.jpg">
+							</s:if><s:else>
+								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
+							</s:else>
+                	</a></li>
+                	<li><a href="user_info_page?username=${session.username}" id="user_name" >${session.username}</a></li>
                 	<li><a href="javacript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
@@ -76,21 +84,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--头部广告位-->
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
+    	<!--<span class="ad-title"></span>-->
         <div class="ad-logo">
         	<small>广告</small>
         </div>
     </div>
     <!--头部广告位 end-->
+    
+    <!-- 面包屑导航 -->
     <div class="container">
 		<ol class="breadcrumb">
 			<li><a href="index">首页</a></li>
 			<li class="active">新闻阅览</li>
 		</ol>
 	</div>
-    <!-- 新闻主体 -->
-    
+	<!-- 面包屑导航end -->
+	
+    <!-- 新闻主体 --> 
     <div class="container">
     	<div class="row">
     		<!-- 新闻内容 -->
@@ -106,7 +118,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			</div>
     		</div>
     		<!-- 新闻内容 end-->
-    		<div class="col-md-4"></div>
+    		<div class="col-md-4">
+    			<!--侧栏广告位-->
+			    <div class="advertise advertise-side" id="ad-side">
+			    	<div class="ad-img">
+			    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
+			    	</div>
+			    	<span class="ad-title"></span>
+			        <div class="ad-logo">
+			        	<small>广告</small>
+			        </div>
+			    </div>
+			    <!--侧栏广告位 end-->
+    		</div>
     	</div>
     </div>
     <!-- 新闻主体 end -->
@@ -118,7 +142,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	<div class="comment-header">
 		    		<h1 class="header-title left">网友评论</h1>
 		    		<p class="comment-protocol left">文明上网理性发言，请遵守新闻评论服务协议</p>
-		    		<p class="comment-count right"><a href="get_news_comment?createId=${news.createId}">${comment_count}条评论</a></p>
+		    		<p class="comment-count right">
+		    			<s:if test="comment_count==0">
+		    				${comment_count}条评论
+		    			</s:if><s:else>
+		    				<a href="get_news_comment?createId=${news.createId}">${comment_count}条评论</a>
+		    			</s:else>		
+		    		</p>
 		    	</div>
 		    	<div class="comment-area clearfix">
 		    		<div class="comment-left left">
@@ -140,15 +170,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		</s:if>
 		    		<s:else>
 		    			<ul>
-		    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
+		    				<li class="user-avatar"><img src="<s:property value='#session.user.Avatar.path'/>" class="avatar" alt="头像"></li>
 		    				<li class="user-name"><span>${session.username}</span></li>
 		    				<input type="hidden" id="userId" value="${session.user.id}"/>
 		    				<li class="slide">|</li>
-		    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
 		    			</ul>
 	    			</s:else>
 		    	</div>
 		    </div>
+	    	<div class="col-md-4">
+	    	
+	    	</div>
 	    </div>
 	</div>
     <!-- 评论结束 -->
@@ -156,8 +188,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
+    	<!--<span class="ad-title"></span>-->
         <div class="ad-logo">
         	<small>广告</small>
         </div>

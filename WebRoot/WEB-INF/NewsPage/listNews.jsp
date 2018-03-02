@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -11,7 +12,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
   </head>
-  
+  <style>
+  	.head-select{
+  		margin-top: 10px;
+  	}
+  	.head-select .layui-form{
+  		float: left;
+  		margin: 0 20px;
+  	}
+  	.head-select .layui-form:first-of-type{
+  		margin-left: 0;
+  	}
+  	.head-select label{
+  		width: auto;
+  		padding-left: 0;
+  	}
+  	.head-select .layui-input-block{
+  		margin-left: 74px;
+  	}
+  </style>
   <body style="padding:30px;">
     <div style="margin-bottom: 5px;">
 	搜索标题：
@@ -19,19 +38,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
 	  </div>
 	<div class="layui-btn-group demoTable">
-	
 	  <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
-	  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-	  <button class="layui-btn" data-type="add_new">新建新闻</button>
+	  <button class="layui-btn" data-type="Issue"><i class="layui-icon">&#xe619;</i>批量发布</button>
+	  <button class="layui-btn layui-btn-warm" data-type="unIssue"><i class="layui-icon">&#xe61a;</i>批量下架</button>
+	  <button class="layui-btn layui-btn-danger" data-type="delete"><i class="layui-icon">&#xe640;</i>批量删除</button>
+	  <button class="layui-btn" data-type="add_new"><i class="layui-icon">&#xe654;</i>新建新闻</button>
 	</div>
-
+	<div class="head-select clearfix">
+		<form class="layui-form">
+			<div class="layui-form-item">
+	        	<label class="layui-form-label">类型搜索</label>
+	        	<div class="layui-input-block">
+					<s:select name="catagery" id="catagery" lay-filter="cate-select" list="category" listKey="key" listValue="value" headerKey="-1" headerValue="请选择分类" emptyOption="true"></s:select>
+				</div>
+			</div>
+		</form>
+		<form class="layui-form">
+			<div class="layui-form-item">
+	        	<label class="layui-form-label">位置搜索</label>
+	        	<div class="layui-input-block">
+					<select lay-filter="news-position">
+						<option value="-1">请选择</option> 
+						<option value=""></option>
+						<option value="1">普通</option>
+						<option value="2">轮播</option>
+						<option value="3">热点</option>					
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<table class="layui-table" id="table" lay-filter="demo"></table>
 	
 	<!-- 工具栏模板引擎 -->
 	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">预览</a>
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="more">查看更多</a>
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
@@ -39,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 表格表单模板引擎 -->
 	<script type="text/html" id="switchTpl">
   		<!-- 这里的 d为ajax获取到的数据对象 -->
-  		<input type="checkbox" name="issue" value="{{d.id}}" lay-skin="switch" lay-text="on|off" lay-filter="sexDemo" {{ d.issue == true ? 'checked' : '' }}>
+  		<input type="checkbox" name="issue" value="{{d.id}}" lay-skin="switch" lay-text="on|off" lay-filter="issueDemo" {{ d.issue == true ? 'checked' : '' }}>
 	</script>
 	
 	<!-- 序列号模板引擎 -->
@@ -71,16 +114,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      ,{field: "newsfrom", title: "来源", width: 90, align: "center"}
 		      ,{field: "category", title: "类型", width: 90, align: "center"}
 		      ,{field: "newstype", title: "位置", width: 90, align: "center"}
-		      ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
-		      ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
+		      //,{field: "createTime", title: "创建时间", width: 160, align: "center"}
+		      //,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
 		      ,{field: "issue", title: "是否发布", width:100, align: "center", templet: "#switchTpl"}
-		      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}
+		      ,{fixed: "right", title: "操作", width:250, align:"center", toolbar: "#barDemo"}
 
 		        ]]
-	  	  ,id: "Reload"
+	  	  ,id: "table"
 	  	  ,cellMinWidth: 85
 		  ,page:true
-		  , height:400
+		  , height: "full"
 	  });
 	  
 	  //监听工具条
@@ -111,11 +154,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	      });  
 	    } else if(obj.event === 'edit'){
 	      window.location.href = location.origin+"/NewsCMS/news/go_update?newsid="+data.id;
+	    }else if(obj.event === 'more'){
+	    	window.location.href = location.origin+"/NewsCMS/news/news_more?newsid="+data.id;
 	    }
 	  });
 	  
 	  //监听issue操作
-	  form.on('switch(sexDemo)', function(obj){
+	  form.on('switch(issueDemo)', function(obj){
 		//console.log(obj);
 	    //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
 	    $.ajax({
@@ -135,31 +180,152 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	}
 	        });//ajax end  
 	  });
-	
+	  
+	  //根据新闻分类重载
+	  form.on('select(cate-select)', function(data){
+		  var reloadvalue = data.value;
+		  var reloadkey = "category";
+		  if(reloadvalue > -1){
+			  table.reload('table', {
+		          page: {
+		            curr: 1 //重新从第 1 页开始
+		          },
+		          where: {
+		        	reloadvalue: reloadvalue,
+		        	reloadkey: reloadkey
+		          }
+		        });
+		  }else{
+			  table.reload('table', {
+		          page: {
+		            curr: 1 //重新从第 1 页开始
+		          },
+		          where: {
+					  reloadvalue: "",
+				      reloadkey: ""
+				  }
+		        });
+		  }
+		});
+	  
+	  //根据新闻位置重载表格
+	  form.on('select(news-position)', function(data){
+		  var reloadvalue = data.value-1;
+		  var reloadkey = "newsposition";
+
+		  if(reloadvalue >=0){
+			  console.log(reloadvalue);
+			  table.reload('table', {
+		          page: {
+		            curr: 1 //重新从第 1 页开始
+		          },
+		          where: {
+					  reloadvalue: reloadvalue,
+				      reloadkey: reloadkey
+				  }
+		        });
+		  }else{
+			  console.log(reloadvalue);
+			  table.reload('table', {
+		          page: {
+		            curr: 1 //重新从第 1 页开始
+		          },
+		          where: {
+		        	  reloadvalue: "",
+					  reloadkey: ""
+				  }
+		        });
+		  }
+	  });
 	  //顶部按钮组的功能函数
 	  var active = { //active start
-	    getCheckLength: function(){ //获取选中数目
-	      var checkStatus = table.checkStatus("Reload")
-	      ,data = checkStatus.data;
-	    
-	      layer.msg('选中了：'+ data.length + ' 个');
+		  Issue: function(){ //获取选中数目
+	      var checkStatus = table.checkStatus("table")
+	      	,data = checkStatus.data;
+		  if(data.length == 0){
+			  return;
+		  }else{
+			  var nids = [];
+			  for(var i=0;i<data.length;i++){
+				  nids.push(data[i].id);
+			  }
+			  nids = nids.join(",");
+			  $.ajax({
+				  type: "post",
+				  url: "batch_handle",
+				  data: {
+					 nids:nids,
+					 issue: true
+				  },
+				  success: function(data){
+					  layer.msg(data);
+					  setTimeout(function(){
+						  table.reload('table', {
+					          page: {
+					            curr: 1 //重新从第 1 页开始
+					          },
+					          where: {
+								  reloadvalue: "",
+							      reloadkey: ""
+							  }
+						  });
+					  },2000);
+				  },
+				  error: function(data){
+					  layer.msg("网络出错，请稍候尝试");
+				  }
+			  });
+		  }
 	    }
-	    ,isAll: function(){ //验证是否全选
-	      var checkStatus = table.checkStatus("table");
-	      layer.msg(checkStatus.isAll ? '全选': '未全选')
+	    ,unIssue: function(){ //获取选中数目
+		      var checkStatus = table.checkStatus("table")
+		      	,data = checkStatus.data;
+			  if(data.length == 0){
+				  return;
+			  }else{
+				  var nids = [];
+				  for(var i=0;i<data.length;i++){
+					  nids.push(data[i].id);
+				  }
+				  nids = nids.join(",");
+				  $.ajax({
+					  type: "post",
+					  url: "batch_handle",
+					  data: {
+						 nids:nids,
+						 issue: false
+					  },
+					  success:function (data){
+						  layer.msg(data);
+						  setTimeout(function(){
+							  table.reload('table', {
+						          page: {
+						            curr: 1 //重新从第 1 页开始
+						          },
+						          where: {
+						        	reloadvalue: "",
+									reloadkey: ""
+						          }
+						        });
+						  },2000);
+					  },
+					  error: function(data){
+						  layer.msg("网络出错，请稍候尝试");
+					  }
+				  });
+			  }
 	    }
 	    ,reload: function(){ //根据搜索内容表格重载start
-	        var demoReload = $('#demoReload');
+	        var demoReload = $("#demoReload");
 	        
 	        //执行重载start
-	        table.reload('testReload', {
+	        table.reload('table', {
 	          page: {
 	            curr: 1 //重新从第 1 页开始
 	          }
 	          ,where: {
-	            key: {
-	              id: demoReload.val()
-	            }
+	        	reloadvalue: demoReload.val(),
+	        	reloadkey: "title"
 	          }
 	        }); //执行重载end
 	      }  //根据搜索内容表格重载end

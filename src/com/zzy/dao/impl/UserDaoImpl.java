@@ -39,4 +39,28 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
 		return (List<User>) getHibernateTemplate().find("from User u where u.username =? ",username);
 	}
 
+	@Override
+	public Integer save(User u) {
+		// TODO Auto-generated method stub
+		return (Integer) getHibernateTemplate().save(u);
+	}
+
+	@Override
+	public void saveOrUpdate(User u) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().saveOrUpdate(u);
+	}
+
+	@Override
+	public void delete(User u) {
+		// TODO Auto-generated method stub
+		getHibernateTemplate().delete(u);
+	}
+
+	@Override
+	public Integer getCount(String hql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

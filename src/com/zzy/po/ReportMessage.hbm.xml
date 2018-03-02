@@ -12,6 +12,8 @@
 		<property name="createTimeS" type="string"  not-null="false"/>
 		<property name="addition" type="string" not-null="false"/>
 		<property name="checked" type="true_false" not-null="true"/>
+		<property name="handled" type="true_false" not-null="true"/>		
+		<property name="handle_result" type="string" not-null="false"/>
 		
 		<many-to-one name="comment" class="Comment" column="comment_id" lazy="false" fetch="join"/>
 		<many-to-one name="reporter" class="User" column="reporter_id" lazy="false" fetch="join"/>

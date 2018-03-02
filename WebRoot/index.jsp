@@ -69,7 +69,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javascript:;" class="user_name" >${session.username}</a></li>
+                	<li  class="nav-ava"><a href="user_info_page?username=${session.username}">
+                		<s:if test="avatar_path==''">
+								<img id="nav-avatar" src="Nimg/user.jpg">
+							</s:if><s:else>
+								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
+							</s:else>
+                	</a></li>
+                	<li><a href="user_info_page?username=${session.username}" class="user_name" >${session.username}</a></li>
                 	<li><a href="javascript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
@@ -79,12 +86,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
         </div>
     </div>
+    
     <!--头部广告位 end-->
 
     <div class="container">
@@ -109,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<s:if test="#st.first">
                      		<div class="item active">
                      			<a href="show_detail?createId=<s:property value='#n.createId'/>">
-			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" style="width:770px;height:470px" alt="<s:property value='#n.title'/>">
 			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
 			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
 		      				  	</a>
@@ -118,7 +126,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <s:else>
                      		<div class="item">
                      			<a href="show_detail?createId=<s:property value='#n.createId'/>">
-			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" style="width:770px;height:470px" alt="<s:property value='#n.title'/>">
 			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
 			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
 		      				  	</a>
@@ -175,7 +183,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>

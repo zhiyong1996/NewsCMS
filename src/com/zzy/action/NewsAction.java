@@ -6,16 +6,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.TreeSet;
 import javax.annotation.Resource;
-
 import net.sf.json.JSONObject;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.zzy.imgUtil.ImgUtil;
 import com.zzy.po.CaImg;
 import com.zzy.po.Category;
+import com.zzy.po.Comment;
 import com.zzy.po.News;
 import com.zzy.po.NewsImg;
 import com.zzy.service.CaImgService;
@@ -39,9 +38,14 @@ public class NewsAction extends ActionSupport {
 	private String createId; // 创建空白新闻区分字段
 	private Boolean issue; // 是否展示
 	private String pathList; // 本地上传的图片路径，以字符串拼接的形式传递
-	// private String allpath ; //所有图片路径，以字符串拼接的形式传递
+	private String netList ; //网络图片路径，以字符串拼接的形式传递
 	private Integer newstype; // 位置码,用于区分新闻所属位置
 	private String caSrc;
+	private String nids ;  //批量操作 id数组
+	
+	//新闻管理表格重载接收参数
+	private String reloadkey;  //关键字
+	private String reloadvalue; //关键值
 
 	// 公共参数
 	private int page;// 分页查询当前页
@@ -49,13 +53,14 @@ public class NewsAction extends ActionSupport {
 	private long createTime; // 更新操作参数
 
 	// 服务器端数据
-	private String status = "success";
+	private TreeSet<Comment> comSet ;  //评论集合
 	private List<News> newsSet;// 新闻列表
 	private News news; // 新闻对象
 	private CaImg ci; //  轮播图像
 	private String message; // 待用信息
 	private JSONObject pageJson;// 返回的json数据
 	private Map<Integer, Object> category; // 更新/添加新闻时查询的分类Map格式数据
+	private Map<Integer, Object> newsposition; // 更新/添加新闻时查询的位置类型Map格式数据
 	private Map<String, String> backnews = new HashMap<String, String>(); // 返回的新闻对象
 
 	public String go_index() {
@@ -70,11 +75,7 @@ public class NewsAction extends ActionSupport {
 		category = new HashMap<Integer, Object>();
 		List<Category> allC = cService.allCategory();
 		for (Category c : allC) {
-			if (c.getId() == 1) {
-				continue;
-			} else {
-				category.put(c.getId(), c.getName());
-			}
+			category.put(c.getId(), c.getName());
 		}
 		if (newstype == StaticParam.CA_NEWS) {
 			return "go_add_ca";
@@ -125,9 +126,16 @@ public class NewsAction extends ActionSupport {
 					ni.setName(fileName);
 					ni.setPath(imgList[i]);
 					ni.setNews(news);
+					ni.setSource("local");
 
 					imgService.saveOrUpdate(ni);
 				}
+			}
+		}
+		if(!netList.equals("")&&!(netList==null)){
+			String[] netList = this.netList.split(",");
+			for(int i=0;i<netList.length;i++){
+				System.out.println(netList[i]);
 			}
 		}
 		//移动轮播图片
@@ -149,6 +157,14 @@ public class NewsAction extends ActionSupport {
 	}
 
 	public String go_list_news() {
+		//获取新闻分离作查询
+		category = new HashMap<Integer, Object>();
+		List<Category> allC = cService.allCategory();
+		System.out.println(allC.size());
+		for (Category c : allC) {
+			category.put(c.getId(), c.getName());
+		}
+		
 		return "list_news";
 	}
 
@@ -210,6 +226,12 @@ public class NewsAction extends ActionSupport {
 				}
 			}
 		}
+		if(!netList.equals("")&&!(netList==null)){
+			String[] netList = this.netList.split(",");
+			for(int i=0;i<netList.length;i++){
+				System.out.println(netList[i]);
+			}
+		}
 		
 		//移动轮播图片
 		if(newstype == StaticParam.CA_NEWS){
@@ -232,21 +254,46 @@ public class NewsAction extends ActionSupport {
 		return "update_success";
 	}
 
-	/*
-	 * 获取新闻列表
-	 * 
+	/* 获取新闻列表
 	 * @param count 记录总数
-	 * 
 	 * @param offset 每页首条记录的索引
-	 * 
 	 * @newsSet 新闻集合
 	 */
 	@SuppressWarnings({})
 	public String list_news() {
-		String hql = "from News";
-		int count = newsService.getCount(hql);
+		
+		//计算值初始索引
 		int offset = (page - 1) * limit;
-		newsSet = (List<News>) newsService.pageNews(hql, offset, limit);
+		int count = 0;
+		//ajax 获取新闻内容
+		
+		if((reloadkey==null||reloadkey.equals(""))){
+			
+			//如果重载key为空则为获取所有的新闻
+			String hql = "from News";
+			newsSet = (List<News>) newsService.pageNews(hql, offset, limit);
+			count = newsService.getCount(hql);
+			
+		}else if(reloadkey.equals("category")){
+			System.out.println(reloadkey+":"+reloadvalue);
+			//如果重载key为category则为根据新闻类型获取新闻
+			String hql = "SELECT * FROM news where category_id = "+reloadvalue;
+			newsSet = newsService.listByCategory(hql, offset, limit);
+			count = newsSet.size();
+			
+		}else if(reloadkey.equals("newsposition")){
+			System.out.println(reloadkey+":"+reloadvalue);
+			//如果重载key为newsposition则为根据新闻位置获取新闻
+			String hql = "SELECT * FROM news where newstype = "+reloadvalue;
+			newsSet = newsService.listByCategory(hql, offset, limit);
+			count = newsSet.size();
+			
+		}else if(reloadkey.equals("title")){
+			System.out.println(reloadkey+":"+reloadvalue);
+			//如果重载key为title则为根据新闻标题模糊查询
+			newsSet = newsService.getByTitle(reloadvalue);
+			count = newsSet.size();
+		}
 		pageJson = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
 		JSONObject data;
@@ -296,24 +343,30 @@ public class NewsAction extends ActionSupport {
 	// 预览新闻
 	public String news_preview() {
 		news = (News) newsService.getById(newsid);
-
 		backnews.put("title", news.getTitle());
 		backnews.put("createTime", StaticParam.DateFormat2.format(news.getCreateTime()));
 		backnews.put("newsfrom", news.getNewsfrom());
 		backnews.put("content", news.getContent());
-
 		ActionContext act = ActionContext.getContext();
 		act.put("preview", backnews);
 		
 		return "news_preview";
 	}
 	
+	//查看更多新闻资料
+	public String news_more(){
+		news = newsService.getById(newsid);
+		TreeSet<Comment> ts = new TreeSet<Comment>();
+		ts.addAll(news.getComments());
+		return "news_more";
+	}
+	
 	//根据分类查询新闻
-	public String list_news_cate(){
-		String hql = "from News n where n.category_id = ?";
-		
+	public String list_by_cate(){
+		String hql = "SELECT * FROM news where category_id = "+cid;
+		System.out.println(hql);
 		int offset = (page - 1) * limit;
-		newsSet = (List<News>) newsService.listByCategory(hql, offset, offset, cid);
+		newsSet = (List<News>) newsService.listByCategory(hql, offset, limit);
 		int count = newsSet.size();
 		pageJson = new JSONObject();
 		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
@@ -341,9 +394,25 @@ public class NewsAction extends ActionSupport {
 		pageJson.put("msg", message);
 		pageJson.put("count", count);
 		pageJson.put("data", arrData);
-		return "";
+		return "list_by_cate";
 	}
 
+	//批量更新发布状态
+	public String batch_handle(){
+		System.out.println("nids:"+nids);
+		String idArr[] = nids.split(",");
+		for(int i=0;i<idArr.length;i++){	
+			News n = newsService.getById(Integer.parseInt(idArr[i]));
+			System.out.println(n);
+			n.setIssue(issue);
+			newsService.saveOrUpdate(n);
+		}
+		message = idArr.length+"条记录操作成功";
+		return "batch_handle";
+	}
+	
+	//ajax
+	
 	public String getTitle() {
 		return title;
 	}
@@ -375,11 +444,7 @@ public class NewsAction extends ActionSupport {
 	public void setNewsid(Integer newsid) {
 		this.newsid = newsid;
 	}
-
-	public String getResult() {
-		return status;
-	}
-
+	
 	public List<News> getNewsSet() {
 		return newsSet;
 	}
@@ -487,14 +552,54 @@ public class NewsAction extends ActionSupport {
 	public void setCaSrc(String caSrc) {
 		this.caSrc = caSrc;
 	}
+	
 
-	// public String getAllpath() {
-	// return allpath;
-	// }
-	//
-	// public void setAllpath(String allpath) {
-	// this.allpath = allpath;
-	// }
-	//
+	public String getReloadkey() {
+		return reloadkey;
+	}
 
+	public void setReloadkey(String reloadkey) {
+		this.reloadkey = reloadkey;
+	}
+
+	public String getReloadvalue() {
+		return reloadvalue;
+	}
+
+	public void setReloadvalue(String reloadvalue) {
+		this.reloadvalue = reloadvalue;
+	}
+
+	public String getNids() {
+		return nids;
+	}
+
+	public void setNids(String nids) {
+		this.nids = nids;
+	}
+
+	public Map<Integer, Object> getNewsposition() {
+		return newsposition;
+	}
+
+	public void setNewsposition(Map<Integer, Object> newsposition) {
+		this.newsposition = newsposition;
+	}
+
+	public String getNetList() {
+		return netList;
+	}
+
+	public void setNetList(String netList) {
+		this.netList = netList;
+	}
+
+	public TreeSet<Comment> getComSet() {
+		return comSet;
+	}
+
+	public void setComSet(TreeSet<Comment> comSet) {
+		this.comSet = comSet;
+	}
+	
 }

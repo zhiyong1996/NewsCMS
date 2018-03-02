@@ -16,6 +16,6 @@ public interface NewsService {
 	public List<News> getComNews(Integer cid,Integer type);
 	
 	public List<News> getByType(Integer typeId);
-	public List<News> listByCategory(String hql,int offset,int length,Integer cid);
+	public List<News> listByCategory(String hql,int offset,int length);
 	public List<News> getByTitle(String keyword);
 }

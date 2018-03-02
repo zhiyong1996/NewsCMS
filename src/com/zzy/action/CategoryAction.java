@@ -65,22 +65,19 @@ public class CategoryAction extends ActionSupport{
 		int count = newsService.getCount(hql);
 		int offset = (page-1)*limit;
 		cSet = (List<Category>)cService.pageCategory(hql,offset,limit);
+		System.out.println(cSet.size());
 		SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		pageC = new JSONObject();
 		ArrayList arrData = new ArrayList();
 		JSONObject data;
 		for(Category c:cSet){
-			if(c.getId() == 1){
-				continue;
-			}else{
-				data = new JSONObject();
-				data.put("cid",c.getId());
-				data.put("cName", c.getName());
-				data.put("createTime",dateformat.format(c.getCreateTime()));
-				data.put("updateTime",dateformat.format(c.getUpdateTime()));
-				arrData.add(data);
-				System.out.println(c.getId());
-			}
+			data = new JSONObject();
+			data.put("cid",c.getId());
+			data.put("cName", c.getName());
+			data.put("createTime",dateformat.format(c.getCreateTime()));
+			data.put("updateTime",dateformat.format(c.getUpdateTime()));
+			arrData.add(data);
+			System.out.println(c.getId());
 		}
 		message = "";
 		pageC.put("code", 0);

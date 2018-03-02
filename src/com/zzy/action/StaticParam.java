@@ -8,6 +8,10 @@ public class StaticParam {
 	public final static Integer CA_NEWS = 1; // 轮播新闻
 	public final static Integer HOT_NEWS = 2; // 热点新闻
 	
+	public final static Integer UNKNOW = 0;
+	public final static Integer MALE = 1;
+	public final static Integer FEMALE = 2;
+	
 	//广告位置
 	public final static Integer AD_TOP = 0; // 顶部
 	public final static Integer AD_BOTTOM = 1; // 底部

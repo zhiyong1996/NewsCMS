@@ -29,10 +29,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a href="javascript:;">
                         <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> admin
                     </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">基本资料</a></dd>
-                        <dd><a href="javascript:;">安全设置</a></dd>
-                    </dl>
                 </li>
                 <li class="layui-nav-item"><a href="login/quit"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
             </ul>
@@ -47,30 +43,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <a href="javascript:;" data-title="新闻管理"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
                         	<dd>
-                                <a href="javascript:;" data-url="news/select_news" data-title="新建文章" kit-target data-id='3'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
+                                <a href="javascript:;" data-url="news/select_news" data-title="新建文章" kit-target data-id='1'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='1'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
+                                <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='2'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" data-url="news/go_list_news" data-title="文章列表" kit-target data-id='2'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 文章列表</span></a>
+                                <a href="javascript:;" data-url="news/go_list_news" data-title="新闻管理" kit-target data-id='3'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 新闻管理</span></a>
                             </dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;" data-url="ad_manager" data-title="广告管理" kit-target data-id='4'><i class="fa fa-life-buoy" aria-hidden="true"></i><span> 广告管理</span></a>
-                        <!--  <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" kit-target data-options="{url:'navbar.html',icon:'&#xe658;',title:'Navbar',id:'6'}"><i class="layui-icon">&#xe658;</i><span> Navbar</span></a></dd>
-                            <dd><a href="javascript:;" kit-target data-options="{url:'tab.html',icon:'&#xe658;',title:'TAB',id:'7'}"><i class="layui-icon">&#xe658;</i><span> Tab</span></a></dd>
-                            <dd><a href="javascript:;" kit-target data-options="{url:'onelevel.html',icon:'&#xe658;',title:'OneLevel',id:'50'}"><i class="layui-icon">&#xe658;</i><span> OneLevel</span></a></dd>
-                            <dd><a href="javascript:;" kit-target data-options="{url:'app.html',icon:'&#xe658;',title:'App',id:'8'}"><i class="layui-icon">&#xe658;</i><span> app.js主入口</span></a></dd>
-                        </dl>-->
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="/components/table/table.html" data-name="table" kit-loader><i class="fa fa-user-o" aria-hidden="true"></i><span> 用户管理</span></a>
+                        <a href="javascript:;" data-url="adminuser/go_list_page" data-title="用户管理" kit-target data-id='5'><i class="fa fa-user-o" aria-hidden="true"></i><span> 用户管理</span></a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="/views/form.html" data-name="form" kit-loader><i class="fa fa-file-image-o" aria-hidden="true"></i><span> 图片管理</span></a>
+                        <a href="javascript:;" data-url="report/go_list" data-title="消息管理" kit-target data-id='6'><i class="fa fa-file-image-o" aria-hidden="true"></i><span> 消息管理</span><span class="layui-badge-dot"></span></a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" data-url="welcome.html" data-title="设置" kit-target data-id='7'><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span> 设置</span></a>
                     </li>
                 </ul>
             </div>

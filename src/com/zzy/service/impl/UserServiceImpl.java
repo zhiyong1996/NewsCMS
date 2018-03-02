@@ -1,12 +1,8 @@
 package com.zzy.service.impl;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.transaction.annotation.Transactional;
-
-import com.zzy.dao.PojoDao;
 import com.zzy.dao.UserDao;
 import com.zzy.po.User;
 import com.zzy.service.UserService;
@@ -14,16 +10,15 @@ import com.zzy.service.UserService;
 @Transactional(readOnly = false)
 public class UserServiceImpl implements UserService {
 	@Resource UserDao userDao;
-	@Resource PojoDao pojoDao;
 	
 	@Override
 	public Integer save(User user) {
-		return pojoDao.save(user);
+		return userDao.save(user);
 	}
 
 	@Override
 	public void saveOrUpdate(User user) {
-		pojoDao.saveOrUpdate(user);
+		userDao.saveOrUpdate(user);
 	}
 
 	@Override
@@ -34,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delUser(User user) {
 		// TODO Auto-generated method stub
-		
+		userDao.delete(user);
 	}
 
 	@Override
@@ -46,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> pageUser(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.pageList(hql, offset, length);
 	}
 
 	@Override

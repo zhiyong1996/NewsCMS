@@ -2,7 +2,6 @@ package com.zzy.dao;
 import java.util.List;
 
 import com.zzy.po.Category;
-import com.zzy.po.News;
 
 public interface CategoryDao {
 	public void saveOrUpdate(Category c);

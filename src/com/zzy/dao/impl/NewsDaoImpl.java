@@ -1,10 +1,13 @@
 package com.zzy.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
@@ -79,7 +82,6 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	@Override
 	public List<News> getNewsByType(Integer typeId){
 		return (List<News>) getHibernateTemplate().find("from News n where n.newstype =? and n.issue = true order by createTime desc",typeId);
-		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -90,18 +92,25 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 	
 	//根据分类分页查询
 	@Override
-	public List<News> listByCategory(final String hql, final int offset, final int length,final Integer cid) {
+	public List<News> listByCategory(final String hql, final int offset, final int length) {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<News> rs = getHibernateTemplate().execute(new HibernateCallback(){
-
 			@Override
 			public Object doInHibernate(Session session) throws HibernateException{
-				Query query = session.createQuery(hql);
-				query.setParameter(0, cid);
+				SQLQuery query = session.createSQLQuery(hql);
+				//query.setParameter(0, cid);
 				query.setFirstResult(offset);
 				query.setMaxResults(length);
-				List<News> rs = query.list();
-				return rs;
+				query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+				query.addEntity(News.class);
+				System.out.println(query.list().size());
+				List<News> n_rs = new ArrayList<News>();
+				for(int i=0;i<query.list().size();i++){
+					Map map = (Map) query.list().get(i);
+					n_rs.add((News) map.get("News"));
+				}
+				//List<News> rs = query.list();
+				return n_rs;
 			}
 		});
 		return rs;

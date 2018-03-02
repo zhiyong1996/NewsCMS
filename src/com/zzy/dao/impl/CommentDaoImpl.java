@@ -33,7 +33,7 @@ public class CommentDaoImpl extends HibernateDaoSupport implements CommentDao{
 
 	@Override
 	public List<Comment> listComment(String hql, int offset, int length) {
-		// TODO Auto-generated method stub
+		// TODO Aauto-generated method stub
 		return null;
 	}
 

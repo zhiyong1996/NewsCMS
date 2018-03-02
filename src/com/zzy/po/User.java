@@ -5,12 +5,16 @@ import java.util.Set;
 
 public class User {
 	private Integer id;
+	private String name;
 	private String username;
 	private String password;
+	private Integer sex;
+	private String headline;
 	private String Email;
 	private Avatar avatar;
 	private Boolean isLock;   //是否锁定
 	private String lastlogin;
+	private String createTime;
 	private Set<Comment> comments = new HashSet<Comment>();
 	private Set<ReportMessage> reportMessage = new HashSet<ReportMessage>();
 	
@@ -19,6 +23,12 @@ public class User {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getUsername() {
 		return username;
@@ -70,5 +80,24 @@ public class User {
 	public void setReportMessage(Set<ReportMessage> reportMessage) {
 		this.reportMessage = reportMessage;
 	}
+	public Integer getSex() {
+		return sex;
+	}
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+	public String getHeadline() {
+		return headline;
+	}
+	public void setHeadline(String headline) {
+		this.headline = headline;
+	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	
 	
 }

@@ -9,6 +9,7 @@
 		</id>
 		<property name="name" type="text" not-null="true"/>
 		<property name="path" type="text" not-null="true"/>
+		<property name="source" type="string" not-null="false"/>
 		<many-to-one name="news" class="News" column="news_id" lazy="false" fetch="join"/>
 	</class>
 </hibernate-mapping>

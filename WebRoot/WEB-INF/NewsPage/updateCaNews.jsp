@@ -146,20 +146,25 @@ layui.use(["form","layedit","upload"], function(){
 		 	var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
 			 
 		      pathList = [],//本地上传图片路径集合
+		      netList = [],//网络图片集合
 		      src = "";     //单个图片路径
 		      
 			if(imgs.length>0){
 			  for(var i=0;i<imgs.length;i++){
 				src = $(imgs[i]).attr("src");
-				src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 				if($(imgs[i]).attr("datatype") == "Nupload"){
+					src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 					pathList.push(src);
+				}else{
+					netList.push(src);
 				}
 			  }
 				pathList = pathList.join(",");
+				netList = netList.join(",");
 				console.log("pathList:"+pathList)
 			}else{
 				pathList = "";
+				netList = "";
 			}
 
 		  	if(parseInt(cid)<1||title==""||newsfrom==""){
@@ -183,6 +188,7 @@ layui.use(["form","layedit","upload"], function(){
 					,caSrc: caSrc
 					,newstype: 1
 					,pathList: pathList
+					,netList: netList
 				},
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");

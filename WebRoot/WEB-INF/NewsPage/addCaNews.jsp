@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   	 <legend>新建轮播新闻</legend>
 	</fieldset>
+	<s:debug/>
   <div class="layui-row">
       <form class="layui-form" action="" method="post" id="article">
         <div class="layui-form-item">
@@ -143,20 +144,26 @@ layui.use(["form","layedit","upload"], function(){
 		 	var imgs = $(content).find("img"),//将正文转换成jq对象并获取img
 			 
 		      pathList = [],//本地上传图片路径集合
+		      netList = [], //网络图片路径集合
 		      src = "";     //单个图片路径
 		      
 			if(imgs.length>0){
 			  for(var i=0;i<imgs.length;i++){
-				src = $(imgs[i]).attr("src");
-				src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 				if($(imgs[i]).attr("datatype") == "Nupload"){
+					src = $(imgs[i]).attr("src");
+					src = src.substring(src.indexOf("\NewsCMS")-1); //去除图片src中协议，域名和端口号，只保留文件引用路径
 					pathList.push(src);
+				}else{
+					src = $(imgs[i]).attr("src");
+					netList.push(src);
 				}
 			  }
 				pathList = pathList.join(",");
+				netList = netList.join(",");
 				console.log("pathList:"+pathList)
 			}else{
 				pathList = "";
+				netList = "";
 			}
 
 		  	if(parseInt(cid)<1||title==""||newsfrom==""){
@@ -179,6 +186,7 @@ layui.use(["form","layedit","upload"], function(){
 					,caSrc: caSrc
 					,newstype: 1
 					,pathList: pathList
+					,netList: netList
 				},
 				success:function(data){
 					layer.msg("添加成功,3秒后自动跳转新闻列表");

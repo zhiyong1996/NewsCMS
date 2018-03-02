@@ -3,6 +3,7 @@ package com.zzy.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -14,18 +15,25 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.po.Avatar;
+import com.zzy.po.User;
+import com.zzy.service.AvatarService;
 import com.zzy.service.ImageService;
 import com.zzy.service.NewsService;
+import com.zzy.service.UserService;
 
 @SuppressWarnings("serial")
 public class ImageAction extends ActionSupport{
 	@Resource ImageService imgService;
 	@Resource NewsService nService;
+	@Resource UserService uService;
+	@Resource AvatarService avaService;
 	
 	private final String temporaryPath = "upload"; //新闻图片暂存一级目录
-	private final String userPath = "\\data\\UserImg"; //用户图片路径
-	private final String adPath = "\\data\\AdImg";     //广告图片路径
+	private final String userPath = "UserImg"; //用户图片路径
+	//private final String adPath = "\\data\\AdImg";     //广告图片路径
 	private String fileFileName;  //图片文件名字
 	private String fileContentType;  //文件类型
 	private File file;  //上传的文件本体
@@ -34,6 +42,7 @@ public class ImageAction extends ActionSupport{
 	
 	private String createId; //新闻的createId，标识是哪一篇新闻的
 	
+	private Integer uid;
 	private JSONObject imgJson;
 	
 	//获取服务器绝对路径
@@ -90,16 +99,62 @@ public class ImageAction extends ActionSupport{
 		return "uploadNewsImg";
 	}
 	
+	public String uploadUserImg() throws IOException{
+		today = new Date();
+		String savePath = "\\"+userPath+"\\"+uid;
+		
+		File file = new File(getSavePath()+savePath);
+		if(!file.isDirectory()){
+			file.mkdirs();
+		}
+		
+		//设置文件名和路径
+		System.out.println("fileFileName:"+fileFileName+uid+fileContentType);
+		String type = fileFileName.substring(fileFileName.lastIndexOf("."));
+		String fileName = "UIMG"+StaticParam.DateFormat1.format(today)+type;
+		String filePath = getSavePath()+savePath+"\\"+fileName;//文件保存的绝对路径包含文件名
+		
+		//开启文档流,将图片存储到服务器文件夹
+		InputStream is = new FileInputStream(getFile());
+		OutputStream os = new FileOutputStream(filePath);
+		byte buffer[] = new byte[1024];
+		int len = 0;
+		while((len = is.read(buffer))>0)
+			os.write(buffer, 0, len);
+		is.close();
+		os.close();
+		//关闭文档流
+		
+		//前端返回的图片引用路径src
+		String imgSrc = ServletActionContext.getRequest().getContextPath()+"/"+userPath+"/"+uid+"/"+fileName;
+		
+		User user = uService.getUserById(uid);
+		System.out.println("uid"+uid);
+		Avatar av = user.getAvatar();
+		if(av == null){
+			av = new Avatar();
+		}
+		av.setImgName(fileName);
+		av.setPath(imgSrc);
+		avaService.saveOrUpdate(av);
+		user.setAvatar(av);
+		uService.saveOrUpdate(user);
+		ActionContext.getContext().getSession().put("user", user);
+		
+		imgJson = new JSONObject();
+		imgJson.put("status", true);
+		imgJson.put("imgUrl", imgSrc);
+		
+		return "uploadUserImg";
+	}
+	
 	public String deleteImg(){
 		return "deleteImg";
 	}
 	
-	public String uploadUserImage(){
-		return "uploadUserImage";
-	}
-	
-	public String uploadAdImage() throws Exception{
-		return "uploadAdImage";
+	public String excute(){
+		System.out.println("执行excute方法");
+		return "excute";
 	}
 	
 	public String getFileFileName() {
@@ -142,6 +197,14 @@ public class ImageAction extends ActionSupport{
 	public void setCreateId(String createId) {
 		this.createId = createId;
 		System.out.println(createId);
+	}
+
+	public Integer getUid() {
+		return uid;
+	}
+
+	public void setUid(Integer uid) {
+		this.uid = uid;
 	}
 	
 	

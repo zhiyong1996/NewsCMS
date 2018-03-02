@@ -13,81 +13,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/detail-txt.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/comment.css"/>
     <script src="js/jquery-3.2.1.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </head>
-  <style>
-  	.main-content{
-		margin-bottom: 50px;  		
-  	}
-  	.news-title{
-  		padding-bottom: 10px;
-  		margin-bottom: 25px;
-  		border-bottom: 2px solid #ccc; 
-  	}
-  	.all-comments{
-  		margin-bottom: 100px;
-  	}
-  	.comment-item{
-  		padding: 10px 0 20px 10px;
-    	border-bottom: 1px solid #ccc;
-  	}
-  	.comment-user-avatar{
-		width: 44px;
-		border-radius: 4px;
-	}
-  	.comment-time{
-  		margin-left: 20px;
-  	}
-  	.comment-item-content{
-		padding: 10px;  	
-  	}
-  	.media-heading{
-  		position: relative;
-  		padding-bottom: 5px;
-  		font-size: 16px;
-  	}
-  	.report{
-  		position: absolute;
-  		top: 2px;
-  		right: 20px;
-  		font-size: 12px;
-  	}
-  	.small{
-  		margin-left: 20px;
-  	}
-  	.report-warp{
-  		position: fixed;
-  		z-index: 1600;
-  		width: 460px;
-  		background: #fff;
-  		top: 20%;
-  		left: 50%;
-  		margin-left: -230px;
-  		padding: 0 10px 20px 10px;
-  		border: 1px solid #ccc;
-  		border-radius: 5px;
-  	}
-  	.report-header{
-  		padding-top: 20px;
-  		height: 50px;
-  	}
-  	.report-title{
-  		font-size: 18px;
-  		font-weight: bold;
-  		float: left;
-  	}
-  	.report-header-close{
-  		float: right;
-  		cursor: pointer;
-  		line-height: 30px;
-  	}
-  	.report-content{
-  		padding: 10px 20px;
-  	}
-  </style>
   <body>
   	<div class="modal-bg"></div>
+  	<!-- 举报功能 -->
   	<div class="report-warp">
   		<div class="report-header clearfix">
   			<div class="report-title report-header-item">评论举报</div>
@@ -103,20 +35,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 			    <div class="radio">
 					<label>
-						<input type="radio" name="report-type" id="re-type2" value="内容不适">侮辱谩骂
+						<input type="radio" name="report-type" id="re-type2" value="侮辱谩骂">侮辱谩骂
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="report-type" id="re-type3" value="内容不适">其他
+						<input type="radio" name="report-type" id="re-type3" value="其他">其他
 					</label>
 				</div>
 			  <div class="form-group">
 			    	<label for="state">举报说明(可选)</label>
-			    	<input type="text" class="form-control" id="state" placeholder="附加内容">
+			    	<input type="text" class="form-control" id="addition" placeholder="附加内容">
 			  </div>
 			  <div class="tip"></div>
-			  <button type="submit" class="btn btn-primary btn-block">提交</button>
+			  <button type="submit" id="submit-report" class="btn btn-primary btn-block">提交</button>
 			</form>
   		</div>
   	</div>
@@ -166,7 +98,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	<li class="to-register"><a class="register-btn" >注册</a></li>
                 </s:if>
                 <s:else>
-                	<li><a href="javacript:;" id="user_name" >${session.username}</a></li>
+                	<li class="nav-ava"><a href="user_info_page?username=${session.username}">
+                		<s:if test="avatar_path==''">
+								<img id="nav-avatar" src="Nimg/user.jpg">
+							</s:if><s:else>
+								<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
+							</s:else>
+                	</a></li>
+                	<li><a href="user_info_page?username=${session.username}" id="user_name" >${session.username}</a></li>
+                	<input type="hidden" id="userid" value="<s:property value='#session.user.id'/>" />
                 	<li><a href="javacript:;" id="quit" >退出</a></li>
                 </s:else>
             </ul>
@@ -176,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--头部广告位-->
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -193,7 +133,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</ol>
 	</div>
 	<!-- end -->
-	
 	<!-- 内容 -->
 	<div class="container">
 		<div class="col-md-8 news-title"><h3>${news.title}<small class="small">[<a href="show_detail?createId=${news.createId}">查看原文</a>]</small></h3></div>
@@ -205,13 +144,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<s:iterator value="news_com_json" status="st" var="n">   
 					<div class="media comment-item">
 					    <a class="media-left" href="javascript:;">
-					        <img class="media-object comment-user-avatar" src="Nimg/user.jpg" alt="媒体对象">
+					        <img class="media-object comment-user-avatar" src="<s:property value='#n.user.Avatar.path'/>" alt="媒体对象">
 					    </a>
 					    <div class="media-body">
-					        <h4 class="media-heading"><s:property value="#n.user.username"/><small class="comment-time">发布于:<s:property value="#n.createTimeS"/></small>
-					        	<span class="report">
-					    			<a href="javascript:;" class="report-btn"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
-					    		</span>
+					        <h4 class="media-heading">
+					        	<s:property value="#n.user.username"/>
+					        	<small class="comment-time">发布于:<s:property value="#n.createTimeS"/></small>
+					        	<s:if test="#session.user==null">
+					        		<span class="report">
+					        			<a href="javascript:;" class="report-btn" comid="<s:property value='#n.id'/>"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
+					        		</span>
+					        	</s:if><s:elseif test="!#session.user.id==#n.user.id">
+					        		<span class="report">
+					        			<a href="javascript:;" class="report-btn" comid="<s:property value='#n.id'/>"><span class="glyphicon glyphicon-exclamation-sign"></span>  举报</a>
+					        		</span>
+					        	</s:elseif>
 					        </h4>
 							<div class="comment-item-content">
 								<s:property value="#n.content"/>
@@ -245,16 +192,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		</s:if>
 		    		<s:else>
 		    			<ul>
-		    				<li class="user-avatar"><img src="Nimg/user.jpg" class="avatar" alt="头像"></li>
+		    				<li class="user-avatar">
+		    					<s:if test="avatar_path==''">
+								<img id="nav-avatar" src="Nimg/user.jpg">
+								</s:if><s:else>
+									<img id="nav-avatar" src="<s:property value='#session.user.Avatar.path'/>">
+								</s:else>
+							</li>
 		    				<li class="user-name"><span>${session.username}</span></li>
 		    				<input type="hidden" id="userId" value="${session.user.id}"/>
-		    				<li class="slide">|</li>
-		    				<li class="user-my-comment"><a href="javascript:;">我的评论</a></li>
 		    			</ul>
 	    			</s:else>
 		    	</div>
 			</div>	
 			<div class="col-md-4">
+				<div class="advertise advertise-side" id="ad-side">
+			    	<div class="ad-img">
+			    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
+			    	</div>
+			    	<span class="ad-title"></span>
+			        <div class="ad-logo">
+			        	<small>广告</small>
+			        </div>
+			    </div>
+			    <!--侧栏广告位 end-->
 			</div>
 		</div>
 	</div>
@@ -262,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;" id="ad-url"><img id="ad-img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -299,37 +260,98 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <script src="Njs/login_quit.js"></script>
     <script src="Njs/get_ad.js"></script>
-        <script>
-    	$(document).ready(function(){
-    		$("#comment-login").on("click",function(e){
-    			$(".my-modal").fadeIn();
-    		});
-    		$("#submit-comment").on("click",function(e){
-    			var comment = $("#comment").val();
-    			console.log(comment)
-    			$.ajax({
-    				type: "post",
-    				url: "add_com",
-    				datatype: "json",
-    				data: {
-    					newsId: ${news.id},
-    					userId: $("#userId").val(),
-    					comment: comment
-    				},
-    				success: function(data){
-    					if(data.code==0){
-    						alert(data.msg);
-    						location.reload();
-    					}else{
-    						alert(data.msg);
-    					}
-    				},
-    				error: function(data){
-    					alert("网络异常");
-    				}
-    			});
-    		});	
-    	});
-    </script>
+    <script>
+   	$(document).ready(function(){
+   		$(".comment-item").on("mouseover",function(e){
+   			$(this).find(".report").show();
+   		}).on("mouseleave",function(e){
+   			$(this).find(".report").hide();
+   		});
+   		var comid;
+   		var uid;
+   		$("#comment-login").on("click",function(e){
+   			$(".my-modal").fadeIn();
+   		});
+   		$("#submit-comment").on("click",function(e){
+   			var comment = $("#comment").val();
+   			console.log(comment)
+   			$.ajax({
+   				type: "post",
+   				url: "add_com",
+   				datatype: "json",
+   				data: {
+   					newsId: ${news.id},
+   					userId: $("#userId").val(),
+   					comment: comment
+   				},
+   				success: function(data){
+   					if(data.code==0){
+   						alert(data.msg);
+   						location.reload();
+   					}else{
+   						alert(data.msg);
+   					}
+   				},
+   				error: function(data){
+   					alert("网络异常");
+   				}
+   			});
+   		});
+   		
+   		$(".report-btn").on("click",function(e){
+   			var uid = $("#userid").val();
+   			if(uid===undefined||uid===null||uid===""){
+   				$(".my-modal").fadeIn();
+   			}else{
+   				$(".modal-bg").fadeIn();
+   				$(".report-warp").fadeIn();
+   				comid = $(this).attr("comid");
+   			}
+   		});
+   		
+   		$("#close-report").on("click",function(e){
+   				$(".modal-bg").fadeOut();
+				$(".report-warp").fadeOut();
+   		});
+   		
+   		$("#report-form").on("submit",function(e){
+   			e.preventDefault();
+   			if(comid===undefined||comid===""||comid===null){
+   				alert("请选择一个要举报的评论");
+   				return;
+   			}
+   			var content = $("input[name='report-type']:checked").val();
+   			if(content===undefined||content===""||content===null){
+   				alert("请选择一个理由");
+   				return;
+   			}else{
+   				var uid = $("#userid").val();
+   				var addition = $("#addition").val();
+   				$.ajax({
+   	   				type: "post",
+   	   				url: "submit_report",
+   	   				dataType: "json",
+   	   				data: {
+   	   					uid: uid,
+   	   					comid: comid,
+   	   					content: content,
+   	   					addition: addition
+   	   				},
+   	   				success:function(data){
+   	   					alert(data.msg);
+	   	   				$(".modal-bg").fadeOut();
+	   	   				$(".report-warp").fadeOut();
+   	   					$("input[name='report-type']").prop({checked:false});
+   	   					$("#addition").val("");
+   	   				},
+   	   				error:function(data){
+   	   					alert("网络出错，稍后重试");
+   	   				}
+   	   			});
+   			}
+   			
+   		});
+   	});
+   </script>
   </body>
 </html>

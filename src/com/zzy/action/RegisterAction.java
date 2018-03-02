@@ -1,5 +1,7 @@
 package com.zzy.action;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
@@ -29,8 +31,11 @@ public class RegisterAction extends ActionSupport{
 		}else{
 			User u = new User();
 			u.setUsername(username);
+			u.setName(username);
 			u.setPassword(password);
+			u.setSex(0);
 			u.setEmail(email);
+			u.setCreateTime(StaticParam.DateFormat2.format(new Date()));
 			Integer uid = uService.save(u);
 			if(uid instanceof Integer){
 				ActionContext.getContext().put("msg", "帐号:["+username+"]创建成功");

@@ -1,6 +1,6 @@
 package com.zzy.po;
 
-public class ReportMessage {
+public class ReportMessage implements Comparable<ReportMessage>{
 	private Integer id;
 	private String content;//举报原因
 	private String addition; //附加内容
@@ -11,6 +11,14 @@ public class ReportMessage {
 	private long createTime; //  消息创建时间戳
 	private String createTimeS; //消息创建时间
 	private boolean checked;  //是否查看
+	private boolean handled;  //是否处理
+	private String handle_result; //处理结果
+	
+	@Override
+	public int compareTo(ReportMessage re) {
+		int result = (int) (re.createTime - this.createTime);
+		return result;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -60,6 +68,22 @@ public class ReportMessage {
 	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
+	public boolean getHandled() {
+		return handled;
+	}
+	public void setHandled(boolean handled) {
+		this.handled = handled;
+	}
+
+	public String getHandle_result() {
+		return handle_result;
+	}
+
+	public void setHandle_result(String handle_result) {
+		this.handle_result = handle_result;
+	}
+
+	
 	
 	
 }
