@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 Object admin = session.getAttribute("user");
 if(admin == null){
-	response.sendRedirect(path+"/index");
+	response.sendRedirect(path+"/load");
 }
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -18,7 +18,7 @@ if(admin == null){
     <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/reset.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/user-info.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
   

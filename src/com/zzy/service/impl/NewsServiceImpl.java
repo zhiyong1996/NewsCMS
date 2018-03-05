@@ -71,20 +71,20 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public List<News> getByTitle(String keyword) {
 		// TODO Auto-generated method stub
-		return newsDao.searchNewsByTitle(keyword);
+		return newsDao.adminSearchTitle(keyword);
 	}
 
 	@Override
 	public List<News> listByPosition(Integer typeId) {
 		// TODO Auto-generated method stub
-		String sql = "select * from news where issue = 'T' and newstype = "+typeId;
+		String sql = "select * from news where issue = 'T' and newstype = "+typeId+" order by createTimeS desc";
 		return newsDao.listBySQL(sql, 0, 5);
 	}
 
 	@Override
 	public List<News> listComByCategory(Integer cateId) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT * FROM `news` where issue = 'T' and newstype = 0 and category_id = "+cateId;
+		String sql = "SELECT * FROM `news` where issue = 'T' and newstype = 0 and category_id = "+cateId+" order by createTimeS desc";
 		return newsDao.listBySQL(sql, 0, 5);
 	}
 }

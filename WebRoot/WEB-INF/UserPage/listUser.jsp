@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="padding:30px;">
     <div style="margin-bottom: 5px;">
-    <form class="layui-form" id="searchUser">
+    <form class="layui-form layui-inline" id="searchUser">
 	  <div class="layui-inline">
 	  	<select name="searchType" lay-filter="searchType">
 	  		<option value="username">用户名</option>
@@ -27,6 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  </div>
 	  <button class="layui-btn" type="submit"><i class="layui-icon">&#xe615;</i>搜索</button>
 	</form>
+	<button class="layui-btn" id="refresh"><i class="layui-icon">&#x1002;</i></button>
 
 	<table class="layui-table" id="table" lay-filter="demo"></table>
 	
@@ -107,7 +108,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	console.log(data.id);
 	    } 
 	  });
-	
+		
+	  $("#refresh").on("click",function(e){
+		//执行重载start
+          table.reload('table', {
+          	page: {
+            	curr: 1 //重新从第 1 页开始
+          	}
+          	,where: {
+            	reloadKey: "",
+            	reloadValue: ""
+          }
+        }); //执行重载end
+	  });
 
 	});
 	</script>

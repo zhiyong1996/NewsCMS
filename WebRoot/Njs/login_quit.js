@@ -41,7 +41,6 @@ $(document).ready(function(){
 			,data:{
 			}
 			,success:function(data){
-				alert("退出成功");
 				location.reload();
 			}
 			,error:function(){

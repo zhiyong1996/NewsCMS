@@ -122,6 +122,13 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao{
 		// TODO Auto-generated method stub
 		return (List<News>) getHibernateTemplate().find("from News where title like '%"+keyword+"%' and issue = 'T' order by createTime desc");
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<News> adminSearchTitle(String keyword) {
+		// TODO Auto-generated method stub
+		return (List<News>) getHibernateTemplate().find("from News where title like '%"+keyword+"%'  order by createTime desc");
+	}
 	
 	
 }

@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button class="layui-btn" data-type="Issue"><i class="layui-icon">&#xe619;</i>批量发布</button>
 	  <button class="layui-btn layui-btn-warm" data-type="unIssue"><i class="layui-icon">&#xe61a;</i>批量下架</button>
 	  <button class="layui-btn layui-btn-danger" data-type="delete"><i class="layui-icon">&#xe640;</i>批量删除</button>
-	  <button class="layui-btn" data-type="add_new"><i class="layui-icon">&#xe654;</i>新建新闻</button>
+	  <button class="layui-btn" data-type="refresh"><i class="layui-icon">&#x1002;</i></button>
 	</div>
 	<div class="head-select clearfix">
 		<form class="layui-form">
@@ -97,15 +97,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  var $ = layui.jquery;
 	  var table = layui.table,
 	  	  form = layui.form;
-	  //监听表格复选框选择
-	  table.on('checkbox(demo)', function(obj){
-	    console.log(obj)
-	  });
 	  
 	  //方法级渲染表格
 	  table.render({
 		  elem: "#table"
-		  ,url: "news/list_news"
+		  ,url: "list_news"
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
 		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl",align: "center"}
@@ -131,7 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  table.on('tool(demo)', function(obj){
 	    var data = obj.data;
 	    if(obj.event === 'detail'){
-	    	window.location.href = location.origin+"/NewsCMS/news/news_preview?newsid="+data.id;
+	    	window.location.href = location.origin+"/NewsCMS/news_preview?newsid="+data.id;
 	    	console.log(data.id);
 	    } else if(obj.event === 'del'){
 	      layer.confirm('确定删除该行么', function(index){
@@ -154,9 +150,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        });//ajax end  
 	      });  
 	    } else if(obj.event === 'edit'){
-	      window.location.href = location.origin+"/NewsCMS/news/go_update?newsid="+data.id;
+	      window.location.href = location.origin+"/NewsCMS/go_update?newsid="+data.id;
 	    }else if(obj.event === 'more'){
-	    	window.location.href = location.origin+"/NewsCMS/news/news_comment?newsid="+data.id;
+	    	window.location.href = location.origin+"/NewsCMS/news_comment?newsid="+data.id;
 	    }
 	  });
 	  
@@ -330,8 +326,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          }
 	        }); //执行重载end
 	      }  //根据搜索内容表格重载end
-	    ,add_new: function(){
-	    	  location.href = location.origin+"/NewsCMS/news/select_news";
+	    ,refresh: function(){
+	    	//执行重载start
+	        table.reload('table', {
+	          page: {
+	            curr: 1 //重新从第 1 页开始
+	          }
+	          ,where: {
+	        	reloadvalue: "",
+	        	reloadkey: ""
+	          }
+	        }); //执行重载end
 	      }
 	    	
 	    };//active end

@@ -16,9 +16,22 @@
 	margin-left: 0;
 	margin-right: 0;
 }
+.carousel{
+	width: 600px;
+	height: 300px;
+}
+
 .carousel-inner .item{
-	width: 770px;
-	height: 474px;
+	width: 600px;
+	height: 300px;
+}
+.carousel-inner .item img{
+	width: 100%;
+	height: 100%;
+	/*
+	width: 600px;
+	height: 300px;
+	*/
 }
 .carousel-caption{
 	width: 100%;
@@ -63,6 +76,13 @@
 
 .advertise img {
 	width: 100%;
+
+}
+#ad-top .ad-img{
+	height: 70px;
+}
+#ad-bot .ad-img{
+	height: 70px;
 }
 .ad-logo {
 	position: absolute;
@@ -86,26 +106,29 @@
 }
 /*广告css end*/
 
-.col-md-4.right {
-	padding-top: 8px;
-	padding-left: 15px;
-	padding-right: 15px;
-	height: 100%;
-	background: #f2f2f2;
+.news-wrap{
+	padding: 10px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
 }
 
-.col-md-4.right ul li {
+.right ul li {
 	list-style: none;
 }
-
+.hot-wrap{
+	width: 440px;
+}
 .hot-news {
 	position: relative;
 	border-bottom: 2px solid #f00;
 	height: 25%;
 }
 
-.hot-news .hot-title {
+.hot-title {
 	font-size: 22px;
+	color: #f00;
+	border-bottom: 2px solid #f00;
+	padding: 5px;
 }
 
 .hot-news .glyphicon-play {
@@ -122,7 +145,6 @@
 }
 
 .hot-items .hot-item {
-	height: 88px;
 	padding-top: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -149,7 +171,7 @@
 }
 
 .catetory-item {
-	height: 183px;
+	height: 210px;
 	padding: 0;
 	border: 1px solid #ccc;
 	width: 48%;
@@ -158,7 +180,7 @@
 }
 
 .cateName {
-	/*border-bottom: 2px solid #d9e3e4;*/
+	border-bottom: 1px solid #d9e3e4;
 	margin-bottom: 5px;
 }
 
@@ -168,9 +190,16 @@
 	font-size: 18px;
 	margin-bottom: 0;
 }
-
+.category-time{
+	color: #b5b5b5;
+    font-size: 13px;
+}
 .newsItem {
 	list-style: none;
+	padding-top: 5px;
+}
+.newsItem:hover{
+	background: rgba(175, 173, 173, 0.2);
 }
 
 footer {
@@ -221,4 +250,7 @@ li.nav-ava a{
 	height: 30px;
     width: 30px;
     border-radius: 5px;
+}
+.z-container{
+	margin-top: 30px;
 }

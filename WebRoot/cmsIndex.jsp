@@ -39,17 +39,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="kit-side-fold"><i class="fa fa-navicon" aria-hidden="true"></i></div>
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+                	<li class="layui-nav-item layui-nav-itemed">
+                       <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='2'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
+                    </li>
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;" data-title="新闻管理"><i class="fa fa-cubes" aria-hidden="true"></i><span> 新闻管理</span></a>
                         <dl class="layui-nav-child">
                         	<dd>
                                 <a href="javascript:;" data-url="select_news" data-title="新建文章" kit-target data-id='1'><i class="fa fa-plus" aria-hidden="true"></i><span> 新建文章</span></a>
-                            </dd>
+                            </dd>     
                             <dd>
-                                <a href="javascript:;" data-url="category/go_listC" data-title="类型管理" kit-target data-id='2'><i class="fa fa-book" aria-hidden="true"></i><span> 类型管理</span></a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;" data-url="go_list_news" data-title="新闻管理" kit-target data-id='3'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 新闻管理</span></a>
+                                <a href="javascript:;" data-url="go_list_news" data-title="新闻管理" kit-target data-id='3'><i class="fa fa-file-text-o" aria-hidden="true"></i><span> 新闻列表</span></a>
                             </dd>
                         </dl>
                     </li>

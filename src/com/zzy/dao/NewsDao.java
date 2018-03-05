@@ -17,4 +17,5 @@ public interface NewsDao {
 	public List<News> getComNews(Integer cid,Integer typeId);
 	public List<News> listBySQL(String hql,int offset,int length);
 	public List<News> searchNewsByTitle(String keyword);
+	public List<News> adminSearchTitle(String keyword);
 }

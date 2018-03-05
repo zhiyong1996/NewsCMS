@@ -102,8 +102,8 @@ public class NewsAction extends ActionSupport {
 		long createTime = System.currentTimeMillis();
 		news.setCreateTime(createTime);
 		news.setUpdateTime(createTime);
-		news.setCreateTimeS(StaticParam.DateFormat2.format(createTime));
-		news.setUpdateTimeS(StaticParam.DateFormat2.format(createTime));
+		news.setCreateTimeS(StaticParam.DateFormat3.format(createTime));
+		news.setUpdateTimeS(StaticParam.DateFormat3.format(createTime));
 		news.setNewstype(newstype);
 		Integer nid = newsService.save(news);
 		
@@ -201,7 +201,7 @@ public class NewsAction extends ActionSupport {
 		news.setCategory(cService.getById(cid));
 		long updateTime = System.currentTimeMillis();
 		news.setUpdateTime(updateTime);
-		news.setUpdateTimeS(StaticParam.DateFormat2.format(updateTime));
+		news.setUpdateTimeS(StaticParam.DateFormat3.format(updateTime));
 
 		if (!pathList.equals("")) {
 
@@ -262,8 +262,7 @@ public class NewsAction extends ActionSupport {
 	 * @newsSet 新闻集合
 	 */
 	@SuppressWarnings({})
-	public String list_news() {
-		
+	public String list_news() {	
 		//计算值初始索引
 		int offset = (page - 1) * limit;
 		int count = 0;
@@ -272,22 +271,23 @@ public class NewsAction extends ActionSupport {
 		if((reloadkey==null||reloadkey.equals(""))){
 			
 			//如果重载key为空则为获取所有的新闻
+			String sql = "SELECT * FROM news ORDER BY createTime DESC";
+			newsSet = newsService.listBySQL(sql, offset, limit);
 			String hql = "from News";
-			newsSet = (List<News>) newsService.pageNews(hql, offset, limit);
 			count = newsService.getCount(hql);
 			
 		}else if(reloadkey.equals("category")){
 			System.out.println(reloadkey+":"+reloadvalue);
 			//如果重载key为category则为根据新闻类型获取新闻
-			String hql = "SELECT * FROM news where category_id = "+reloadvalue;
-			newsSet = newsService.listBySQL(hql, offset, limit);
+			String sql = "SELECT * FROM news where category_id = "+reloadvalue+" ORDER BY createTime DESC";
+			newsSet = newsService.listBySQL(sql, offset, limit);
 			count = newsSet.size();
 			
 		}else if(reloadkey.equals("newsposition")){
 			System.out.println(reloadkey+":"+reloadvalue);
 			//如果重载key为newsposition则为根据新闻位置获取新闻
-			String hql = "SELECT * FROM news where newstype = "+reloadvalue;
-			newsSet = newsService.listBySQL(hql, offset, limit);
+			String sql = "SELECT * FROM news where newstype = "+reloadvalue+" ORDER BY createTime DESC";
+			newsSet = newsService.listBySQL(sql, offset, limit);
 			count = newsSet.size();
 			
 		}else if(reloadkey.equals("title")){
@@ -311,8 +311,8 @@ public class NewsAction extends ActionSupport {
 				data.put("category", ns.getCategory().getName());
 				data.put("commentSize", ns.getComments().size());
 				data.put("issue", ns.getIssue());
-				data.put("createTime", StaticParam.DateFormat2.format(ns.getCreateTime()));
-				data.put("updateTime", StaticParam.DateFormat2.format(ns.getUpdateTime()));
+				data.put("createTime", StaticParam.DateFormat3.format(ns.getCreateTime()));
+				data.put("updateTime", StaticParam.DateFormat3.format(ns.getUpdateTime()));
 				arrData.add(data);
 			} else {
 				System.out.println("查询数据失败");
@@ -347,7 +347,7 @@ public class NewsAction extends ActionSupport {
 	public String news_preview() {
 		news = (News) newsService.getById(newsid);
 		backnews.put("title", news.getTitle());
-		backnews.put("createTime", StaticParam.DateFormat2.format(news.getCreateTime()));
+		backnews.put("createTime", StaticParam.DateFormat3.format(news.getCreateTime()));
 		backnews.put("newsfrom", news.getNewsfrom());
 		backnews.put("content", news.getContent());
 		ActionContext act = ActionContext.getContext();
@@ -390,8 +390,8 @@ public class NewsAction extends ActionSupport {
 				data.put("newstype", StaticParam.getPositionType(ns.getNewstype()));
 				data.put("category", ns.getCategory().getName());
 				data.put("issue", ns.getIssue());
-				data.put("createTime", StaticParam.DateFormat2.format(ns.getCreateTime()));
-				data.put("updateTime", StaticParam.DateFormat2.format(ns.getUpdateTime()));
+				data.put("createTime", StaticParam.DateFormat3.format(ns.getCreateTime()));
+				data.put("updateTime", StaticParam.DateFormat3.format(ns.getUpdateTime()));
 				arrData.add(data);
 			} else {
 				System.out.println("查询数据失败");

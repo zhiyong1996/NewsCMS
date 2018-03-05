@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/register.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
   </head>
 <style>

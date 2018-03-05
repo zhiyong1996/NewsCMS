@@ -14,8 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/reset.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-	<script src="bootstrap/js/bootstrap.js"></script>
+
   </head>
   <script>
 	var flag = ${flag==null};
@@ -95,9 +94,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8 left">
+            <div class="carousel-news news-wrap left">
                 <!--轮播-->
-                <div id="myCarousel" class="carousel slide">
+                <div id="myCarousel" class="carousel slide" data-ride=”carousel”> 
                 <!-- 轮播（Carousel）指标 -->
                     <ol class="carousel-indicators">
                         <s:iterator value="#ca_news" status="st" var="n">
@@ -105,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                     		<li data-target="#myCarousel" data-slide-to="<s:property value='#st.index'/>" class="active"></li>
 	                     	</s:if>
 	                     	<s:else>
-	                     		<li data-target="#myCarousel" data-slide-to="<s:property value='#st.index'/>'/>"></li>
+	                     		<li data-target="#myCarousel" data-slide-to="<s:property value='#st.index'/>"></li>
 	                     	</s:else>
 	                	</s:iterator>
                     </ol>
@@ -115,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<s:if test="#st.first">
                      		<div class="item active">
                      			<a href="show_detail?createId=<s:property value='#n.createId'/>">
-			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" style="width:770px;height:470px" alt="<s:property value='#n.title'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
 			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
 			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
 		      				  	</a>
@@ -124,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    <s:else>
                      		<div class="item">
                      			<a href="show_detail?createId=<s:property value='#n.createId'/>">
-			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" style="width:770px;height:470px" alt="<s:property value='#n.title'/>">
+			      				  	<img class="ca_img" src="<s:property value='#n.caimg.path'/>" alt="<s:property value='#n.title'/>">
 			      				  	<input type="hidden" value="<s:property value='#st.index'/>">
 			      				  	<div class="carousel-caption"><s:property value="#n.title"/></div>
 		      				  	</a>
@@ -139,9 +138,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!--轮播end-->
             </div>
 
-            <div class="col-md-4 col-sm-6 col-xs-12 right">
-                <div class="hot-news">
-                    <span class="glyphicon glyphicon-play"></span><span class="hot-title">&nbsp;&nbsp;&nbsp;&nbsp;热点新闻</span>
+            <div class="hot-wrap news-wrap right">
+                <div class="hot-title">
+                    <span class="glyphicon glyphicon-play"></span><span class="">&nbsp;&nbsp;&nbsp;&nbsp;热点新闻</span>
                 </div>
                 <div class="hot-news-content">
                     <ul class="hot-items">
@@ -160,7 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--轮播 位置新闻 end-->
 
     <!--分类显示新闻-->
-    <div class="container category">
+    <div class="z-container category">
         <div class="row">
         	<s:iterator value="comNews" var="all" status="st">
         		<div class="catetory-item panel panel-default col-md-5 col-sm-6 col-xs-12">
@@ -169,7 +168,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                </div>
 	                <ul class="newss panel-body">
 		        		<s:iterator value="#all.value" status="s" var="news">
-		        			<li class="newsItem"><a href="show_detail?createId=<s:property value='#news.createId'/>"><s:property value="#news.title"/></a></li>
+		        			<li class="newsItem">
+		        				<a href="show_detail?createId=<s:property value='#news.createId'/>"><s:property value="#news.title"/></a>
+		        				<span class="category-time right"><s:property value='#news.createTimeS'/></span>
+		        			</li>
 		        		</s:iterator>
 	        		</ul>
 	        	</div>
@@ -216,7 +218,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <p>@ 2017-2018 zzy版权所有 | 联系方式: 814793367@qq.com | <a href="javascript:;">意见反馈</a></p>
         </div>
     </div>
+    <script src="js/jquery-3.2.1.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="Njs/login_quit.js"></script>
 	<script src="Njs/get_ad.js"></script>
+	<script>
+		$(function(){
+			
+			$("#myCarousel").carousel('cycle');
+		});	
+	</script>
 </body>
 </html>

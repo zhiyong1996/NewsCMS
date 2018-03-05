@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--头部广告位-->
     <div class="container advertise" id="ad-top">
     	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class="ad-‫img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class='ad-img'/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
@@ -136,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--脚部广告位-->
     <div class="container advertise" id="ad-bot">
     	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class="ad-‫img"/></a>
+    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
     	</div>
         <div class="ad-logo">
         	<small>广告</small>
