@@ -65,7 +65,12 @@
 			<result name="del_news" type="json">	<!-- 删除新闻 -->
 				<param name="root">status</param>
 			</result>
+			<!-- 批量处理 -->
 			<result name="batch_handle" type="json">
+				<param name="root">message</param>
+			</result>
+			<!-- 批量删除 -->
+			<result name="batch_del" type="json">
 				<param name="root">message</param>
 			</result>
 			<result name="list_by_cate" type="json">
@@ -76,7 +81,7 @@
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 			<interceptor-ref name="loginStack" />
 			<!-- 对应方法 -->
-			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news,batch_handle,list_by_cate,news_comment</allowed-methods>
+			<allowed-methods>add_news,list_news,go_update,update_news,del_news,go_add_news,go_list_news,issue_news,news_preview,go_add_news,select_news,batch_handle,list_by_cate,news_comment,batch_del</allowed-methods>
 		</action>
 	</package>
 	
@@ -123,18 +128,21 @@
 			<result name="handle_result" type="json">
 				<param name="root">json</param>
 			</result>
+			<!-- ajax查询是否有新消息 -->
+			<result name="has_new" type="json">
+				<param name="root">checkjson</param>
+			</result>
 			
 			<!-- 拦截器返回登陆界面 -->
 			<result name="login" type="redirect" >/admin_login.jsp</result>	
 			<!-- 登录拦截器,以上请求如果未登录就会返回登录界面 -->
 			<interceptor-ref name="loginStack" />
 			<!-- 对应方法 -->
-			<allowed-methods>go_list,list_report_msg,batch_handle,handle_result,msg_detail,del_single</allowed-methods>
+			<allowed-methods>go_list,list_report_msg,batch_handle,handle_result,msg_detail,del_single,has_new</allowed-methods>
 		</action>
 	</package>
 	<!-- 分类Action -->
-	<package name="category" extends="json-default,interce"
-		namespace="/category">
+	<package name="category" extends="json-default,interce" namespace="/category">
 		<action name="*" class="com.zzy.action.CategoryAction" method="{1}">
 			<result name="listCView">/WEB-INF/CategoryPage/listCategory.jsp</result>
 			<result name="addCategory" type="json"><!-- 添加类型 -->
@@ -156,16 +164,76 @@
 	</package>
 	
 	<!-- 广告 -->
-	<package name="advertisement" extends="json-default,interce" namespace="">
+	<package name="advertisement" extends="json-default,interce">
 		<action name="ad_manager" class="com.zzy.action.AdvertiseAction" method="ad_manager">
-			<result name="ad_manager">/WEB-INF/NewsPage/adPage.jsp</result>
+			<result name="ad_manager">/WEB-INF/AdPage/listAdPage.jsp</result>
 			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
 		</action>
-		<action name="ad_update" class="com.zzy.action.AdvertiseAction" method="update_ad">
+		<action name="ad_update" class="com.zzy.action.AdvertiseAction" method="ad_update">
 			<result type="json" name="update_ad">
 				<param name="root">json_ad</param>
 			</result>
 			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		
+		<!-- 广告列表 -->
+		<action name="list_top" class="com.zzy.action.AdvertiseAction" method="listTopAd">
+			<result type="json" name="list_top">
+				<param name="root">json_top</param>
+			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="list_bot" class="com.zzy.action.AdvertiseAction" method="listBotAd">
+			<result type="json" name="list_bot">
+				<param name="root">json_bot</param>
+			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="list_side" class="com.zzy.action.AdvertiseAction" method="listSideAd">
+			<result type="json" name="list_side">
+				<param name="root">json_side</param>
+			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<!-- 添加或者更新 -->
+		<action name="go_new_ad" class="com.zzy.action.AdvertiseAction" method="go_new_ad">
+			<result name="go_new_top">WEB-INF/AdPage/updateTopAd.jsp</result>
+			<result name="go_new_bot">WEB-INF/AdPage/updateBotAd.jsp</result>
+			<result name="go_new_side">WEB-INF/AdPage/updateSideAd.jsp</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="new_ad" class="com.zzy.action.AdvertiseAction" method="new_ad">
+			<result type="json" name="new_ad">
+				<param name="root">json_side</param>
+			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="go_update_ad" class="com.zzy.action.AdvertiseAction" method="go_update_ad">
+			<result name="go_update_top">WEB-INF/AdPage/updateTopAd.jsp</result>
+			<result name="go_update_bot">WEB-INF/AdPage/updateBotAd.jsp</result>
+			<result name="go_update_side">WEB-INF/AdPage/updateSideAd.jsp</result>
+			
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="ad_switch" class="com.zzy.action.AdvertiseAction" method="ad_switch">
+			<result type="json" name="ad_switch">
+				<param name="root">json_ad</param>
+			</result>
+			<result name="login" type="redirect" >/admin_login.jsp</result>
+			<interceptor-ref name="loginStack" />
+		</action>
+		<action name="delete_ad" class="com.zzy.action.AdvertiseAction" method="delete_ad">
+			<result type="json" name="delete_ad">
+				<param name="root">json_ad</param>
+			</result>
 		</action>
 
 	</package>

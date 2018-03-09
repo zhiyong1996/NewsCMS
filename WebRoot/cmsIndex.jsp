@@ -2,6 +2,9 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+response.setHeader("Cache-Control","no-cache");
+response.setHeader("Pragma","no-cache");
+response.setDateHeader ("Expires", 0);
 	Object admin = session.getAttribute("admin");
 	if(admin == null){
 		response.sendRedirect(path+"/admin_login.jsp");
@@ -59,8 +62,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="layui-nav-item">
                         <a href="javascript:;" data-url="adminuser/go_list_page" data-title="用户管理" kit-target data-id='5'><i class="fa fa-user-o" aria-hidden="true"></i><span> 用户管理</span></a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" data-url="report/go_list" data-title="消息管理" kit-target data-id='6'><i class="fa fa-volume-down" aria-hidden="true"></i><span> 消息管理</span><span class="layui-badge-dot"></span></a>
+                    <li class="layui-nav-item" id="message-manager">
+                        <a href="javascript:;" data-url="report/go_list" data-title="消息管理" kit-target data-id='6'><i class="fa fa-volume-down" aria-hidden="true"></i><span> 消息管理</span><span id="tip" style="display:none" class="layui-badge-dot"></span></a>
                     </li>
                     <!--  <li class="layui-nav-item">
                         <a href="javascript:;" data-url="welcome.html" data-title="设置" kit-target data-id='7'><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span> 设置</span></a>
@@ -75,8 +78,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="layui-footer"></div>
     </div>
+    <script src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script>
     <script src="<%=request.getContextPath() %>/static/plugins/layui/layui.js"></script>
     <script>
+	$(document).ready(function(){
+    	$("#message-manager").on("click",function(e){
+    		$("#tip").hide();
+    	});
+    	
+    	var time = 20000; //请求间隔
+    	var check = setInterval(function(e){
+    		$.ajax({
+    			type: "post",
+    			dataType: "json",
+    			url: "report/has_new",
+    			success: function(data){
+    				if(data.status){
+    					console.log("有新消息");
+    					$("#tip").show();
+    				}else{
+    					console.log("没有新消息");
+    					//location.href = location.oirgin+"/NewsCMS/admin_login.jsp"
+    				}
+    			},
+    			error: function(e){
+    				console.log("网络出错，无法获取新闻");
+    			}
+    		});
+    	},10000);
+	});
         var message;
         layui.config({
             base: "<%=request.getContextPath() %>/static/src/js/"
@@ -91,6 +121,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type: 'iframe'
             }).init();
         });
+
     </script>
+    
   </body>
 </html>

@@ -28,6 +28,7 @@ public class ReportMessageAction extends ActionSupport{
 	//服务器返回数据
 	private List<ReportMessage> rmsgList;
 	private JSONObject json;
+	private JSONObject checkjson;
 	private ReportMessage rmsg;
 	private User com_ower;
 	private Comment comment;
@@ -112,6 +113,20 @@ public class ReportMessageAction extends ActionSupport{
 		return "del_single";
 	}
 	
+	//是否有新的消息
+	public String has_new(){
+		String hql = "from ReportMessage r where r.checked = 'F'";
+		rmsgList = rService.listData(hql, 0, 10);
+		checkjson = new JSONObject();
+		if(rmsgList.size()>0){
+			checkjson.put("status", true);
+			return "has_new";
+		}else{
+			checkjson.put("status", false);
+			return "has_new";
+		}	
+	}
+	
 	//批量更新
 	public String batch_handle(){
 		return "batch_handle";
@@ -187,6 +202,14 @@ public class ReportMessageAction extends ActionSupport{
 
 	public void setHandleResult(String handleResult) {
 		this.handleResult = handleResult;
+	}
+
+	public JSONObject getCheckjson() {
+		return checkjson;
+	}
+
+	public void setCheckjson(JSONObject checkjson) {
+		this.checkjson = checkjson;
 	}
 
 	

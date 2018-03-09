@@ -17,6 +17,7 @@ if(admin == null){
     <link rel="stylesheet" type="text/css" href="Ncss/index.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/mymodal.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="Ncss/detail-txt.css"/>
     <link rel="stylesheet" type="text/css" href="Ncss/user-info.css"/>
     <script src="js/jquery-3.2.1.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
@@ -57,7 +58,7 @@ if(admin == null){
     <!--顶部导航栏 navbar end-->
     
     <!-- 面包屑导航 -->
-    <div class="container bread-nav">
+    <div class="container bread-nav no-padding">
 		<ol class="breadcrumb">
 			<li><a href="load">首页</a></li>
 			<li class="active">个人资料</li>
@@ -66,7 +67,7 @@ if(admin == null){
 	<!-- 面包屑导航end -->
     
     <!-- 主体 -->
-    <div class="container main-content">
+    <div class="container main-content no-padding">
     	<div class="tabs-left row">
     		<!--  选项卡导航   -->
 		  	<ul id="myTab" class="nav nav-pills nav-stacked col-md-2">
@@ -257,7 +258,6 @@ if(admin == null){
 						if(data.code>0){
 							$("#help").text(data.msg);
 						}else{
-							alert("修改成功,请重新登录");
 							history.go(0);
 						}
 					},

@@ -13,10 +13,14 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.zzy.dao.AdDao;
+import com.zzy.po.BottomAd;
 import com.zzy.po.Category;
 import com.zzy.po.Comment;
 import com.zzy.po.News;
 import com.zzy.po.ReportMessage;
+import com.zzy.po.SideAd;
+import com.zzy.po.TopAd;
 import com.zzy.po.User;
 import com.zzy.service.CategoryService;
 import com.zzy.service.CommentService;
@@ -27,6 +31,7 @@ import com.zzy.service.UserService;
 @SuppressWarnings("serial")
 public class UserAction extends ActionSupport{
 	@Resource NewsService nService;
+	@Resource AdDao addao;
 	@Resource CategoryService cService;
 	@Resource UserService uService;
 	@Resource CommentService comService;
@@ -49,6 +54,11 @@ public class UserAction extends ActionSupport{
 	private int comment_count;
 	private User user;
 	private List<Comment> my_comment;
+	
+	//广告列表
+	private List<TopAd> topAd;
+	private List<BottomAd> botAd;
+	private List<SideAd> sideAd;
 
 	//服务器接受客户端参数
 	private String createTime;
@@ -73,6 +83,12 @@ public class UserAction extends ActionSupport{
 	private Integer newsId;
 	private Integer userId;
 	
+	public void getAd(){
+		topAd = addao.listTrue("TopAd");
+		botAd = addao.listTrue("BottomAd");
+		sideAd = addao.listTrue("SideAd");
+	}
+	
 	public String loading_news(){
 		
 		ActionContext cx = ActionContext.getContext();
@@ -90,10 +106,19 @@ public class UserAction extends ActionSupport{
 				comNews.put(c.getName(), c_news);
 			}
 		}
+		//获取广告
+		topAd = addao.listTrue("TopAd");
+		botAd = addao.listTrue("BottomAd");
+		sideAd = addao.listTrue("SideAd");
+		System.out.println(topAd+"|"+botAd+"|"+sideAd);
 		return "loading_news";
 	}
 
 	public String detail_news(){
+		//获取广告
+		topAd = addao.listTrue("TopAd");
+		botAd = addao.listTrue("BottomAd");
+		sideAd = addao.listTrue("SideAd");
 		if(createId==null||createId.equals("")){
 			return "index";
 		}else{
@@ -102,7 +127,17 @@ public class UserAction extends ActionSupport{
 				return "index";
 			}
 			comment_count = news.getComments().size();
-			createTime = StaticParam.DateFormat2.format(news.getCreateTime());
+			createTime = StaticParam.DateFormat3.format(news.getCreateTime());
+			TreeSet<Comment> ts = new TreeSet<Comment>();
+			ts.addAll(news.getComments());
+			
+			news_com_json = new ArrayList<Comment>();
+			for(Comment c : ts){
+				if(c.getShowed()){
+					news_com_json.add(c);
+				}
+				System.out.println(StaticParam.DateFormat2.format(c.getCreateTime()));
+			}
 			return "detail_suc";
 		}
 	}
@@ -143,6 +178,9 @@ public class UserAction extends ActionSupport{
 		search_news = nService.getByTitle(keyword);
 		System.out.println(keyword);
 		size = search_news.size();
+		topAd = addao.listTrue("TopAd");
+		botAd = addao.listTrue("BottomAd");
+		sideAd = addao.listTrue("SideAd");
 		return "user_search";
 	}
 	
@@ -171,7 +209,7 @@ public class UserAction extends ActionSupport{
 		news = nService.getByCreateId(createId);
 		TreeSet<Comment> ts = new TreeSet<Comment>();
 		ts.addAll(news.getComments());
-		//Set<Comment> coms = news.getComments();
+		
 		news_com_json = new ArrayList<Comment>();
 		for(Comment c : ts){
 			if(c.getShowed()){
@@ -215,7 +253,9 @@ public class UserAction extends ActionSupport{
 	}
 	
 	public String submit_report(){
-		System.out.println(uid+comid+content);
+		System.out.println(uid);
+		System.out.println(comid+content);
+		System.out.println(content);
 		User user = uService.getUserById(uid);
 		Comment comment = comService.getById(comid);
 		ReportMessage rsg = new ReportMessage();
@@ -504,6 +544,30 @@ public class UserAction extends ActionSupport{
 		this.newpassword = newpassword;
 	}
 
+	public List<TopAd> getTopAd() {
+		return topAd;
+	}
+
+	public void setTopAd(List<TopAd> topAd) {
+		this.topAd = topAd;
+	}
+
+	public List<BottomAd> getBotAd() {
+		return botAd;
+	}
+
+	public void setBotAd(List<BottomAd> botAd) {
+		this.botAd = botAd;
+	}
+
+	public List<SideAd> getSideAd() {
+		return sideAd;
+	}
+
+	public void setSideAd(List<SideAd> sideAd) {
+		this.sideAd = sideAd;
+	}
+	
 	
 	
 }

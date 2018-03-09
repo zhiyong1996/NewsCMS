@@ -1,6 +1,7 @@
 package com.zzy.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,25 +18,38 @@ import com.zzy.po.SideAd;
 import com.zzy.po.SideAdImg;
 import com.zzy.po.TopAd;
 import com.zzy.po.TopAdImg;
+import com.zzy.service.AdService;
 
 @SuppressWarnings("serial")
 public class AdvertiseAction extends ActionSupport{
 	@Resource AdDao addao;
+	@Resource AdService adService;
 	@Resource AdImgDao adImgDao;
 	
+	//服务端接收数据
+	private Integer ad_id;
 	private Integer ad_type;
 	private String ad_about;
 	private String ad_url;
 	private String ad_img_url;
+	private String ad_company;
+	private Integer page;
+	private Integer limit;
+	private boolean issue;
 	
+	//服务器返回数据
 	private JSONObject json_ad;
+	
+	private JSONObject json_top;
+	private JSONObject json_bot;
+	private JSONObject json_side;
 	
 	private TopAd t_ad;
 	private BottomAd b_ad;
 	private SideAd s_ad;
 	
 	public String ad_manager(){
-		List<TopAd> top = addao.listAd("TopAd");
+		/*List<TopAd> top = addao.listAd("TopAd");
 		List<BottomAd> bot = addao.listAd("BottomAd");
 		List<SideAd> side = addao.listAd("SideAd");
 		if(top.size()>0){
@@ -46,7 +60,7 @@ public class AdvertiseAction extends ActionSupport{
 		}
 		if(side.size()>0){
 			s_ad = side.get(0);
-		}
+		}*/
 		return "ad_manager";
 	}
 	
@@ -94,22 +108,25 @@ public class AdvertiseAction extends ActionSupport{
 		return "get_ad";
 	}
 	
-	public String update_ad() throws IOException{
+	public String ad_update() throws IOException{
 		String new_src;//新的图片路径
 		if(ad_type == StaticParam.AD_TOP){
 			TopAd t_ad ;
-			List<TopAd> all_t_ad = addao.listAd("TopAd");
-			if(all_t_ad.size() == 0){ //判断对象是否存在
+			if(ad_id == 0){ //判断对象是否存在
 				t_ad = new TopAd();
 				t_ad.setAbout(ad_about);
 				t_ad.setUrl(ad_url);
 				t_ad.setAbout(ad_about);
+				t_ad.setCompany(ad_company);
+				t_ad.setIssue(false);
 				addao.save(t_ad);
 			}else{
-				t_ad = all_t_ad.get(0);
+				t_ad = addao.getTopById(ad_id);
 				t_ad.setAbout(ad_about);
 				t_ad.setUrl(ad_url);
 				t_ad.setAbout(ad_about);
+
+				t_ad.setCompany(ad_company);
 			}
 			System.out.println(ad_type+ad_url+ad_about+ad_img_url);
 			//保存图片对象
@@ -131,19 +148,22 @@ public class AdvertiseAction extends ActionSupport{
 			
 		}else if(ad_type == StaticParam.AD_BOTTOM){
 			BottomAd b_ad ;
-			List<BottomAd> all_b_ad = addao.listAd("BottomAd");
-			if(all_b_ad.size() == 0){ //判断对象是否存在
+			if(ad_id == 0){ //判断对象是否存在
 				b_ad = new BottomAd();
 				b_ad.setAbout(ad_about);
 				b_ad.setUrl(ad_url);
 				b_ad.setAbout(ad_about);
+				b_ad.setIssue(false);
+				b_ad.setCompany(ad_company);
 				addao.save(b_ad);
 			}else{
 				System.out.println(ad_url);
-				b_ad = all_b_ad.get(0);
+				b_ad = addao.getBotById(ad_id);
 				b_ad.setAbout(ad_about);
 				b_ad.setUrl(ad_url);
 				b_ad.setAbout(ad_about);
+
+				b_ad.setCompany(ad_company);
 			}
 			
 			//保存图片对象
@@ -162,19 +182,22 @@ public class AdvertiseAction extends ActionSupport{
 			addao.saveOrUpdate(b_ad);//保存新闻对象
 		}else{
 			SideAd s_ad;
-			List<SideAd> all_s_ad = addao.listAd("SideAd");
-			if(all_s_ad.size() == 0){ //判断对象是否存在
+			if(ad_id == 0){ //判断对象是否存在
 				s_ad = new SideAd();
 				s_ad.setAbout(ad_about);
 				s_ad.setUrl(ad_url);
 				s_ad.setAbout(ad_about);
+				s_ad.setIssue(false);
+				s_ad.setCompany(ad_company);
 				addao.save(s_ad);
 			}else{
-				s_ad = all_s_ad.get(0);
+				s_ad = addao.getSideById(ad_id);
 				System.out.println(ad_url);
 				s_ad.setAbout(ad_about);
 				s_ad.setUrl(ad_url);
 				s_ad.setAbout(ad_about);
+
+				s_ad.setCompany(ad_company);
 			}
 			
 			//保存图片对象
@@ -195,11 +218,145 @@ public class AdvertiseAction extends ActionSupport{
 		
 		json_ad = new JSONObject();
 		json_ad.put("code", 0);
+		json_ad.put("status", true);
 		json_ad.put("msg","success");
 		
 		return "update_ad";
 	}
-
+	
+	public String listTopAd(){
+		json_top = new JSONObject();
+		int offset = (page - 1) * limit;
+		List<TopAd> t_ad = addao.listAd("TopAd");
+		System.out.println(t_ad+":"+t_ad.size());
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
+		JSONObject data;
+		for (TopAd ad : t_ad) {
+			data = new JSONObject();
+			System.out.println("id======="+t_ad);
+			data.put("id",ad.getId());
+			data.put("company",ad.getCompany());
+			data.put("about",ad.getAbout());
+			data.put("url",ad.getUrl());
+			data.put("issue",ad.getIssue());
+			arrData.add(data);
+		}
+		json_top.put("code", 0);
+		json_top.put("msg", "");
+		json_top.put("count", t_ad.size());
+		json_top.put("data", arrData);
+		return "list_top";
+	}
+	
+	public String listBotAd(){
+		json_bot = new JSONObject();
+		int offset = (page - 1) * limit;
+		List<BottomAd> b_ad = addao.listAd("BottomAd");
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
+		JSONObject data;
+		for (BottomAd ad : b_ad) {
+			data = new JSONObject();
+			data.put("id",ad.getId());
+			data.put("company",ad.getCompany());
+			data.put("about",ad.getAbout());
+			data.put("url",ad.getUrl());
+			data.put("issue",ad.getIssue());
+			arrData.add(data);
+		}
+		json_bot.put("code", 0);
+		json_bot.put("msg", "");
+		json_bot.put("count", b_ad.size());
+		json_bot.put("data", arrData);
+		return "list_bot";
+	}
+	
+	public String listSideAd(){
+		json_side = new JSONObject();
+		int offset = (page - 1) * limit;
+		List<SideAd> s_ad = addao.listAd("SideAd");
+		ArrayList<JSONObject> arrData = new ArrayList<JSONObject>();
+		JSONObject data;
+		for (SideAd ad : s_ad) {
+			data = new JSONObject();
+			data.put("id",ad.getId());
+			data.put("company",ad.getCompany());
+			data.put("about",ad.getAbout());
+			data.put("url",ad.getUrl());
+			data.put("issue",ad.getIssue());
+			arrData.add(data);
+		}
+		json_side.put("code", 0);
+		json_side.put("msg", "");
+		json_side.put("count", s_ad.size());
+		json_side.put("data", arrData);
+		return "list_side";
+	}
+	
+	public String go_new_ad(){
+		if(ad_type==StaticParam.AD_TOP){
+			return "go_new_top";
+		}else if(ad_type==StaticParam.AD_BOTTOM){
+			return "go_new_bot";
+		}else{
+			return "go_new_side";
+		}
+	}
+	
+	//查询更新广告
+	public String go_update_ad(){
+		if(ad_type==StaticParam.AD_TOP){
+			t_ad = addao.getTopById(ad_id);
+			return "go_update_top";
+		}else if(ad_type==StaticParam.AD_BOTTOM){
+			b_ad = addao.getBotById(ad_id);
+			return "go_update_bot";
+		}else{
+			s_ad = addao.getSideById(ad_id);
+			return "go_update_side";
+		}	
+	}
+	
+	public String ad_switch(){
+		json_ad = new JSONObject();
+		if(ad_type==StaticParam.AD_TOP){
+			t_ad = addao.getTopById(ad_id);
+			t_ad.setIssue(issue);
+			addao.saveOrUpdate(t_ad);
+		}else if(ad_type==StaticParam.AD_BOTTOM){
+			b_ad = addao.getBotById(ad_id);
+			b_ad.setIssue(issue);
+			addao.saveOrUpdate(b_ad);
+		}else{
+			s_ad = addao.getSideById(ad_id);
+			s_ad.setIssue(issue);
+			addao.saveOrUpdate(s_ad);
+		}
+		
+		json_ad.put("status",true);
+		return "ad_switch";
+	}
+	
+	public String delete_ad(){
+		if(ad_type==StaticParam.AD_TOP){
+			t_ad = addao.getTopById(ad_id);
+			addao.delete(t_ad);
+		}else if(ad_type==StaticParam.AD_BOTTOM){
+			b_ad = addao.getBotById(ad_id);
+			addao.delete(b_ad);
+		}else{
+			s_ad = addao.getSideById(ad_id);
+			addao.delete(s_ad);
+		}
+		json_ad = new JSONObject();
+		json_ad.put("status",true);
+		return "delete_ad";
+	}
+	
+	/*
+	 * 
+	 * 根对象setter 和getter
+	 * 
+	 * */
 	public Integer getAd_type() {
 		return ad_type;
 	}
@@ -262,6 +419,70 @@ public class AdvertiseAction extends ActionSupport{
 
 	public void setS_ad(SideAd s_ad) {
 		this.s_ad = s_ad;
+	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
+	public String getAd_company() {
+		return ad_company;
+	}
+
+	public void setAd_company(String ad_company) {
+		this.ad_company = ad_company;
+	}
+
+	public JSONObject getJson_top() {
+		return json_top;
+	}
+
+	public void setJson_top(JSONObject json_top) {
+		this.json_top = json_top;
+	}
+
+	public JSONObject getJson_bot() {
+		return json_bot;
+	}
+
+	public void setJson_bot(JSONObject json_bot) {
+		this.json_bot = json_bot;
+	}
+
+	public JSONObject getJson_side() {
+		return json_side;
+	}
+
+	public void setJson_side(JSONObject json_side) {
+		this.json_side = json_side;
+	}
+
+	public Integer getAd_id() {
+		return ad_id;
+	}
+
+	public void setAd_id(Integer ad_id) {
+		this.ad_id = ad_id;
+	}
+
+	public boolean getIssue() {
+		return issue;
+	}
+
+	public void setIssue(boolean issue) {
+		this.issue = issue;
 	}
 	
 }

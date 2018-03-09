@@ -50,7 +50,7 @@ $(document).ready(function(e){
 			        data: formdata,
 					success: function(data){
 						console.log(data);
-						alert("修改成功");
+						
 						$("#avatar-img").prop({src:data.imgUrl});
 						$("#nav-avatar").prop({src:data.imgUrl});
 					},
@@ -87,7 +87,7 @@ $(document).ready(function(e){
 						if(data.status){
 							updateInfo(data);
 							$("#cancel-btn").click();
-							alert("更新成功");
+							
 						}
 					},
 					error: function(data){

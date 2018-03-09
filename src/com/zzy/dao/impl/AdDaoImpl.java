@@ -64,4 +64,29 @@ public class AdDaoImpl extends HibernateDaoSupport implements AdDao{
 		return (List<O>) getHibernateTemplate().find("from "+hql);
 	}
 
+	@Override
+	public List<TopAd> listTopBySQL(String sql, Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BottomAd> listBotBySQL(String sql, Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SideAd> listSideBySQL(String sql, Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <O> List<O> listTrue(String adType) {
+		String hql = "from "+adType+ " ad where ad.issue = 'T'"; 
+		return (List<O>) getHibernateTemplate().find(hql);
+	}
+
 }

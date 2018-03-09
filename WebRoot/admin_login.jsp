@@ -2,6 +2,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+response.setHeader("Cache-Control","no-cache");
+response.setHeader("Pragma","no-cache");
+response.setDateHeader ("Expires", 0);
+
 Object admin = session.getAttribute("admin");
 if(admin != null){
 	response.sendRedirect(path+"/cmsIndex.jsp");

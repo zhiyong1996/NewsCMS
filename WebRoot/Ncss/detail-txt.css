@@ -1,9 +1,8 @@
 .txt {
-	padding-bottom: 30px;
-	margin-top: 30px;
 	margin-left: 0;
 	margin-right: 0;
 	margin-bottom: 50px;
+	padding: 0 30px 30px 30px;
 }
 
 .content p {
@@ -22,11 +21,16 @@
 .ctime {
 	margin-left: 20px;
 }
-
+.no-comment{
+	text-align: center;
+    color: #ababab;
+    padding-top: 10px;
+}
 .breadcrumb {
 	background-color: #fff;
 	border-bottom: 1px solid #eee;
 	border-radius: 0;
+	box-shadow: 0 1px 3px rgba(26,26,26,.1);
 }
 
 .breadcrumb>li+li:before {

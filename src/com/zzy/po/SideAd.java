@@ -2,6 +2,7 @@ package com.zzy.po;
 
 public class SideAd {
 	private Integer id;
+	private String company;
 	private String about;
 	private SideAdImg adimg;
 	private String url;
@@ -36,6 +37,12 @@ public class SideAd {
 	}
 	public void setAbout(String about) {
 		this.about = about;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
 	}
 	
 	

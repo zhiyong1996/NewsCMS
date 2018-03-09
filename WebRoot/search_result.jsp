@@ -25,6 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		font-size: 13px;
   		color: #9c9c9c;
   	}
+  	.carousel{
+  		width: 100%;
+  	}
+  	.advertise-side .carousel-inner .item{
+  		width: 100%;
+  	}
   </style>
   <body>
   	<div class="my-modal">
@@ -84,16 +90,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </nav>
     <!--顶部导航栏 navbar end-->
 	
-    <!--头部广告位-->
-    <div class="container advertise" id="ad-top">
-    	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class='ad-img'/></a>
-    	</div>
-        <div class="ad-logo">
-        	<small>广告</small>
-        </div>
+	<!--头部广告位 end-->	
+    <div class="container advertise no-padding" id="ad-top">
+	    <s:iterator value="topAd" status="st" var="ad">
+	    	<div class="ad-item">
+		    	<div class="ad-img">
+		    		<a href="<s:property value='#ad.url'/>" class="ad-url" target="_blank">
+		    			<img class="ad-img" src="<s:property value='#ad.adimg.path'/>" alt="<s:property value='#ad.about'/>"/>
+		    		</a>
+		    	</div>
+		    	<div class="ad-logo">
+		        	<small>广告</small>
+		        </div>
+	        </div>
+	    </s:iterator> 
     </div>
-    <!--头部广告位 end-->
+    <!--头部广告位 end-->	
     
     <div class="container">
 		<ol class="breadcrumb">
@@ -120,27 +132,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="col-md-4">
 			<!--侧栏广告位-->
 		    <div class="advertise advertise-side" id="ad-side">
-		    	<div class="ad-img">
-		    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
-		    	</div>
-		    	<span class="ad-title"></span>
-		        <div class="ad-logo">
-		        	<small>广告</small>
-		        </div>
+		    	<div id="adCarousel" class="carousel slide" data-ride=”carousel”> 
+                <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <s:iterator value="sideAd" status="st" var="ad">
+                        	<s:if test="#st.first">
+	                     		<li data-target="#adCarousel" data-slide-to="<s:property value='#st.index'/>" class="active"></li>
+	                     	</s:if>
+	                     	<s:else>
+	                     		<li data-target="#adCarousel" data-slide-to="<s:property value='#st.index'/>"></li>
+	                     	</s:else>
+	                	</s:iterator>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+						<s:iterator value="sideAd" status="st" var="ad">     
+						<s:if test="#st.first">
+                     		<div class="item active">
+                     			<a href="<s:property value='#ad.url'/>" target="_blank">
+			      				  	<img class="ca_img" src="<s:property value='#ad.adimg.path'/>">
+			      				  	<div class="carousel-caption"><s:property value="#ad.about"/></div>
+		      				  	</a>
+		    				</div>
+	                    </s:if>
+	                    <s:else>
+                     		<div class="item">
+                     			<a href="<s:property value='#ad.url'/>">
+			      				  	<img class="ca_img" src="<s:property value='#ad.adimg.path'/>">
+			      				  	<div class="carousel-caption"><s:property value="#ad.about"/></div>
+		      				  	</a>
+		    				</div>
+	                    </s:else>               		
+	                    </s:iterator>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#adCarousel" data-slide="prev">&lsaquo;</a>
+                    <a class="carousel-control right" href="#adCarousel" data-slide="next">&rsaquo;</a>
+                </div>
 		    </div>
 		    <!--侧栏广告位 end-->
 		</div>
 	</div>
 	<!-- 主体end -->
 	
-	<!--脚部广告位-->
-    <div class="container advertise" id="ad-bot">
-    	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
-    	</div>
-        <div class="ad-logo">
-        	<small>广告</small>
-        </div>
+    <!--脚部广告位-->
+    <div class="container advertise no-padding" id="ad-bot">
+	    <s:iterator value="botAd" status="st" var="ad">
+	    	<div class="ad-item">
+		    	<div class="ad-img">
+		    		<a href="<s:property value='#ad.url'/>" class="ad-url" target="_blank">
+		    			<img class="ad-img" src="<s:property value='#ad.adimg.path'/>"  alt="<s:property value='#ad.about'/>"/>
+		    		</a>
+		    	</div>
+		    	<div class="ad-logo">
+		        	<small>广告</small>
+		        </div>
+	        </div>
+	    </s:iterator> 
     </div>
     <!--脚部广告位 end-->
     
@@ -172,6 +220,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <script src="Njs/login_quit.js"></script>
-    <script src="Njs/get_ad.js"></script>
   </body>
 </html>

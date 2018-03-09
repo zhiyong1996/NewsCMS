@@ -251,7 +251,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <script src="Njs/login_quit.js"></script>
-    <script src="Njs/get_ad.js"></script>
     <script>
    	$(document).ready(function(){
    		$(".comment-item").on("mouseover",function(e){

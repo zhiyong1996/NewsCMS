@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
 		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl"}
-		      ,{field: "id", title: "ID", width: 60, sort: true}
+		      //,{field: "id", title: "ID", width: 60, sort: true}
 		      ,{field: "username", title: "用户名", width: 280, align: "center"}
 		      ,{field: "name", title: "昵称", width: 90, align: "center"}
 		      ,{field: "lastlogin", title: "最后登录时间", width: 250, align: "center"}

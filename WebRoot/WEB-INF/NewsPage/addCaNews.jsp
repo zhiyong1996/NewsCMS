@@ -134,6 +134,11 @@ layui.use(["form","layedit","upload"], function(){
 		 	,newsfrom = $("#newsfrom").val()
 		  	,content = layedit.getContent(edit).replace(/\"/g,"'");//获取正文内容并替换双引号为单引号
 		  	
+		 if(content == ""){
+			  layer.msg("请填写新闻内容");
+			  return ;
+		  }s
+		  	
 		 	if(content.indexOf("<p>") == -1){
 				  console.log("无p标签包裹");
 				  content = "<p>"+content+"</p>"
@@ -189,9 +194,9 @@ layui.use(["form","layedit","upload"], function(){
 					,netList: netList
 				},
 				success:function(data){
-					layer.msg("添加成功,3秒后自动跳转新闻列表");
+					layer.msg("添加成功,3秒后自动跳转");
 					setTimeout(function(){
-						location.href = location.origin+"/NewsCMS/news/go_list_news"
+						location.href = location.origin+"/NewsCMS/select_news"
 						},3000);
 				},
 				error:function(){

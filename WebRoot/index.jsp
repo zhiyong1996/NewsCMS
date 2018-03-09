@@ -81,19 +81,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </nav>
     <!--顶部导航栏 navbar end-->
 	
-    <div class="container advertise" id="ad-top">
-    	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
-    	</div>
-        <div class="ad-logo">
-        	<small>广告</small>
-        </div>
+	<!--头部广告位 end-->	
+    <div class="container advertise no-padding" id="ad-top">
+	    <s:iterator value="topAd" status="st" var="ad">
+	    	<div class="ad-item">
+		    	<div class="ad-img">
+		    		<a href="<s:property value='#ad.url'/>" class="ad-url">
+		    			<img class="ad-img" src="<s:property value='#ad.adimg.path'/>"/>
+		    		</a>
+		    	</div>
+		    	<div class="ad-logo">
+		        	<small>广告</small>
+		        </div>
+	        </div>
+	    </s:iterator> 
     </div>
-    
-    <!--头部广告位 end-->
+    <!--头部广告位 end-->	
 
-    <div class="container">
-        <div class="row">
+    <div class="container no-padding">
+        <div class="row no-margin">
             <div class="carousel-news news-wrap left">
                 <!--轮播-->
                 <div id="myCarousel" class="carousel slide" data-ride=”carousel”> 
@@ -181,13 +187,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--分类 end-->
 
     <!--脚部广告位-->
-    <div class="container advertise" id="ad-bot">
-    	<div class="ad-img">
-    		<a href="javascript:;" class="ad-url"><img class="ad-img"/></a>
-    	</div>
-        <div class="ad-logo">
-        	<small>广告</small>
-        </div>
+    <div class="container advertise no-padding" id="ad-bot">
+	    <s:iterator value="botAd" status="st" var="ad">
+	    	<div class="ad-item">
+		    	<div class="ad-img">
+		    		<a href="<s:property value='#ad.url'/>" class="ad-url">
+		    			<img class="ad-img" src="<s:property value='#ad.adimg.path'/>"/>
+		    		</a>
+		    	</div>
+		    	<div class="ad-logo">
+		        	<small>广告</small>
+		        </div>
+	        </div>
+	    </s:iterator> 
     </div>
     <!--脚部广告位 end-->
 
@@ -221,7 +233,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="js/jquery-3.2.1.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="Njs/login_quit.js"></script>
-	<script src="Njs/get_ad.js"></script>
 	<script>
 		$(function(){
 			

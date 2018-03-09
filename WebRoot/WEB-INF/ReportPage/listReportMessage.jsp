@@ -2,6 +2,9 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+response.setHeader("Cache-Control","no-cache");
+response.setHeader("Pragma","no-cache");
+response.setDateHeader ("Expires", 0);
 %>
 <!DOCTYPE HTML>
 <html>
@@ -39,6 +42,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script type="text/html" id="indexTpl">
     	{{parseInt(d.LAY_TABLE_INDEX+1)}}
 		</script>
+		
+		<script type="text/html" id="checkedTpl">
+  			{{#  if(d.checked === '未读'){ }}
+    		<span style="color: #FF5722;">{{ d.checked }}</span>
+ 			 {{#  } else { }}
+    		<span style="color: #13ad13;">{{ d.checked }}</span>
+  			{{#  } }}
+		</script>
 	</div>
 	
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
@@ -60,10 +71,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  ,cols: [[
 		      {checkbox: true,fixed: true}
 		      ,{title: "序号",width: 60,fixed: true,templet: "#indexTpl"}
-		      ,{field: "id", title: "id", width: 90, sort: true}
+		      //,{field: "id", title: "id", width: 90, sort: true}
 		      ,{field: "reporter", title: "举报者", width: 200, align: "center"}
 		      ,{field: "content", title: "理由", width: 90, align: "center"}
-		      ,{field: "checked", title: "状态", width: 90, align: "center"}
+		      ,{field: "checked", title: "状态", width: 90, align: "center",sort: true, templet: '#checkedTpl'}
 		      ,{field: "createTimeS", title: "日期", width: 250, align: "center"}
 		      //,{field: "islock", title: "锁定", width:100, align: "center", templet: "#switchTpl"}
 		      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}

@@ -7,6 +7,7 @@
 		<id name="id">
 			<generator class="native"/>
 		</id>
+		<property name="company" type="java.lang.String" length="50" not-null="true"/>
 		<property name="about" type="java.lang.String" length="50" not-null="true"/>
 		<property name="url" type="java.lang.String" not-null="true"/>
 		<property name="issue" type="true_false"/>

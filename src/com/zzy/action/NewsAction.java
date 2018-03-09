@@ -418,6 +418,17 @@ public class NewsAction extends ActionSupport {
 		message = idArr.length+"条记录操作成功";
 		return "batch_handle";
 	}
+	//批量删除
+		public String batch_del(){
+			System.out.println("nids:"+nids);
+			String idArr[] = nids.split(",");
+			for(int i=0;i<idArr.length;i++){	
+				News n = newsService.getById(Integer.parseInt(idArr[i]));
+				newsService.delNews(n);
+			}
+			message = idArr.length+"条记录操作成功";
+			return "batch_del";
+		}
 	
 	//ajax
 	

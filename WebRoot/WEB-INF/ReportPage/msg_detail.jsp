@@ -114,12 +114,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<!-- item4 -->
 				<div class="layui-form-item">
+					<label class="layui-form-label">所属新闻</label>
+					<div class="layui-input-block">
+						<span class="data-show">
+							[<a style="color:#124dfd;" href="http://localhost:8080/NewsCMS/news_preview?newsid=<s:property value="comment.news.id"/>"><s:property value="comment.news.title"/></a>]
+						</span>
+					</div>
+				</div>
+				<!-- item5 -->
+				<div class="layui-form-item">
 					<label class="layui-form-label">评论内容</label>
 					<div class="layui-input-block">
 						<span class="data-show"><s:property value="comment.content"/></span>
 					</div>
 				</div>
-				<!-- item5 -->
+				<!-- item6 -->
 				<div class="layui-form-item">
 					<label class="layui-form-label">评论处理:</label>
 					<div class="layui-input-block">	
@@ -133,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</span>
 					</div>
 				</div>
-				<!-- item6 -->
+				<!-- item7 -->
 				<div class="layui-form-item">
 				    <div class="layui-input-block">
 				    <s:if test="rmsg.handled==false">
@@ -141,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</s:if>
 				    </div>
 				</div>
-				<!-- item7 -->
+				<!-- item8 -->
 			</form>
 			<!-- form end -->
 		

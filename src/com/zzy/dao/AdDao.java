@@ -20,4 +20,11 @@ public interface AdDao {
 	public <O> void delete(O obj);
 	public Integer getCount(String hql);
 	public <O> List<O> listAd(String hql);
+	
+	public <O> List<O> listTrue(String adType);
+	
+	public List<TopAd> listTopBySQL(String sql, Integer offset, Integer limit);
+	public List<BottomAd> listBotBySQL(String sql, Integer offset, Integer limit);
+	public List<SideAd> listSideBySQL(String sql, Integer offset, Integer limit);
+	
 }

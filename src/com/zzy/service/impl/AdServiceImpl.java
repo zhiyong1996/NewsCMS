@@ -48,4 +48,23 @@ public class AdServiceImpl implements AdService{
 		return addao.listAd(hql);
 	}
 
+	@Override
+	public List<TopAd> listTop(Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		String sql = "select * from topad";
+		return (List<TopAd>) addao.listTopBySQL(sql, offset, limit);
+	}
+	@Override
+	public List<BottomAd> listBot(Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		String sql = "select * from bottomad";
+		return (List<BottomAd>) addao.listBotBySQL(sql, offset, limit);
+	}
+	@Override
+	public List<SideAd> listSide(Integer offset, Integer limit) {
+		// TODO Auto-generated method stub
+		String sql = "select * from sidead";
+		return (List<SideAd>) addao.listSideBySQL(sql, offset, limit);
+	}
+
 }

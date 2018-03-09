@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="container">
             <h1 class="">News帐号注册<small><a href="load">新闻首页</a></small></h1>
             <div class="login-link">
-                已有帐号,<span><a href="#" class="btn btn-link">现在登录</a></span>
+                已有帐号,<span><a href="load" class="btn btn-link">现在登录</a></span>
             </div>
         </div>
     </div>

@@ -5,7 +5,12 @@
 .right {
 	float: right;
 }
-
+.no-padding{
+	padding: 0;
+}
+.no-margin{
+	margin: 0;
+}
 .clearfix :before {
 	content: "";
 	clear:both;
@@ -57,10 +62,12 @@
 	广告css
 */
 .advertise {
-	position: relative;
 	background: #ddd;
 	margin-bottom: 30px;
-	display: none;
+}
+.ad-item{
+	position: relative;
+	margin-top: 5px;
 }
 .advertise.advertise-side{
 	position: relative;

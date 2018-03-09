@@ -10,80 +10,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>广告管理</title>
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.2.1.js"></script> 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/layui/css/layui.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath() %>/Ncss/adPage.css"/>
   </head>
-  <style>
-  html{overflow-y:scroll;}
-  	body{
-  		padding: 10px;
-  	}
-  	.layui-btn{
-  		border: 1px solid #009688;
-  		box-sizing: border-box;
-  	}
-  	.layui-btn.layui-btn-disabled{
-  		border: 1px solid #e6e6e6;
-  	}
-  	.layui-btn-danger{
-  		border: 1px solid #FF5722;
-  		box-sizing: border-box;
-  	}
-
-	.layui-btn-danger.layui-btn-disabled{
-		background: #FBFBFB;
-		border: 1px solid #e6e6e6
-	}
-	.layui-btn-normal{
-		border: 1px solid #1E9FFF;
-	}
-	.layui-btn-normal.layui-btn-disabled{
-		background: #FBFBFB;
-		border: 1px solid #e6e6e6;
-	}
-	.ad-wrap{
-
-	}
-	.ad-content{
-		position:relative;
-		padding: 0 12px;
-		
-	}
-	.lock-bg{
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		width: 100%;
-		height: 100%;
-		padding-bottom: 15px;
-		background: rgba(167,167,167,.2);
-		z-index: 999;
-	}
-	.lock-button{
-		padding: 10px 10px;
-    	border-bottom: 1px solid #e6e6e6;
-	}
-	.active-edit{
-		border-color: #009688;
-	}
-	.layui-field{
-		/*transition: all 1s;*/
-	}
-	.layui-form-item{
-		padding: 5px 2px;
-	}
-	.side-pre{
-		width: 200px;
-		height: 200px;
-	}
-	.top-bot-pre{
-		width: 100%;
-		height: 70px;
-	}
-	.tips{
-		color: #a5a5a5;
-	}
-  </style>
   <body>
   	<div class="ad-wrap">
 		<fieldset class="layui-elem-field top-field">

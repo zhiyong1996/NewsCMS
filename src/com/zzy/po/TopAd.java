@@ -2,6 +2,7 @@ package com.zzy.po;
 
 public class TopAd {
 	private Integer id;
+	private String company;
 	private String about;
 	private TopAdImg adimg;
 	private String url;
@@ -35,6 +36,12 @@ public class TopAd {
 	}
 	public void setAbout(String about) {
 		this.about = about;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
 	}
 	
 	

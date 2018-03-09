@@ -35,7 +35,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
-
+	
+	<!-- 序列号模板引擎 -->
+	<script type="text/html" id="indexTpl">
+    	{{parseInt(d.LAY_TABLE_INDEX+1)}}
+	</script>
 
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
 	<script>
@@ -50,7 +54,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  ,url: "category/pageCategory"
 			  ,cellMinWidth: 60
 			  ,cols: [[
-				   {field: "cid", title: "ID", width: 60, sort: true,fixed: true}
+				   {title: "序号",width: 60,fixed: true,templet: "#indexTpl"}  
+				  //,{field: "cid", title: "ID", width: 60, sort: true,fixed: true}
 			      ,{field: "cName", title: "新闻类型(点击可编辑)", width: 280, align: "center",edit: "text"}		  		  ,{field: "createTime", title: "创建时间", width: 160, align: "center"}
 		  		  ,{field: "updateTime", title: "更新时间", width: 160, align: "center"}
 			      ,{fixed: "right", title: "操作", width:160, align:"center", toolbar: "#barDemo"}

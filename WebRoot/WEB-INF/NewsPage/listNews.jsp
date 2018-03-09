@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
 	  <button class="layui-btn" data-type="Issue"><i class="layui-icon">&#xe619;</i>批量发布</button>
 	  <button class="layui-btn layui-btn-warm" data-type="unIssue"><i class="layui-icon">&#xe61a;</i>批量下架</button>
-	  <button class="layui-btn layui-btn-danger" data-type="delete"><i class="layui-icon">&#xe640;</i>批量删除</button>
+	  <button class="layui-btn layui-btn-danger" data-type="batch_del"><i class="layui-icon">&#xe640;</i>批量删除</button>
 	  <button class="layui-btn" data-type="refresh"><i class="layui-icon">&#x1002;</i></button>
 	</div>
 	<div class="head-select clearfix">
@@ -91,7 +91,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 	
 	<script type="text/javascript" src="<%=request.getContextPath() %>/layui/layui.js"></script>
-
 	<script>
 	layui.use('table', function(){
 	  var $ = layui.jquery;
@@ -338,6 +337,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	          }
 	        }); //执行重载end
 	      }
+	     ,batch_del: function(){
+	    	 var checkStatus = table.checkStatus("table")
+		      	,data = checkStatus.data;
+			  if(data.length == 0){
+				  return;
+			  }else{
+				  var nids = [];
+				  for(var i=0;i<data.length;i++){
+					  nids.push(data[i].id);
+				  }
+				  nids = nids.join(",");
+				  $.ajax({
+					  type: "post",
+					  url: "batch_del",
+					  data: {
+						 nids:nids,
+						 issue: false
+					  },
+					  success:function (data){
+						  layer.msg(data);
+						  setTimeout(function(){
+							  table.reload('table', {
+						          page: {
+						            curr: 1 //重新从第 1 页开始
+						          },
+						          where: {
+						        	reloadvalue: "",
+									reloadkey: ""
+						          }
+						        });
+						  },2000);
+					  },
+					  error: function(data){
+						  layer.msg("网络出错，请稍候尝试");
+					  }
+				  });
+			  }
+	     }
 	    	
 	    };//active end
 	

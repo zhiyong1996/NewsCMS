@@ -13,4 +13,8 @@ public interface AdService {
 	public SideAd getSideById(Integer id);
 	public <O> List<O> listAd(String hql);
 	public Integer getCount(String ad);
+	
+	public List<TopAd> listTop(Integer offset,Integer limit);
+	public List<BottomAd> listBot(Integer offset,Integer limit);
+	public List<SideAd> listSide(Integer offset,Integer limit);
 }
